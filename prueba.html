@@ -1,0 +1,129 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>
+        Bakery
+    </title>
+
+    <style>
+        :root {
+            --background: #eccbd9;
+            --primary: #e4aec5;
+            --secondary: #d9556d;
+            --hover: #eb4b5e;
+            --white: #fff;
+        }
+
+        .container-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+
+        }
+
+        .container-info img {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 10px;
+        }
+
+        .content-info {
+            margin-top: 20px;
+       
+        
+        }
+
+        .content-info h2 {
+            color: var(--secondary);
+            font-size: 1.2em;
+            margin: 0;
+        }
+
+        .content-info h1 {
+            font-size: 2em;
+            margin: 10px 0;
+        }
+
+        .content-info h1 span {
+            color: var(--secondary);
+        }
+
+        .content-info p {
+
+            font-size: 1em;
+            line-height: 1.5;
+            margin: 10px 0;
+        }
+
+        @media (min-width: 768px) {
+            .container-info {
+                flex-direction: row;
+                text-align: left;
+            }
+
+            .container-info img {
+                margin-right: 20px;
+            }
+
+            .content-info {
+                margin-top: 0;
+            }
+        }
+
+        /* BOTON REPETIDO CSS */
+        .content-info .cta-btn {
+            background-color: var(--secondary);
+            color: #fff;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .content-info .cta-btn:hover {
+            background-color: var(--hover);
+            color: var(--white);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-info">
+        <img alt="A stack of delicious croissants" src="/src/assets/img/principal/principal_img.jpg">
+        <div class="content-info">
+            <h2>
+                About Us
+            </h2>
+            <h1>
+                The
+                <span>
+                    Taste
+                </span>
+                You Need, For Your Pleasure
+            </h1>
+            <p>
+                At Bakery Co., we believe that every day deserves a little sweetness. Our artisan bakery is your
+                one-stop destination for baked treats that burst with flavor and melt in your mouth. With a passion for
+                baking that has been passed down through generations, we take pride in creating mouth-watering pastries
+                that delight your taste buds.
+            </p>
+            <br>
+            <a class="cta-btn" href="#">
+                More about us
+            </a>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
