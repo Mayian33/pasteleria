@@ -14,18 +14,18 @@
 <body>
     <!-- MENU NAVBAR -->
     <header>
-        <div class="navbar">
+        <div class="navbar" id="home">
             <nav>
                 <div class="logo">
                     <img alt="logo" src="./assets//img/logos/logo_menu.png" />
                 </div>
                 <nav class="nav">
-                    <a href="#">Home</a>
-                    <a href="#">About Us</a>
+                    <a href="#home">Home</a>
+                    <a href="#sobremi">Sobre mi</a>
                     <a href="#">Menu</a>
-                    <a href="#">Reviews</a>
+                    <a href="#">Reseñas</a>
                     <a href="#">Blog</a>
-                    <a href="#">Contacts</a>
+                    <a href="#">Contacto</a>
                 </nav>
                 <a class="cta-btn" href="#">
                     Make a Reservation
@@ -35,134 +35,147 @@
     </header>
 
     <section class="main">
-    <!-- CONTAINER PRINCIPAL -->
-    <div class="container">
-        <div class="content-card">
-            <div class="text-content">
-                <h1 class="title">Dulce<br />&amp;<span>Pasión</span></h1>
-                <p>Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia
-                    consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</p>
-                <a class="cta-btn" href="#">
-                    Make a Reservation
-                </a>
-            </div>
+        <!-- CONTAINER PRINCIPAL -->
+        <div class="container">
+            <div class="content-card">
+                <div class="text-content">
+                    <h1 class="title">Dulce<br />&amp;<span>Pasión</span></h1>
+                    <p>Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia
+                        consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</p>
+                    <a class="cta-btn" href="#">
+                        Make a Reservation
+                    </a>
+                </div>
 
-            <div class="image-content">
-                <img alt="image-principal" src="./assets/img/principal/principal-img.jpg" />
-            </div>
-        </div>
-    </div>
-
-    <!-- SECTION INFO -->
-    <section>
-        <div class="container-info">
-            <img alt="A stack of delicious croissants" src="/src/assets/img/principal/info-img.jpg">
-            <div class="content-info">
-                <h2 class="regular-title">About Us</h2>
-                <h1 class="subtitle">El <span>Sabor</span> Que necesitas, para tu placer.</h1>
-                <p>At Bakery Co., we believe that every day deserves a little sweetness. Our artisan bakery is your
-                    one-stop destination for baked treats that burst with flavor and melt in your mouth. With a passion
-                    for
-                    baking that has been passed down through generations, we take pride in creating mouth-watering
-                    pastries
-                    that delight your taste buds.</p>
-                <br>
-                <a class="cta-btn" href="#">More about us</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- CARDS -->
-    <script src="cards.js"></script>
-
-    <div class="cards-wrapper">
-        <div class="card-wrapper">
-            <div class="card-1 card-object card-object-hf"><a class="face front" href="#">
-                    <div class="title-wrapper">
-                        <div class="title">Jenny</div>
-                        <div class="subtitle">felis hairyus</div>
-                    </div>
-                </a><a class="face back" href="#">
-                    <div class="img-wrapper">
-                        <div class="avatar"></div>
-                    </div>
-                    <div class="info-wrapper">
-                        <div class="info-title">Jenny</div>
-                        <ul class="info-content">
-                            <li class="info-content-item">Age <span>6 years</span></li>
-                            <li class="info-content-item">Length <span>46cm</span></li>
-                            <li class="info-content-item">Weight <span>4kg</span></li>
-                        </ul>
-                    </div>
-                </a></div>
-        </div>
-        <div class="card-wrapper">
-            <div class="card-2 card-object card-object-hf"><a class="face front" href="#">
-                    <div class="title-wrapper">
-                        <div class="title">Mishka</div>
-                        <div class="subtitle">felis catus</div>
-                    </div>
-                </a><a class="face back" href="#">
-                    <div class="img-wrapper">
-                        <div class="avatar"></div>
-                    </div>
-                    <div class="info-wrapper">
-                        <div class="info-title">Mishka</div>
-                        <ul class="info-content">
-                            <li class="info-content-item">Age <span>7 years</span></li>
-                            <li class="info-content-item">Length <span>42cm</span></li>
-                            <li class="info-content-item">Weight <span>3.8kg</span></li>
-                        </ul>
-                    </div>
-                </a></div>
-        </div>
-        <div class="card-wrapper">
-            <div class="card-3 card-object card-object-hf"><a class="face front" href="#">
-                    <div class="title-wrapper">
-                        <div class="title">Kyra</div>
-                        <div class="subtitle">felix pumus</div>
-                    </div>
-                </a><a class="face back" href="#">
-                    <div class="img-wrapper">
-                        <div class="avatar"></div>
-                    </div>
-                    <div class="info-wrapper">
-                        <div class="info-title">Kyra</div>
-                        <ul class="info-content">
-                            <li class="info-content-item">Age <span>5 years</span></li>
-                            <li class="info-content-item">Length <span>50cm</span></li>
-                            <li class="info-content-item">Weight <span>5.2kg</span></li>
-                        </ul>
-                    </div>
-                </a></div>
-        </div>
-    </div>
-
-    <!-- footer -->
-    <footer>
-        <div class="footer-card">
-            <div class="logo-footer">
-                <img src="./assets//img/logos/logo_menu.png" alt="logo">
-            </div>
-
-            <p class="text">Un lugar donde el azul y el naranja no son sólo colores.</p>
-
-            <div class="logos">
-                <img src="./assets/img/logos/instagram.png" alt="logo1">
-                <img src="./assets/img/logos/marker.png" alt="logo2">
-                <img src="./assets/img/logos/whatsapp.png" alt="logo3">
-            </div>
-
-            <div class="footer-text">
-                <p>© 2025 - Bróllin | pasteleria</p>
-                <div class="footer-policies">
-                    <p>Política de Privacidad</p>
-                    <p>Política de Cookies</p>
+                <div class="image-content">
+                    <img alt="image-principal" src="./assets/img/principal/principal-img.jpg" />
                 </div>
             </div>
         </div>
-    </footer>
-</section>
+
+        <!-- SECTION INFO -->
+        <section id="sobremi">
+            <div class="container-info">
+                <img alt="A stack of delicious croissants" src="/src/assets/img/principal/info-img.jpg">
+                <div class="content-info">
+                    <h2 class="regular-title">Sobre mi</h2>
+                    <h1 class="subtitle">El <span>Sabor</span> Que necesitas, para tu placer.</h1>
+                    <p>At Bakery Co., we believe that every day deserves a little sweetness. Our artisan bakery is your
+                        one-stop destination for baked treats that burst with flavor and melt in your mouth. With a
+                        passion
+                        for
+                        baking that has been passed down through generations, we take pride in creating mouth-watering
+                        pastries
+                        that delight your taste buds.</p>
+                    <br>
+                    <a class="cta-btn" href="#">More about us</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- CARDS -->
+
+        <div class="cards-title">
+            <h1 class="title-text"> <span>Delicias Caseras:</span> El Sabor de lo Hecho con Amor</h1>
+            <p class="text">Un catálogo de productos frescos y auténticos para endulzar tus momentos</p>
+        </div>
+
+        <script src="cards.js"></script>
+
+        <div class="cards-wrapper">
+            <div class="card-wrapper">
+                <div class="card-1 card-object card-object-hf"><a class="face front" href="#">
+                        <div class="title-wrapper">
+                            <div class="title">Jenny</div>
+                            <div class="subtitle">felis hairyus</div>
+                        </div>
+                    </a><a class="face back" href="#">
+                        <div class="img-wrapper">
+                            <div class="avatar"></div>
+                        </div>
+                        <div class="info-wrapper">
+                            <div class="info-title">Jenny</div>
+                            <ul class="info-content">
+                                <li class="info-content-item">Age <span>6 years</span></li>
+                                <li class="info-content-item">Length <span>46cm</span></li>
+                                <li class="info-content-item">Weight <span>4kg</span></li>
+                            </ul>
+                        </div>
+                    </a></div>
+            </div>
+            <div class="card-wrapper">
+                <div class="card-2 card-object card-object-hf"><a class="face front" href="#">
+                        <div class="title-wrapper">
+                            <div class="title">Mishka</div>
+                            <div class="subtitle">felis catus</div>
+                        </div>
+                    </a><a class="face back" href="#">
+                        <div class="img-wrapper">
+                            <div class="avatar"></div>
+                        </div>
+                        <div class="info-wrapper">
+                            <div class="info-title">Mishka</div>
+                            <ul class="info-content">
+                                <li class="info-content-item">Age <span>7 years</span></li>
+                                <li class="info-content-item">Length <span>42cm</span></li>
+                                <li class="info-content-item">Weight <span>3.8kg</span></li>
+                            </ul>
+                        </div>
+                    </a></div>
+            </div>
+            <div class="card-wrapper">
+                <div class="card-3 card-object card-object-hf"><a class="face front" href="#">
+                        <div class="title-wrapper">
+                            <div class="title">Kyra</div>
+                            <div class="subtitle">felix pumus</div>
+                        </div>
+                    </a><a class="face back" href="#">
+                        <div class="img-wrapper">
+                            <div class="avatar"></div>
+                        </div>
+                        <div class="info-wrapper">
+                            <div class="info-title">Kyra</div>
+                            <ul class="info-content">
+                                <li class="info-content-item">Age <span>5 years</span></li>
+                                <li class="info-content-item">Length <span>50cm</span></li>
+                                <li class="info-content-item">Weight <span>5.2kg</span></li>
+                            </ul>
+                        </div>
+                    </a></div>
+            </div>
+        </div>
+        <div class="cta-catalogue">
+            <a class="cta-btn" href="#">
+                Ver más
+            </a>
+        </div>
+
+        <!-- footer -->
+        <footer>
+            <div class="footer-card">
+                <div class="logo-footer">
+                    <img src="./assets//img/logos/logo_menu.png" alt="logo">
+                </div>
+
+                <p class="text">Endulzando tus días con cada creación casera. <br> <b>¡Gracias por confiar en
+                        nosotros!</b></p>
+
+                <div class="logos">
+                    <img src="./assets/img/logos/instagram.png" alt="logo1">
+                    <img src="./assets/img/logos/marker.png" alt="logo2">
+                    <img src="./assets/img/logos/whatsapp.png" alt="logo3">
+                </div>
+
+                <div class="footer-text">
+                    <p>© 2025 - Bróllin | pasteleria</p>
+                    <div class="footer-policies">
+                        <p>Política de Privacidad</p>
+                        <p>Política de Cookies</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </section>
 </body>
 
 </html>

@@ -3,6 +3,21 @@
   src: url(../assets/fonts/lemon_milk/LEMONMILK-Bold.otf);
 }
 
+@font-face {
+  font-family: text;
+  src: url(../assets/fonts/roboto/Roboto-Light.ttf);
+}
+
+@font-face {
+  font-family: subtitle;
+  src: url(../assets/fonts/roboto/Roboto-Black.ttf);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+
 :root {
   --background: #ffe6f0;
   --secondary: #d9556d;
@@ -27,13 +42,21 @@
   font-size: 50px;
 }
 
-body {
+.title-text {
+  font-size: 40px;
+}
 
+/* checkar los textos que un no tienen esta size-font */
+.text {
+  font-size: 16px;
+}
+
+body {
   font-family: 'Roboto', sans-serif;
   background-color: var(--background);
 }
 
-.main{
+.main {
   margin: 0 6rem;
 }
 
@@ -45,14 +68,14 @@ body {
   justify-content: center;
   align-items: center;
   margin: 20px;
+
 }
 
 nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 100px;
-  padding: 0 4rem;
+  height: 80px;
 }
 
 .nav a {
@@ -73,7 +96,7 @@ nav {
 }
 
 .logo img {
-  height: 200px;
+  height: 150px;
 }
 
 .reservation-btn {
@@ -117,7 +140,7 @@ nav {
 
 .text-content p {
   color: #6D6D6D;
-
+  font-family: text;
   margin-bottom: 30px;
 }
 
@@ -198,11 +221,13 @@ nav {
 .content-info h2 {
   color: var(--secondary);
   margin: 0;
+  font-family: subtitle;
 }
 
 .content-info h1 {
   margin: 10px 0;
   width: 40rem;
+  font-family: subtitle;
 }
 
 .content-info h1 span {
@@ -212,6 +237,7 @@ nav {
 .content-info p {
   line-height: 1.5;
   margin: 10px 0;
+  font-family: text;
 }
 
 @media (min-width: 768px) {
@@ -239,6 +265,7 @@ nav {
   text-decoration: none;
   font-weight: 500;
   transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+  font-family: text;
 }
 
 .cta-btn:hover {
@@ -248,7 +275,33 @@ nav {
   cursor: pointer;
 }
 
+.cta-catalogue {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 4rem;
+}
+
 /* CARDS */
+
+.cards-title {
+  text-align: center;
+  margin-top: 6rem;
+}
+
+.cards-title h1 {
+  font-family: subtitle;
+}
+
+.cards-title p {
+  font-family: text;
+}
+
+.title-text span {
+  border-bottom: 3px solid var(--hover);
+  /* Línea negra de 3px */
+  padding-bottom: 5px;
+  /* Espacio entre el texto y la línea */
+}
 
 .cards-wrapper {
   position: relative;
@@ -268,7 +321,9 @@ nav {
   margin: 0;
   width: 28%;
   height: 0;
-  padding: 0 0 28%;
+  /* largo  margin */
+  padding: 10% 19% 25%;
+  /* 0 28% */
   perspective: 700px;
 }
 
@@ -283,6 +338,7 @@ nav {
   height: 88%;
   transform-style: preserve-3d;
 }
+
 
 .card-object.card-1 .front {
   background: #222 url(../assets/img/principal/img1.jpg) 90% 35%;
@@ -676,17 +732,17 @@ nav {
   margin-bottom: 4rem;
 }
 
-.logos img{
-padding: 0 5px;
+.logos img {
+  padding: 0 5px;
 }
 
 .footer-text {
   display: flex;
   flex-wrap: row;
-  gap: 68%;
+  gap: 67%;
 }
 
-.footer-policies{
+.footer-policies {
   display: flex;
   gap: 20px;
 }
@@ -695,7 +751,8 @@ padding: 0 5px;
   position: relative;
   display: inline-block;
   cursor: pointer;
-  padding-bottom: 5px; /* Espacio para la línea */
+  padding-bottom: 5px;
+  /* Espacio para la línea */
 }
 
 .footer-policies p::after {
