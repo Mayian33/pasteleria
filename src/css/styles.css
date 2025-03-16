@@ -57,9 +57,33 @@ body {
 }
 
 .main {
-  margin: 0 6rem;
+  margin: 0 6rem; /* Margen original para pantallas grandes */
 }
 
+/* Media Queries para hacer .main responsive */
+@media (max-width: 1200px) {
+  .main {
+    margin: 0 4rem; /* Reducimos el margen para pantallas más pequeñas */
+  }
+}
+
+@media (max-width: 992px) {
+  .main {
+    margin: 0 3rem; /* Margen más pequeño para tablets */
+  }
+}
+
+@media (max-width: 768px) {
+  .main {
+    margin: 0 2rem; /* Margen reducido para tablets pequeñas y móviles grandes */
+  }
+}
+
+@media (max-width: 576px) {
+  .main {
+    margin: 0 1rem; /* Margen mínimo para móviles pequeños */
+  }
+}
 /* NAVBAR */
 
 .navbar {
@@ -228,7 +252,6 @@ nav {
   margin-bottom: 15px;
 }
 
-
 .text-content p {
   font-family: text;
   margin-bottom: 30px;
@@ -249,7 +272,6 @@ nav {
 }
 
 .image-content {
-
   position: relative;
   border-radius: 3rem;
 }
@@ -258,17 +280,6 @@ nav {
   height: auto;
   width: 400px;
   border-radius: 2rem;
-}
-
-@media (max-width: 768px) {
-  .content-card {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .image-content {
-    margin-top: 20px;
-  }
 }
 
 .image-contentinfo {
@@ -290,6 +301,89 @@ nav {
   line-height: 1.5;
 }
 
+/* Media Queries para Responsive Design */
+@media (max-width: 1200px) {
+  .content-card {
+    padding: 40px 0;
+  }
+
+  .image-content img {
+    width: 350px;
+  }
+}
+
+@media (max-width: 992px) {
+  .container,
+  .footer-card {
+    padding: 0 3rem; /* Aumenté el padding para hacer el container más grande */
+  }
+
+  .content-card {
+    padding: 30px 0;
+  }
+
+  .text-content {
+    max-width: 400px;
+  }
+
+  .image-content img {
+    width: 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container,
+  .footer-card {
+    padding: 0 2rem; /* Aumenté el padding para pantallas medianas */
+    margin: 1rem; /* Añadí un margen para más espacio */
+  }
+
+  .content-card {
+    flex-direction: column;
+    text-align: center;
+    padding: 40px 0;
+  }
+
+  .text-content {
+    max-width: 100%;
+  }
+
+  .image-content {
+    margin-top: 20px;
+  }
+
+  .image-content img {
+    width: 100%;
+    max-width: 400px;
+  }
+}
+
+@media (max-width: 576px) {
+  .container,
+  .footer-card {
+    padding: 0 1.5rem; /* Aumenté el padding para pantallas pequeñas */
+    margin: 0; /* Ajusté el margen para más espacio */
+  }
+
+  .content-card {
+    margin: 1rem;
+    padding: 30px 0;
+  }
+
+  .text-content h1 {
+    font-size: 2em;
+  }
+
+  .text-content p {
+    font-size: 0.9em;
+  }
+
+  .image-content img {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
 /* SECTION INFO */
 
 .container-info {
@@ -299,13 +393,15 @@ nav {
   text-align: center;
   padding: 20px;
   border-radius: 10px;
-  margin: 6rem 14rem;
+  margin: 6rem auto; /* Cambiado a "auto" para centrar en pantallas grandes */
+  max-width: 1200px; /* Limita el ancho máximo para pantallas grandes */
 }
 
 .container-info img {
   width: 100%;
   max-width: 350px;
   border-radius: 10px;
+  margin-bottom: 20px; /* Espacio entre la imagen y el texto en móviles */
 }
 
 .content-info h2 {
@@ -316,7 +412,8 @@ nav {
 
 .content-info h1 {
   margin: 10px 0;
-  width: 40rem;
+  width: 100%; /* Ajusta el ancho al 100% para móviles */
+  max-width: 40rem; /* Limita el ancho máximo en pantallas grandes */
   font-family: subtitle;
 }
 
@@ -328,20 +425,52 @@ nav {
   line-height: 1.5;
   margin: 10px 0;
   font-family: text;
+  max-width: 600px; /* Limita el ancho del párrafo para mejor legibilidad */
+  margin-left: auto;
+  margin-right: auto;
 }
 
+.cta-btn {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: var(--secondary);
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-family: text;
+}
+
+/* Media Queries para pantallas más grandes */
 @media (min-width: 768px) {
   .container-info {
     flex-direction: row;
     text-align: left;
+    gap: 40px; /* Espacio entre la imagen y el contenido */
   }
 
   .container-info img {
-    margin-right: 20px;
+    margin-bottom: 0;
+    flex: 1; /* La imagen ocupa 1 parte del espacio */
   }
 
   .content-info {
-    margin-top: 0;
+    flex: 2; /* El contenido ocupa 2 partes del espacio */
+  }
+}
+
+/* Ajustes para pantallas muy pequeñas (móviles) */
+@media (max-width: 480px) {
+  .container-info {
+    margin: 3rem 1rem; /* Reduce el margen en móviles */
+  }
+
+  .content-info h1 {
+    font-size: 1.5rem; /* Reduce el tamaño del título en móviles */
+  }
+
+  .content-info p {
+    font-size: 0.9rem; /* Reduce el tamaño del texto en móviles */
   }
 }
 
