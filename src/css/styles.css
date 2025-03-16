@@ -61,6 +61,7 @@ body {
 }
 
 /* NAVBAR */
+
 .navbar {
   border: 2px solid var(--secondary);
   border-radius: 3rem;
@@ -74,14 +75,34 @@ body {
 nav {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-between; 
   height: 80px;
+  width: 100%;
+}
+
+/* Ajuste del logo (a la izquierda) */
+.logo {
+  flex: 0; /* Ocupa espacio a la izquierda */
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  height: 120px;
+}
+
+/* Ajuste del menú (centrado) */
+.nav {
+  flex: 2; /* Hace que el menú ocupe más espacio en el centro */
+  display: flex;
+  justify-content: center; /* Centra los links */
+  gap: 15px;
 }
 
 .nav a {
   text-decoration: none;
   padding: 10px 15px;
-  color: #333;
+  color: var(--details);
   font-family: title;
 }
 
@@ -90,16 +111,11 @@ nav {
   transition: background-color 0.3s, color 0.3s;
 }
 
-.header {
-  display: flex;
-  align-items: center;
-}
-
-.logo img {
-  height: 150px;
-}
-
+/* Ajuste del botón de reservación (a la derecha) */
 .reservation-btn {
+  flex: 1; /* Ocupa espacio a la derecha */
+  display: flex;
+  justify-content: flex-end; /* Alinea el botón a la derecha */
   border: 1px solid #000;
   padding: 10px 20px;
   border-radius: 5px;
@@ -107,6 +123,81 @@ nav {
   color: #000;
   font-weight: 500;
 }
+
+
+/* RESPONSIVE DESIGN */
+@media screen and (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    text-align: center;
+    padding: 10px;
+  }
+
+  nav {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .logo img {
+    height: 200px; /* Tamaño más grande en pantallas pequeñas */
+  }
+
+  .nav {
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 0;
+  }
+
+  .reservation-btn {
+    margin-top: 10px;
+  }
+}
+
+/* MENÚ HAMBURGUESA */
+@media screen and (max-width: 600px) {
+  .nav {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .nav.active {
+    display: flex;
+  }
+
+  .menu-toggle {
+    display: block;
+    cursor: pointer;
+    font-size: 24px;
+    padding: 10px;
+  }
+}
+
+/* Ocultar el menú hamburguesa en pantallas grandes */
+
+.menu-toggle {
+  display: none; /* Oculto en pantallas grandes */
+  font-size: 40px; /* Aumenta el tamaño del ícono ☰ */
+  cursor: pointer;
+  padding: 10px;
+  text-align: center; 
+}
+
+/* Mostrar el menú hamburguesa solo en pantallas pequeñas */
+@media screen and (max-width: 768px) {
+  .menu-toggle {
+    display: block; /* Mostrar el botón de menú hamburguesa */
+  }
+
+  .nav {
+    display: none; /* Esconde el menú por defecto en móviles */
+  }
+
+  .nav.active {
+    display: flex; /* Mostrar el menú cuando esté activo */
+  }
+}
+
 
 /* CONTAINER PRINCIPAL*/
 
