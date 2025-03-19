@@ -29,12 +29,13 @@ html {
 
 /* TEXTOS */
 
-.card-font{
+.card-font {
   font-family: title;
-  font-size: 40px ;
+  font-size: 40px;
 }
-.card-font-text{
-    font-size: 15px;
+
+.card-font-text {
+  font-size: 15px;
 }
 
 .title {
@@ -373,9 +374,10 @@ nav {
   }
 }
 
-/* SECTION INFO */
+/* SECTION INFO Y PERSONALIZACION */
 
-.container-info {
+.container-info,
+.personalization-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -383,39 +385,45 @@ nav {
   padding: 20px;
   border-radius: 10px;
   margin: 6rem auto;
-  /* Cambiado a "auto" para centrar en pantallas grandes */
   max-width: 1200px;
-  /* Limita el ancho máximo para pantallas grandes */
 }
 
-.container-info img {
+.personalization-content {
+  background-color: #F8F4F2;
+  border-radius: 3rem;
+  padding: 2rem;
+}
+
+.img-info,
+.img-personalization {
   width: 100%;
   max-width: 350px;
   border-radius: 10px;
   margin-bottom: 20px;
-  /* Espacio entre la imagen y el texto en móviles */
 }
 
-.content-info h2 {
+.subtitle-info,
+.subtitle-perso {
   color: var(--secondary);
   margin: 0;
   font-family: subtitle;
 }
 
-.content-info h1 {
+.title-info,
+.title-perso {
   margin: 10px 0;
   width: 100%;
-  /* Ajusta el ancho al 100% para móviles */
   max-width: 40rem;
-  /* Limita el ancho máximo en pantallas grandes */
   font-family: subtitle;
 }
 
-.content-info h1 span {
+.content-info h1 span,
+.personalization-content h1 span {
   color: var(--secondary);
 }
 
-.content-info p {
+.content-info p,
+.personalization-content p {
   line-height: 1.5;
   margin: 10px 0;
   font-family: text;
@@ -423,40 +431,42 @@ nav {
 
 /* Media Queries para pantallas más grandes */
 @media (min-width: 768px) {
-  .container-info {
+
+  .container-info,
+  .personalization-wrapper {
     flex-direction: row;
     text-align: left;
     gap: 40px;
-    /* Espacio entre la imagen y el contenido */
   }
 
-  .container-info img {
+  .container-info img,
+  .personalization-wrapper img {
     margin-bottom: 0;
     flex: 1;
-    /* La imagen ocupa 1 parte del espacio */
   }
 
-  .content-info {
+  .content-info,
+  .personalization-content {
     flex: 2;
-    /* El contenido ocupa 2 partes del espacio */
   }
 }
 
 /* Ajustes para pantallas muy pequeñas (móviles) */
 @media (max-width: 480px) {
-  .container-info {
+
+  .container-info,
+  .personalization-wrapper {
     margin: 3rem 1rem;
-    /* Reduce el margen en móviles */
   }
 
-  .content-info h1 {
+  .content-info h1,
+  .personalization-content h1 {
     font-size: 1.5rem;
-    /* Reduce el tamaño del título en móviles */
   }
 
-  .content-info p {
+  .content-info p,
+  .personalization-content p {
     font-size: 0.9rem;
-    /* Reduce el tamaño del texto en móviles */
   }
 }
 
@@ -510,20 +520,23 @@ nav {
   padding-bottom: 1px;
 }
 
-@media (max-width: 768px) {  /* Ajusta el tamaño según necesites */
+@media (max-width: 768px) {
+
+  /* Ajusta el tamaño según necesites */
   .title-text span {
-    border-bottom: 2px solid var(--hover); /* Reduce el grosor en pantallas pequeñas */
+    border-bottom: 2px solid var(--hover);
+    /* Reduce el grosor en pantallas pequeñas */
     padding-bottom: 0.5px;
   }
 }
 
 @media (max-width: 480px) {
   .title-text span {
-    border-bottom: 2.5px solid var(--hover); /* Aún más delgado en móviles */
+    border-bottom: 2.5px solid var(--hover);
+    /* Aún más delgado en móviles */
     padding-bottom: 0;
   }
 }
-
 
 .cards-wrapper {
   position: relative;
@@ -545,7 +558,6 @@ nav {
   height: 0;
   /* largo  margin */
   padding: 10% 19.3% 25%;
-  /* 0 28% */
   perspective: 700px;
 }
 
@@ -562,17 +574,17 @@ nav {
 }
 
 .card-object.card-1 .front {
-  background: #222 url(../assets/img/principal/img1.jpg) 90% 35%;
+  background: url(../assets/img/principal/img1.jpg) 90% 35%;
   background-size: 115%;
 }
 
 .card-object.card-2 .front {
-  background: #222 url(../assets/img/principal/img2.jpg) 50% 90% no-repeat;
+  background: url(../assets/img/principal/img2.jpg) 50% 90% no-repeat;
   background-size: 105%;
 }
 
 .card-object.card-3 .front {
-  background: #222 url(../assets/img/principal/img3.jpg) 80% 100% no-repeat;
+  background: url(../assets/img/principal/img3.jpg) 80% 100% no-repeat;
   background-size: 108%;
 }
 
@@ -748,17 +760,17 @@ nav {
 @media (max-width: 768px) {
   .cards-wrapper {
     flex-direction: column;
-    align-items: center; 
+    align-items: center;
   }
 
-  .card-font{
+  .card-font {
     font-size: 1.5rem;
   }
 
   .card-wrapper {
-    width: 100%; 
+    width: 100%;
     height: 15rem;
-    margin-bottom: 20px; 
+    margin-bottom: 20px;
   }
 }
 
@@ -878,4 +890,4 @@ nav {
   .footer-policies {
     gap: 5px;
   }
-} 
+}
