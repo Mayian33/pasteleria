@@ -1,0 +1,310 @@
+@font-face {
+  font-family: title;
+  src: url(../assets/fonts/lemon_milk/LEMONMILK-Bold.otf);
+}
+
+@font-face {
+  font-family: subtitle;
+  src: url(../assets/fonts/roboto/Roboto-Black.ttf);
+}
+
+@font-face {
+  font-family: text;
+  src: url(../assets/fonts/roboto/Roboto-Light.ttf);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+:root {
+  --background: #ffe6f0;
+  --secondary: #d9556d;
+  --hover: #e90a73;
+  --white: #fff;
+  --details: #320a28;
+  --error: #ff0000;
+}
+
+/* TEXTOS */
+
+.card-font {
+  font-family: title;
+  font-size: 40px;
+}
+
+.card-font-text {
+  font-size: 15px;
+}
+
+/* TAMAÑO TEXTOS */
+.title {
+  font-family: title;
+  font-size: 80px;
+  color: var(--details);
+}
+
+.subtitle-text {
+  font-size: 50px;
+  color: var(--details);
+}
+
+.title-text {
+  font-size: 40px;
+}
+
+.regular-title {
+  font-size: 30px;
+}
+
+/* checkar los textos que un no tienen esta size-font */
+.text {
+  font-size: 16px;
+}
+
+/* FIN TEXTOS */
+
+body {
+  background-color: var(--background);
+}
+
+.main {
+  margin: 0 6rem;
+}
+
+/* Media Queries para hacer .main responsive */
+@media (max-width: 1200px) {
+  .main {
+    margin: 0 4rem;
+    /* Reducimos el margen para pantallas más pequeñas */
+  }
+}
+
+@media (max-width: 992px) {
+  .main {
+    margin: 0 3rem;
+    /* Margen más pequeño para tablets */
+  }
+}
+
+@media (max-width: 768px) {
+  .main {
+    margin: 0 2rem;
+    /* Margen reducido para tablets pequeñas y móviles grandes */
+  }
+}
+
+@media (max-width: 576px) {
+  .main {
+    margin: 0 1rem;
+    /* Margen mínimo para móviles pequeños */
+  }
+}
+
+/* NAVBAR */
+.navbar {
+  border: 2px solid var(--secondary);
+  border-radius: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+}
+
+nav {
+  flex: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+  width: 100%;
+}
+
+.nav a {
+  text-decoration: none;
+  padding: 10px 15px;
+  color: var(--details);
+  font-family: title;
+}
+
+.nav a:hover {
+  color: var(--hover);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.logo img {
+  height: 150px;
+}
+
+/* RESPONSIVE DESIGN */
+@media screen and (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    text-align: center;
+    padding: 10px;
+  }
+
+  nav {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .logo img {
+    height: 200px;
+    /* Tamaño más grande en pantallas pequeñas */
+  }
+
+  .nav {
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 0;
+  }
+
+  .reservation-btn {
+    margin-top: 10px;
+  }
+}
+
+/* MENÚ HAMBURGUESA */
+@media screen and (max-width: 600px) {
+  .nav {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .nav.active {
+    display: flex;
+  }
+
+  .menu-toggle {
+    display: block;
+    cursor: pointer;
+    font-size: 24px;
+    padding: 10px;
+  }
+}
+
+/* Ocultar el menú hamburguesa en pantallas grandes */
+.menu-toggle {
+  display: none;
+  /* Oculto en pantallas grandes */
+  font-size: 30px;
+  /* Aumenta el tamaño del ícono ☰ */
+  cursor: pointer;
+  padding: 10px;
+  text-align: center;
+  color: var(--details);
+}
+
+/* Mostrar el menú hamburguesa solo en pantallas pequeñas */
+@media screen and (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+    /* Mostrar el botón de menú hamburguesa */
+  }
+
+  .nav {
+    display: none;
+    /* Esconde el menú por defecto en móviles */
+  }
+
+  .nav.active {
+    display: flex;
+    /* Mostrar el menú cuando esté activo */
+  }
+}
+
+/* BOTON REPETIDO ABOUT US */
+.cta-btn {
+  background-color: var(--secondary);
+  color: var(--white);
+  padding: 15px 30px;
+  border: none;
+  border-radius: 2rem;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+  font-family: text;
+}
+
+.cta-btn:hover {
+  background-color: var(--hover);
+  color: var(--white);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.btn-menu {
+  margin: 20px;
+}
+
+.cta-catalogue {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 4rem;
+}
+
+/* Estilos para el menú desplegable */
+.nav .dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.nav .dropdown-content {
+  display: none;
+  position: absolute;
+  min-width: 160px;
+  z-index: 1;
+  background-color: var(--background);
+  border-radius: 2rem;
+}
+
+.nav .dropdown-content a {
+  color: var(--details);
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.nav .dropdown-content a:hover {
+  color: var(--hover);
+}
+
+.nav .dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Estilos para el menú hamburguesa (móviles) */
+.menu-toggle {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+    cursor: pointer;
+  }
+
+  .nav {
+    display: none;
+    width: 100%;
+  }
+
+  .nav.active {
+    display: block;
+  }
+
+  .nav a {
+    display: block;
+    text-align: left;
+    padding: 10px;
+    color: var(--white);
+    text-decoration: none;
+  }
+
+  .dropdown-content {
+    position: relative;
+
+  }
+}

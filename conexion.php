@@ -1,8 +1,11 @@
 <?php
-$servername = "localhost"; 
-$username = "root"; 
-$password = ""; 
-$dbname = "brollin"; 
+error_reporting(E_ALL);
+ini_set('diaplay_errors', 1);
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "brollin";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -10,31 +13,32 @@ if ($conn->connect_error) {
     die("Conexión fallida: " . $conn->connect_error);
 }
 
-$sql = "SELECT id_prod, nombre_prod, descripcion_prod, categoria, precio, imagen FROM productos";
-$result = $conn->query($sql);
-
-// Verificar si hay resultados
-if ($result->num_rows > 0) {
-    echo "<h1>Catálogo de Productos</h1>";
-    echo "<div style='display: flex; flex-wrap: wrap;'>"; // Para mostrar en formato de cuadrícula
-
-    // Recorrer los resultados y mostrarlos
-    while ($row = $result->fetch_assoc()) {
-        echo "<div style='border: 1px solid #ccc; margin: 10px; padding: 10px; width: 200px;'>";
-        echo "<h2>" . htmlspecialchars($row['nombre_prod']) . "</h2>";
-        echo "<p>" . htmlspecialchars($row['descripcion_prod']) . "</p>";
-        echo "<p><strong>Categoría:</strong> " . htmlspecialchars($row['categoria']) . "</p>";
-        echo "<p><strong>Precio:</strong> $" . htmlspecialchars($row['precio']) . "</p>";
-        
-        // Mostrar la imagen
-        echo "<img src='" . htmlspecialchars($row['imagen']) . "' style='width: 100%; height: auto;' />";
-        
-        echo "</div>";
-    }
-    echo "</div>";
-} else {
-    echo "No hay productos disponibles.";
-}
-
-$conn->close();
-?>
+$Menu =
+    '        <div class="navbar" id="home">
+            <nav>
+                <div class="logo">
+                    <img alt="logo" src="./assets//img/logos/logo_menu.png" />
+                </div>
+                <!-- Botón de Menú Hamburguesa (solo visible en móviles) -->
+                <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+                <nav class="nav">
+                    <a href="./index.php">Home</a>
+                    <a href="#sobremi">Sobre mi</a>
+                            <div class="dropdown">
+                <a href="#">Pastelería</a>
+                <div class="dropdown-content">
+                    <a href="#">Pastelería Salada</a>
+                    <a href="#">Pastelería dulce</a>
+                    <a href="#">Tartas</a>
+                </div>
+                </div>
+                    <a href="./catalogue.php">Catalogo</a>
+                    <a href="#">Reseñas</a>
+                    <a href="#personalizacion">Personalizacion</a>
+                    <a href="#">Contacto</a>
+                </nav>
+                <a class="cta-btn btn-menu" href="./login.php">
+                    Iniciar sesión
+                </a>
+            </nav>
+        </div>';

@@ -1,3 +1,7 @@
+<?php
+include_once('conexion.php');
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,8 +9,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catálogo</title>
+    <link rel="preload" href="css/estilos-comunes.css" as="style" />
+    <link href="css/estilos-comunes.css" rel="stylesheet" />
+
     <link rel="preload" href="css/catalogue.css" as="style" />
     <link href="css/catalogue.css" rel="stylesheet" />
+    
     <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
@@ -14,47 +22,18 @@
 <body>
     <!-- MENU NAVBAR -->
     <header>
-        <div class="navbar" id="home">
-            <nav>
-                <div class="logo">
-                    <img alt="logo" src="/assets/img/logos/logo_menu.png" />
-                </div>
-                <div class="menu-toggle" onclick="toggleMenu()">☰</div>
-                <nav class="nav">
-                    <a href="#home">Home</a>
-                    <a href="#sobremi">Sobre mí</a>
-                    <a href="#">Menú</a>
-                    <a href="#">Reseñas</a>
-                    <a href="#personalizacion">Personalización</a>
-                    <a href="#">Contacto</a>
-                </nav>
-                <a class="cta-btn btn-menu" href="#">
-                    Hacer una Reserva
-                </a>
-            </nav>
-        </div>
+        <?php echo $Menu ?>
     </header>
 
     <!-- Sección de catálogo de productos -->
     <section id="catalogo">
         <div class="container-catalogue">
-            <h1 class="title title-catalogue">Catálogo de productos</h1>
+            <h1 class="subtitle-text title-info">Catálogo de Productos <span>Caseros</span></h1>
         </div>
 
         <div class="cards-wrapper">
             <?php
-            $servername = "localhost"; // Cambia esto si tu servidor es diferente
-            $username = "root"; // Cambia esto por tu usuario de MySQL
-            $password = ""; // Cambia esto por tu contraseña de MySQL
-            $dbname = "brollin"; // Cambia esto por el nombre de tu base de datos
-
-            // Crear conexión
-            $conn = new mysqli($servername, $username, $password, $dbname);
-
-            // Verificar conexión
-            if ($conn->connect_error) {
-                die("Conexión fallida: " . $conn->connect_error);
-            }
+ 
 
             // Obtener los productos de la base de datos
             $sql = "SELECT id_prod, nombre_prod, descripcion_prod, categoria, precio, imagen FROM productos";
@@ -62,31 +41,57 @@
 
             // Verificar si hay resultados
             if ($result->num_rows > 0) {
-                // Recorrer los resultados y mostrarlos
+                // Inicializar un array para almacenar productos por categoría
+                $productosPorCategoria = [];
+
+                // Mapeo de categorías
+                $categorias = [
+                    '1' => 'Tarta',
+                    '2' => 'Bizcocho',
+                    '3' => 'Ponche'
+                ];
+
+                // Recorrer los resultados y agruparlos por categoría
                 while ($row = $result->fetch_assoc()) {
-                    echo "<div class='card-wrapper'>";
-                    echo "<div class='card-1 card-object card-object-hf'>";
-                    echo "<a class='face front' href='#' style='background-image: url(" . htmlspecialchars($row['imagen']) . ");'>";
-                    echo "<div class='title-wrapper'>";
-                    echo "<div class='card-font'>" . htmlspecialchars($row['nombre_prod']) . "</div>";
-                    echo "<div class='card-font-text'>" . htmlspecialchars($row['descripcion_prod']) . "</div>";
-                    echo "</div></a>";
-                    echo "<a class='face back' href='#'>";
-                    echo "<div class='img-wrapper'>";
-                    echo "<div class='avatar' style='background-image: url(" . htmlspecialchars($row['imagen']) . ");'></div>";
-                    echo "</div></a>";
-                    echo "</div>"; // Cierra card-1
-                    echo "</div>"; // Cierra card-wrapper
+                    $categoria = $row['categoria'];
+                    // Convertir el número de categoría a texto
+                    if (isset($categorias[$categoria])) {
+                        $categoriaTexto = $categorias[$categoria];
+                    } else {
+                        $categoriaTexto = 'Otra'; // Para categorías no mapeadas
                     }
-                } else {
-                    echo "<p>No hay productos disponibles.</p>";
+
+                    if (!isset($productosPorCategoria[$categoriaTexto])) {
+                        $productosPorCategoria[$categoriaTexto] = [];
+                    }
+                    $productosPorCategoria[$categoriaTexto][] = $row;
                 }
-    
-                $conn->close();
-                ?>
-            </div>
-        </section>
-    
-    </body>
-    
-    </html>
+
+                // Mostrar productos organizados por categoría
+                foreach ($productosPorCategoria as $categoria => $productos) {
+                    echo "<div class='cards-title'>"; // Contenedor para el título de la categoría
+                    echo "<h2 class='subtitle-text title-info categoria-titulo'>" . htmlspecialchars(ucfirst($categoria)) . "</h2>"; // Muestra el nombre de la categoría
+                    echo " </div>";
+                    echo "<div class='productos'>"; // Contenedor para los productos
+                    foreach ($productos as $producto) {
+                        echo "<div class='card-wrapper'>";
+                        echo "<div class='card-1 card-object card-object-hf'>";
+                        echo "<a class='face front' href='#' style='background-image: url(" . htmlspecialchars($producto['imagen']) . ");'>";
+                        echo "<div class='title-wrapper'>";
+                        echo "<div class='card-font'>" . htmlspecialchars($producto['nombre_prod']) . "</div>";
+                        echo "<div class='card-font-text'>" . htmlspecialchars($producto['descripcion_prod']) . "</div>";
+                        echo "</div></a>";
+                        echo "<a class='face back' href='#'>";
+                        echo "<div class='img-wrapper'>";
+                        echo "<div class='avatar' style='background-image: url(" . htmlspecialchars($producto['imagen']) . ");'></div>";
+                        echo "</div></a>";
+                        echo "</div>"; // Cierra card-1
+                        echo "</div>"; // Cierra card-wrapper
+                    }
+                    echo "</div>"; // Cierra el contenedor de productos
+                }
+            } else {
+                echo "<p>No hay productos disponibles.</p>";
+            }
+
+            $conn->close();
