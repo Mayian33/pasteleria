@@ -34,7 +34,7 @@
                     <button type="submit">Registrarse</button>
                 </form>
 
-                <p>¿Ya tienes cuenta? <a class="login_option" href="login.php">Inicia sesión aquí</a></p>
+                <p>¿Ya tienes cuenta? <a class="log_option" href="login.php">Inicia sesión aquí</a></p>
             </div>
         </div>
     </div>

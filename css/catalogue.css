@@ -2,7 +2,6 @@
 .container-catalogue h1 {
     margin-top: 5rem;
     text-align: center;
-    /* Centra el título */
 }
 
 .container-catalogue h1 span {
@@ -10,20 +9,50 @@
 }
 
 .cards-title h2 {
-    border-bottom: 3px solid var(--hover);
-    padding-bottom: 1px;
+    background-color: var(--secondary);
+    color: var(--white);
+    width: 60rem;
+    border-radius: 3rem;
+    text-align: center;
+    margin: 1rem auto;
 }
 
-.title-info {
-    font-family: subtitle;
-}
+
 
 .categoria-titulo {
     font-family: subtitle;
     color: var(--details);
-    margin-top: 2rem;
-    margin-bottom: 1rem;
+    margin-top: 3rem;
+    margin-bottom: 2rem;
     text-align: center;
+}
+
+.btn-wrapper {
+    gap: 1rem;
+}
+
+/* pantallas pequeñas */
+@media (max-width: 768px) {
+    .container-catalogue h1 {
+        font-size: 1.8rem;
+        margin-top: 2rem;
+    }
+
+    .cards-title h2 {
+        width: 80%;
+        padding: 1rem;
+    }
+
+    .categoria-titulo {
+        font-size: 1.6rem;
+        margin-top: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .btn-wrapper {
+        gap: 0.5rem;
+        align-items: center;
+    }
 }
 
 /* SECCION CARDS */
@@ -36,7 +65,7 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    flex-wrap: wrap;/
+    flex-wrap: wrap;
 }
 
 .productos {
@@ -47,7 +76,19 @@
     justify-content: center;
 }
 
-/* Ajustes para las tarjetas */
+/* seccion card dinamica */
+.categoria-container {
+    background-color: var(--white);
+    border-radius: 3rem;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.categoria-titulo {
+    margin-bottom: 15px;
+}
+
 .card-wrapper {
     display: block;
     position: relative;
@@ -58,32 +99,27 @@
     perspective: 700px;
     display: flex;
     justify-content: center;
+    min-height: 250px;
 }
 
-/* Media Queries */
 @media (max-width: 768px) {
     .cards-wrapper {
         flex-direction: column;
         align-items: center;
-        /* Centra las tarjetas en pantallas más pequeñas */
     }
 
     .card-wrapper {
         width: 100%;
-        /* Ajusta el ancho para pantallas más pequeñas */
         margin-bottom: 20px;
-        /* Espacio entre tarjetas */
     }
 }
 
 @media (max-width: 480px) {
     .card-wrapper {
         width: 90%;
-        /* Ajusta el ancho para pantallas más pequeñas */
     }
 }
 
-/* Asegúrate de que las tarjetas tengan un tamaño adecuado */
 .card-object {
     color: var(--white);
     display: block;
@@ -95,19 +131,16 @@
     transform-style: preserve-3d;
 }
 
-/* Resto de tu CSS permanece igual */
-
 .cards-wrapper {
     position: relative;
-    height: 100%;
+    height: auto;
     list-style: none;
     margin: 0;
     padding: 0 5%;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    /* Permite que las tarjetas se envuelvan en pantallas más pequeñas */
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
 }
 
 .card-wrapper {
@@ -117,8 +150,7 @@
     margin: 0;
     width: 28%;
     height: 0;
-    /* Esto puede ser ajustado si es necesario */
-    padding: 10% 0% 15%;
+    padding: 10% 1rem 1rem;
     perspective: 700px;
 }
 
@@ -193,9 +225,9 @@
     line-height: 1;
     opacity: 0.8;
     transition: opacity 0.2s ease;
-  }
+}
 
-  .face.front .title-wrapper .card-font::after {
+.face.front .title-wrapper .card-font::after {
     display: block;
     margin: 7% auto 8% auto;
     width: 100%;
@@ -205,7 +237,7 @@
     opacity: 0.5;
     transform: scale(0);
     transition: transform 0.15s;
-  }
+}
 
 .face.front .title-wrapper .card-font-text {
     line-height: 1;
@@ -238,6 +270,13 @@
     opacity: 0.7;
     transition-delay: 0.2s;
     transition-duration: 0.2s;
+}
+
+.card-font-text {
+    font-family: text;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .info-container {
@@ -294,6 +333,5 @@
 @media (max-width: 480px) {
     .card-wrapper {
         width: 90%;
-        /* Ajusta el ancho para pantallas más pequeñas */
     }
 }

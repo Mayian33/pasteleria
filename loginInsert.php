@@ -1,6 +1,6 @@
 <?php
 include_once('conexion.php');
-session_start(); // Iniciar sesión para mostrar mensajes
+session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $Email = $_POST['email'];
@@ -12,9 +12,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    $Pass = md5($Password); // Convertir la contraseña a MD5
+    $Pass = md5($Password);
 
-    // Consultar en la base de datos
     $sql = "SELECT nombre_usuario, rol FROM usuarios WHERE email_usuario='$Email' AND password_usuario='$Pass'";
     $result = $conn->query($sql);
 
@@ -23,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['Nombre'] = $row['nombre_usuario'];
         $_SESSION['Id'] = $row['rol'];
 
-        header("Location: index.php"); // Redirigir si es correcto
+        header("Location: index.php");
         exit();
     } else {
         $_SESSION['error'] = "Email o contraseña incorrectos. Inténtalo de nuevo.";

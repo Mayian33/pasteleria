@@ -32,14 +32,14 @@
                 <form action="loginInsert.php" method="post">
                     <label for="email">Email:</label>
                     <input type="email" id="email" name="email" required>
-                    
+
                     <label for="password">Contraseña:</label>
                     <input type="password" id="password" name="password" required>
-                    
-                    <button type="submit">Iniciar sesión</button>
+
+                    <button type="submit" class="cta-btn text">Iniciar sesión</button>
                 </form>
 
-                <p>¿No tienes cuenta? <a class="login_option" href="registro.php">Regístrate aquí</a></p>
+                <p>¿No tienes cuenta? <a class="log_option" href="registro.php">Regístrate aquí</a></p>
             </div>
         </div>
     </div>

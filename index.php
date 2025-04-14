@@ -32,7 +32,7 @@ include_once('conexion.php');
             <div class="content-card">
                 <div class="text-content">
                     <h1 class="title">Dulce<br />&amp;<span>Pasión</span></h1>
-                    <p>Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia
+                    <p class="common-text">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia
                         consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</p>
                     <a class="cta-btn" href="#">
                         Compra Online
@@ -52,7 +52,7 @@ include_once('conexion.php');
                 <div class="content-info">
                     <h2 class="regular-title subtitle-info">Sobre mi</h2>
                     <h1 class="subtitle-text title-info">El <span>Sabor</span> Que necesitas, para tu placer.</h1>
-                    <p>At Bakery Co., we believe that every day deserves a little sweetness. Our artisan bakery is your
+                    <p class="common-text">At Bakery Co., we believe that every day deserves a little sweetness. Our artisan bakery is your
                         one-stop destination for baked treats that burst with flavor and melt in your mouth. With a
                         passion
                         for
@@ -66,43 +66,44 @@ include_once('conexion.php');
         </section>
 
         <!-- CARDS -->
+        <?php
+        $sql = "SELECT id_categ, nombre_categ, descripcion_categ FROM categorias";
+        $result = $conn->query($sql);
 
-        <div class="cards-title">
+        if ($result->num_rows > 0) {
+            echo '<div class="cards-title">
             <h1 class="title-text subtitle-text"> <span>Delicias Caseras:</span> El Sabor de lo Hecho con Amor</h1>
-            <p class="text">Un catálogo de productos frescos y auténticos para endulzar tus momentos</p>
-        </div>
+            <p class="common-text">Un catálogo de productos frescos y auténticos para endulzar tus momentos</p>
+          </div>';
+            echo '<div class="cards-wrapper">';
 
-        <div class="cards-wrapper">
-            <div class="card-wrapper">
-                <div class="card-1 card-object card-object-hf"><a class="face front" href="#">
+            // Recorre cada producto y genera una card
+            while ($row = $result->fetch_assoc()) {
+                $nombre_categ = $row['nombre_categ'];
+                $descripcion_categ = $row['descripcion_categ'];
+
+                echo '<div class="card-wrapper">
+                <div class="card-' . htmlspecialchars($row['id_categ']) . ' card-object card-object-hf">
+                    <a class="face front" href="catalogue.php#">
                         <div class="title-wrapper">
-                            <div class="card-font">Ponche</div>
-                            <div class="card-font-text">Sabor casero</div>
+                            <div class="card-font">' . htmlspecialchars($nombre_categ) . '</div>
+                            <div class="card-font-text common-text">' . htmlspecialchars($descripcion_categ) . '</div>
                         </div>
-                    </a></div>
-            </div>
-            <div class="card-wrapper">
-                <div class="card-2 card-object card-object-hf"><a class="face front" href="#">
-                        <div class="title-wrapper">
-                            <div class="card-font">Tartas</div>
-                            <div class="card-font-text">Pura delicia</div>
-                        </div>
-                    </a></div>
-            </div>
-            <div class="card-wrapper">
-                <div class="card-3 card-object card-object-hf"><a class="face front" href="#">
-                        <div class="title-wrapper">
-                            <div class="card-font">Bizcochos</div>
-                            <div class="card-font-text">Bocado perfecto</div>
-                        </div>
-                    </a></div>
-            </div>
-        </div>
-        <div class="cta-catalogue">
+                    </a>
+                </div>
+              </div>';
+            }
+
+            echo '</div>';
+            echo '<div class="cta-catalogue">
             <a class="cta-btn" href="#">
                 Ver catálogo completo
             </a>
-        </div>
+          </div>';
+        } else {
+            echo "No hay productos disponibles.";
+        }
+        ?>
 
         <!-- SECCION PERSONALIZACION -->
         <section id="personalization" class="personalization-section">
@@ -110,8 +111,8 @@ include_once('conexion.php');
                 <img class="img-personalization" src="./assets/img/principal/principal-img.jpg">
                 <div class="personalization-content">
                     <h2 class="regular-title subtitle-perso">Personalización</h2>
-                    <h1 class="subtitle-text title-perso">Dulces <span>Personalizados</span> para tus momentos especiales</h1>
-                    <p>¿Quieres sorprender a alguien con un regalo único y especial? En Bróllin Pastelería, creamos
+                    <h1 class="subtitle-text title-info">Dulces <span>Personalizados</span> para tus momentos especiales</h1>
+                    <p class="common-text">¿Quieres sorprender a alguien con un regalo único y especial? En Bróllin Pastelería, creamos
                         dulces personalizados para que celebres tus momentos más especiales </p>
                     <br>
                     <a class="cta-btn" href="#">Personalizar ahora</a>
@@ -127,11 +128,11 @@ include_once('conexion.php');
                 </div>
 
                 <div class="footer-text">
-                    <p class="text">Endulzando tus días con cada creación casera.
-                    <div class="frase">
+
+                    <div class="frase common-text">
+                        <p>Endulzando tus días con cada creación casera.</p>
                         <b>¡Gracias por confiar en nosotros!</b>
                     </div>
-                    </p>
                 </div>
 
                 <div class="logos">
@@ -140,7 +141,7 @@ include_once('conexion.php');
                     <img src="./assets/img/logos/whatsapp.png" alt="logo3">
                 </div>
 
-                <div class="footer-info">
+                <div class="footer-info common-text">
                     <p>© 2025 - Bróllin | pasteleria</p>
                     <div class="footer-policies">
                         <p>Política de Privacidad</p>

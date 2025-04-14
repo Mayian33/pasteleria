@@ -14,7 +14,7 @@ include_once('conexion.php');
 
     <link rel="preload" href="css/catalogue.css" as="style" />
     <link href="css/catalogue.css" rel="stylesheet" />
-    
+
     <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
@@ -31,17 +31,20 @@ include_once('conexion.php');
             <h1 class="subtitle-text title-info">Catálogo de Productos <span>Caseros</span></h1>
         </div>
 
+        <div class="cta-catalogue btn-wrapper">
+            <a class="cta-btn common-text" href="./personalization.php">Personalización</a>
+            <a class="cta-btn common-text donation">
+                Donaciones
+                <img src="./assets/img/icons/donation.png" alt="Icono de donaciones" class="icono">
+            </a>
+        </div>
+
         <div class="cards-wrapper">
             <?php
- 
-
-            // Obtener los productos de la base de datos
             $sql = "SELECT id_prod, nombre_prod, descripcion_prod, categoria, precio, imagen FROM productos";
             $result = $conn->query($sql);
 
-            // Verificar si hay resultados
             if ($result->num_rows > 0) {
-                // Inicializar un array para almacenar productos por categoría
                 $productosPorCategoria = [];
 
                 // Mapeo de categorías
@@ -51,7 +54,6 @@ include_once('conexion.php');
                     '3' => 'Ponche'
                 ];
 
-                // Recorrer los resultados y agruparlos por categoría
                 while ($row = $result->fetch_assoc()) {
                     $categoria = $row['categoria'];
                     // Convertir el número de categoría a texto
@@ -76,7 +78,7 @@ include_once('conexion.php');
                     foreach ($productos as $producto) {
                         echo "<div class='card-wrapper'>";
                         echo "<div class='card-1 card-object card-object-hf'>";
-                        echo "<a class='face front' href='#' style='background-image: url(" . htmlspecialchars($producto['imagen']) . ");'>";
+                        echo "<a class='face front' href='compra.php?id=" . $producto['id_prod'] . "' style='background-image: url(" . htmlspecialchars($producto['imagen']) . ");'>";
                         echo "<div class='title-wrapper'>";
                         echo "<div class='card-font'>" . htmlspecialchars($producto['nombre_prod']) . "</div>";
                         echo "<div class='card-font-text'>" . htmlspecialchars($producto['descripcion_prod']) . "</div>";
@@ -95,3 +97,12 @@ include_once('conexion.php');
             }
 
             $conn->close();
+            ?>
+        </div> <!-- Fin cards-wrapper -->
+    </section> <!-- Fin sección catálogo -->
+
+    <!-- SCRIPTS -->
+    <script src="js/catalogue.js"></script>
+</body>
+
+</html>
