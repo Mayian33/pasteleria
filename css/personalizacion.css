@@ -49,6 +49,12 @@
     border-color: var(--hover);
 }
 
+.info-text {
+    align-self: flex-start;
+    text-align: left;
+    color: var(--details);
+  }
+  
 
 .formulario-personalizacion {
     display: flex;

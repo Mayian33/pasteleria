@@ -48,7 +48,7 @@ $conn->close();
 
             <?php if ($result2->num_rows > 0): ?>
                 <form id="mainForm" class="formulario-personalizacion">
-                    <p class="common-text">Elige entre las siguientes opciones:</p>
+                    <p class="common-text info-text"><b> Elige entre las siguientes opciones:</b></p>
 
                     <!-- Sabor -->
                     <div class="form-group">
@@ -107,8 +107,8 @@ $conn->close();
         </div>
     </section>
 
-        <!-- SCRIPTS -->
-        <script src="js/catalogue.js"></script>
+    <!-- SCRIPTS -->
+    <script src="js/catalogue.js"></script>
 </body>
 
 </html>
