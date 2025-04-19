@@ -1,19 +1,26 @@
 <?php
 include_once('conexion.php');
 
+// Consultas
 $sql1 = "SELECT * FROM sabor";
-$result1 = $conn->query($sql1);
-
 $sql2 = "SELECT * FROM masa";
-$result2 = $conn->query($sql2);
-
 $sql3 = "SELECT * FROM tamano";
-$result3 = $conn->query($sql3);
-
 $sql4 = "SELECT * FROM decoracion";
+
+$result1 = $conn->query($sql1);
+$sabores = $result1->fetch_all(MYSQLI_ASSOC);
+
+$result2 = $conn->query($sql2);
+$masas = $result2->fetch_all(MYSQLI_ASSOC);
+
+$result3 = $conn->query($sql3);
+$tamanos = $result3->fetch_all(MYSQLI_ASSOC);
+
 $result4 = $conn->query($sql4);
+$decoraciones = $result4->fetch_all(MYSQLI_ASSOC);
 
 $conn->close();
+session_start();
 ?>
 
 <!DOCTYPE html>
@@ -35,71 +42,72 @@ $conn->close();
 
 <body>
 
-    <!-- NAV -->
     <header>
         <?php echo $Menu ?>
     </header>
 
-    <!-- CONTENIDO PERSONALIZACIÓN -->
     <section class="personalization-wrapper">
         <div class="personalization-content">
             <h1 class="subtitle-text title-info">Personalización</h1>
             <p class="common-text">¿Qué te apetece hoy?</p>
 
-            <?php if ($result2->num_rows > 0): ?>
-                <form id="mainForm" class="formulario-personalizacion">
+            <!-- Mostrar errores si existen -->
+            <?php if (isset($_SESSION['error'])): ?>
+                <p class="error-msg"><?= $_SESSION['error'] ?></p>
+                <?php unset($_SESSION['error']); ?>
+            <?php endif; ?>
+
+            <?php if (count($masas) > 0): ?>
+                <form id="mainForm" class="formulario-personalizacion" action="personalizationInsert.php" method="POST">
                     <p class="common-text info-text"><b> Elige entre las siguientes opciones:</b></p>
 
                     <!-- Sabor -->
                     <div class="form-group">
                         <label class="common-text" for="saborSelect">Sabor:</label>
-                        <select id="saborSelect">
+                        <select name="sabor" id="saborSelect">
                             <option value="">Elige un sabor</option>
-                            <?php while ($row1 = $result1->fetch_assoc()): ?>
-                                <option value="<?= $row1['id_sabor'] ?>"><?= $row1['nombre_sabor'] ?></option>
-                            <?php endwhile; ?>
+                            <?php foreach ($sabores as $sabor): ?>
+                                <option value="<?= $sabor['id_sabor'] ?>"><?= $sabor['nombre_sabor'] ?></option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
 
                     <!-- Masa -->
                     <div class="form-group">
                         <label class="common-text" for="masaSelect">Masa:</label>
-                        <select id="masaSelect">
+                        <select name="masa" id="masaSelect">
                             <option value="">Elige una masa</option>
-                            <?php while ($row2 = $result2->fetch_assoc()): ?>
-                                <option value="<?= $row2['id_masa'] ?>"><?= $row2['nombre_masa'] ?></option>
-                            <?php endwhile; ?>
+                            <?php foreach ($masas as $masa): ?>
+                                <option value="<?= $masa['id_masa'] ?>"><?= $masa['nombre_masa'] ?></option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
 
                     <!-- Tamaño -->
                     <div class="form-group">
                         <label class="common-text" for="tamanoSelect">Tamaño:</label>
-                        <select id="tamanoSelect">
+                        <select name="tamano" id="tamanoSelect">
                             <option value="">Elige un tamaño</option>
-                            <?php while ($row3 = $result3->fetch_assoc()): ?>
-                                <option value="<?= $row3['id_tamano'] ?>"><?= $row3['nombre_tamano'] ?></option>
-                            <?php endwhile; ?>
+                            <?php foreach ($tamanos as $tamano): ?>
+                                <option value="<?= $tamano['id_tamano'] ?>"><?= $tamano['nombre_tamano'] ?></option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
 
                     <!-- Decoración -->
                     <div class="form-group">
                         <label class="common-text" for="decoracionSelect">Decoración:</label>
-                        <select id="decoracionSelect">
+                        <select name="decoracion" id="decoracionSelect">
                             <option value="">Elige una decoración</option>
-                            <?php while ($row4 = $result4->fetch_assoc()): ?>
-                                <option value="<?= $row4['id_decoracion'] ?>"><?= $row4['nombre_decoracion'] ?></option>
-                            <?php endwhile; ?>
+                            <?php foreach ($decoraciones as $deco): ?>
+                                <option value="<?= $deco['id_decoracion'] ?>"><?= $deco['nombre_decoracion'] ?></option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
 
-
                     <div class="form-buttons">
-                        <a class="cta-btn" onclick="redirigirComprar()">Comprar</a>
-                        <a class="cta-btn" onclick="redirigirAnadir()">Añadir</a>
+                        <button type="submit" class="cta-btn">Añadir</button>
                     </div>
-
                 </form>
             <?php else: ?>
                 <p class="common-text">No hay tipos de productos disponibles.</p>
@@ -107,8 +115,7 @@ $conn->close();
         </div>
     </section>
 
-    <!-- SCRIPTS -->
-    <script src="js/catalogue.js"></script>
-</body>
+    <!-- <script src="js/catalogue.js"></script> -->
 
+</body>
 </html>
