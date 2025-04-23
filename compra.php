@@ -54,7 +54,7 @@ if (isset($_GET['id'])) {
             <h1 class="title"><?php echo htmlspecialchars($producto['nombre_prod']); ?></h1>
             <p><?php echo htmlspecialchars($producto['descripcion_prod']); ?></p>
             <h1><?php echo htmlspecialchars($producto['precio']); ?> €</h1>
-            <a class="cta-btn" href="#">Añadir al carrito</a>
+            <a class="cta-btn" href="carrito.php">Añadir al carrito</a>
         </div>
     </div>
 

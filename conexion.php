@@ -2,7 +2,6 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Iniciar sesión solo si no está activa
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
@@ -18,36 +17,29 @@ if ($conn->connect_error) {
     die("Conexión fallida: " . $conn->connect_error);
 }
 
-// Inicializar variables
 $Exist = false;
 $Name = "";
 $Cerrar = "";
-$Menu = '';
 
-// Asignar el rol en base a la sesión
+// Rol
+$Rol_trab = "Invitado";
 if (isset($_SESSION["rol"])) {
-    switch ($_SESSION["rol"]) {
-        case 1:
-            $Rol_trab = "Admin";
-            break;
-        case 2:
-            $Rol_trab = "Cliente";
-            break;
-        default:
-            $Rol_trab = "Invitado"; // Opción por defecto
-            break;
-    }
+    $Rol_trab = ($_SESSION["rol"] == 1) ? "Admin" : (($_SESSION["rol"] == 2) ? "Cliente" : "Invitado");
 }
 
-// Verificar si existe un nombre en la sesión
-if (isset($_SESSION["Name"]) && $_SESSION["Name"] != "") {
+// Usuario logueado
+if (!empty($_SESSION["Name"])) {
     $Exist = true;
     $Name = $_SESSION["Name"];
-    $Cerrar = '<a class="cta-btn btn-menu nav-link" href="cerrarsesion.php">Cerrar sesión</a>'; // Si está logueado, mostrar Cerrar sesión
+    $Cerrar = '<a class="cta-btn btn-menu nav-link" href="cerrarsesion.php">Cerrar sesión</a>';
 } else {
-    // Si no está logueado, mostrar el enlace de Iniciar sesión
     $Cerrar = '<a class="cta-btn btn-menu nav-link" href="login.php">Iniciar sesión <img src="./assets/img/icons/login.png" alt="Icono de usuario" class="icono"></a>';
 }
+
+// Opcional: cerrar conexión si ya no la usas
+// $conn->close();
+
+
 
 // Menú dinámico
 $Menu = '
