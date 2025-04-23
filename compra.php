@@ -78,7 +78,7 @@ if (isset($_GET['id'])) {
 
             echo '<div class="card-wrapper">
                     <div class="card-' . htmlspecialchars($row['id_categ']) . ' card-object card-object-hf">
-                        <a class="face front" href="catalogue.php#' . htmlspecialchars($slug) . '">
+                        <a class="face front" href="catalogue.php#">
                             <div class="title-wrapper">
                                 <div class="card-font">' . htmlspecialchars($nombre_categ) . '</div>
                                 <div class="card-font-text">' . htmlspecialchars($descripcion_categ) . '</div>

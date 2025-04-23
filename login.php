@@ -1,5 +1,10 @@
+<?php
+// Iniciar la sesión para mostrar los errores
+session_start();
+?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -21,11 +26,11 @@
                 <h1 class="subtitle title-midium">Iniciar sesión</h1>
                 <h2 class="text-midium">Login</h2>
 
+                <!-- Mostrar mensaje de error si existe -->
                 <?php
-                session_start();
                 if (isset($_SESSION['error'])) {
                     echo '<p class="error_message">' . $_SESSION['error'] . '</p>';
-                    unset($_SESSION['error']);
+                    unset($_SESSION['error']);  // Limpiar el mensaje después de mostrarlo
                 }
                 ?>
 

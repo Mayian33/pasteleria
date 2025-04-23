@@ -1,5 +1,33 @@
 <?php
 include_once('conexion.php');
+
+// Inicializar variables
+$Exist = false;
+$Name = "";
+$Hello = "";
+$Cerrar = "";
+$rolMensaje = "";
+
+// Verificar si existe un nombre en la sesión
+if (isset($_SESSION["Name"]) && $_SESSION["Name"] != "") {
+    $Exist = true;
+    $Name = $_SESSION["Name"];
+    $Hola = "Bienvenida " . $Name . "</br>";
+    $Cerrar = '<a class="nav-link" href="CerrarSesion.php">Cerrar sesión</a>';
+
+    // Verificar el rol del usuario y mostrar el mensaje correspondiente
+    if (isset($_SESSION['Id_Rol'])) {
+        if ($_SESSION['Id_Rol'] == 1) {
+            $rolMensaje = "Bienvenido Admin";
+        } elseif ($_SESSION['Id_Rol'] == 2) {
+            $rolMensaje = "Bienvenido Cliente";
+        } else {
+            $rolMensaje = "Bienvenido Invitado";
+        }
+    }
+} else {
+    $rolMensaje = "Bienvenido, por favor inicie sesión.";
+}
 ?>
 
 <!DOCTYPE html>

@@ -1,32 +1,30 @@
-<?php
-include_once('conexion.php');
-session_start();
+<?php 
+include_once 'conexion.php'; // Incluir el archivo de conexión a la base de datos
 
+// Verificar si se enviaron las credenciales a través del formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $Email = $_POST['email'];
-    $Password = $_POST['password'];
-
-    if (empty($Email) || empty($Password)) {
-        $_SESSION['error'] = "Por favor, ingresa tu email y contraseña.";
-        header("Location: login.php");
-        exit();
-    }
+    $Password = md5($_POST['password']);  
 
     $Pass = md5($Password);
 
-    $sql = "SELECT nombre_usuario, rol FROM usuarios WHERE email_usuario='$Email' AND password_usuario='$Pass'";
+    // Consultar la base de datos para verificar el usuario
+    $sql = "SELECT nombre_usuario, rol FROM usuarios WHERE email_usuario='$Email' AND password_usuario='$Password'";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
+        // Si las credenciales son correctas, iniciar sesión
         $row = $result->fetch_assoc();
-        $_SESSION['Nombre'] = $row['nombre_usuario'];
-        $_SESSION['Id'] = $row['rol'];
+        $_SESSION['Name'] = $row['nombre_usuario'];
+        $_SESSION['Id_Rol'] = $row['rol'];
 
+        // Redirigir a la página principal
         header("Location: index.php");
         exit();
     } else {
-        $_SESSION['error'] = "Email o contraseña incorrectos. Inténtalo de nuevo.";
-        header("Location: login.php");
+        // Si las credenciales son incorrectas, guardar el error en la sesión
+        $_SESSION['error'] = "Usuario o contraseña incorrectos.";
+        header("Location: login.php"); // Redirigir al login
         exit();
     }
 }

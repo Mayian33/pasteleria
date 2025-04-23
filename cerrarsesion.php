@@ -1,6 +1,6 @@
 <?php
-session_start(); //Iniciar
-session_unset(); //Borrar sesion
-header("Location:login.php"); //Redireccion
+session_start(); 
+session_unset(); 
+header("Location:index.php"); 
 exit();
 ?>
