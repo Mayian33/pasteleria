@@ -1,31 +1,35 @@
-<?php 
-include_once 'conexion.php'; // Incluir el archivo de conexión a la base de datos
+<?php
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
-// Verificar si se enviaron las credenciales a través del formulario
+session_start();
+include_once 'conexion.php';
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $Email = $_POST['email'];
-    $Password = md5($_POST['password']);  
+    $Password = md5($_POST['password']);  // Solo una vez md5
 
-    $Pass = md5($Password);
+    // Usamos prepare para evitar inyecciones SQL
+    $sql = "SELECT id_usuario, nombre_usuario, rol FROM usuarios WHERE email_usuario='$Email' AND password_usuario='$Password'";
 
-    // Consultar la base de datos para verificar el usuario
-    $sql = "SELECT nombre_usuario, rol FROM usuarios WHERE email_usuario='$Email' AND password_usuario='$Password'";
-    $result = $conn->query($sql);
+    $stmt = $conn->prepare($sql);  // Asegúrate de que esto sea preparado
+    $stmt->execute();
+    $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        // Si las credenciales son correctas, iniciar sesión
         $row = $result->fetch_assoc();
+
+        // Guardar datos en la sesión
+        $_SESSION['usuario_id'] = $row['id_usuario'];
         $_SESSION['Name'] = $row['nombre_usuario'];
         $_SESSION['Id_Rol'] = $row['rol'];
 
-        // Redirigir a la página principal
+        // Redirigir al index (o a donde quieras)
         header("Location: index.php");
         exit();
     } else {
-        // Si las credenciales son incorrectas, guardar el error en la sesión
         $_SESSION['error'] = "Usuario o contraseña incorrectos.";
-        header("Location: login.php"); // Redirigir al login
+        header("Location: login.php");
         exit();
     }
 }
-?>
