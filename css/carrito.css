@@ -55,6 +55,96 @@ margin-top: 2rem;
 color: var(--secondary);
 }
 
+/* Estilo del carrito */
+.carrito {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.producto {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.producto img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.info span {
+  font-size: 14px;
+}
+
+.precio {
+  font-weight: bold;
+  color: #333;
+}
+
+/* Diseño minimalista para el control de cantidad */
+.cantidad {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cantidad button {
+  width: 30px;
+  height: 30px;
+  font-size: 20px;
+  background-color: transparent;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.cantidad button:hover {
+  background-color: #f0f0f0;
+}
+
+.cantidad button:focus {
+  outline: none;
+}
+
+.cantidad input {
+  display: none;
+}
+
+/* Estilo para el total */
+.total {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 20px;
+  color: #333;
+}
+
+/* eliminar */
+.papelera {
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #888;
+  padding: 0;
+  margin-left: 10px;
+}
+
+.papelera:hover {
+  color: #e74c3c;
+}
+
+
 @media (max-width: 768px) {
 .producto {
   flex-direction: column;

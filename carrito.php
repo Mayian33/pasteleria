@@ -1,10 +1,14 @@
 <?php
-session_start();
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
+session_start();  // Esto siempre debe estar al principio de cada archivo PHP que utilice la sesión
 include_once('conexion.php');
 
+// Verificar si el usuario está logueado
 if (!isset($_SESSION['usuario_id'])) {
-    echo "No estás logueado.";
-    exit;
+    header("Location: login.php");  // Si no está logueado, redirige a login
+    exit();
 }
 
 $usuario_id = $_SESSION['usuario_id'];
@@ -25,7 +29,6 @@ $stmt = $conn->prepare("SELECT p.id_pedido AS id_pedido,
 $stmt->bind_param("i", $usuario_id);
 $stmt->execute();
 $result = $stmt->get_result();
-
 ?>
 
 <!DOCTYPE html>
@@ -34,7 +37,7 @@ $result = $stmt->get_result();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Carrito</title>
 
     <link rel="preload" href="css/estilos-comunes.css" as="style" />
     <link href="css/estilos-comunes.css" rel="stylesheet" />
@@ -44,7 +47,7 @@ $result = $stmt->get_result();
 </head>
 
 <body>
-    <h2 class="title">Tu Carrito</h2>
+    <h2>Tu Carrito</h2>
     <div class="carrito">
         <?php
         $total = 0;
@@ -59,7 +62,18 @@ $result = $stmt->get_result();
                     echo '<span>' . $pedido['producto_nombre'] . '</span>';
                     echo '<span class="precio">€' . number_format($pedido['producto_precio'], 2) . '</span>';
                     echo '</div>';
-                    echo '<span>Cantidad: 1</span>';
+                    echo '
+                    <div class="cantidad">
+                        <button onclick="cambiarCantidad(this, -1)">−</button>
+                        <span class="cantidad-numero">1</span>
+                        <input type="hidden" value="1">
+                        <button onclick="cambiarCantidad(this, 1)">+</button>
+                        <form method="POST" action="eliminar_carrito.php" onsubmit="return confirm(\'¿Eliminar este producto?\');">
+                            <input type="hidden" name="id_pedido" value="' . $pedido['id_pedido'] . '">
+                            <button type="submit" class="papelera">🗑️</button>
+                        </form>
+                    </div>';
+
                     $total += $pedido['producto_precio'];
                 } else {
                     echo '<img src="ruta/img/personalizado.jpg" alt="Personalizado">';
@@ -68,7 +82,17 @@ $result = $stmt->get_result();
                     echo '<span>Masa: ' . $pedido['masa'] . ' | Decoración: ' . $pedido['decoracion'] . '</span>';
                     echo '<span class="precio">€' . number_format($pedido['personalizacion_precio'], 2) . '</span>';
                     echo '</div>';
-                    echo '<span>Cantidad: 1</span>';
+                    echo '
+                    <div class="cantidad">
+                        <button onclick="cambiarCantidad(this, -1)">−</button>
+                        <span class="cantidad-numero">1</span>
+                        <input type="hidden" value="1">
+                        <button onclick="cambiarCantidad(this, 1)">+</button>
+                        <form method="POST" action="eliminar_carrito.php" onsubmit="return confirm(\'¿Eliminar este producto?\');">
+                            <input type="hidden" name="id_pedido" value="' . $pedido['id_pedido'] . '">
+                            <button type="submit" class="papelera">🗑️</button>
+                        </form>
+                    </div>';;
                     $total += $pedido['personalizacion_precio'];
                 }
 
@@ -82,6 +106,8 @@ $result = $stmt->get_result();
         ?>
     </div>
 
+    <script src="js/carrito.js"></script>
+    </script>
 
 </body>
 
