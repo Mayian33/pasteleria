@@ -1,37 +1,56 @@
 <?php
-include_once('conexion.php');
 session_start();
+include_once('conexion.php');
 
-// Verificar que el formulario haya sido enviado
+// Verificar si el usuario está logueado
+if (!isset($_SESSION['usuario_id'])) {
+    header("Location: login.php");
+    exit();
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Obtener los valores del formulario
-    $sabor = $_POST['sabor'];
-    $masa = $_POST['masa'];
-    $tamano = $_POST['tamano'];
-    $decoracion = $_POST['decoracion'];
+    $sabor = intval($_POST['sabor']);
+    $masa = intval($_POST['masa']);
+    $tamano = intval($_POST['tamano']);
+    $decoracion = intval($_POST['decoracion']);
 
-    // Verificar que no haya campos vacíos
     if (empty($sabor) || empty($masa) || empty($tamano) || empty($decoracion)) {
         $_SESSION['error'] = "Por favor, selecciona todas las opciones.";
-        header("Location: personalization.php"); // Redirigir de nuevo al formulario
+        header("Location: personalization.php");
         exit();
     }
 
-    // Preparar la consulta para insertar los datos en la base de datos
-    $sql = "INSERT INTO personalizacion (sabor_personalizacion, masa_personalizacion, tamano_personalizacion, decoracion_personalizacion) 
-            VALUES ('$sabor', '$masa', '$tamano', '$decoracion')";
+    $usuario_id = $_SESSION['usuario_id'];
+    $fecha = date("Y-m-d H:i:s");
 
-    if ($conn->query($sql) === TRUE) {
-        // Si la inserción es exitosa, redirigir a otra página
-        header("Location: carrito.php"); // Cambiar a la página de confirmación
+    // Aquí hacemos una sola consulta para traer todos los precios
+    $sql = "
+        SELECT 
+            (SELECT precio_masa FROM masa WHERE id_masa = ?) +
+            (SELECT precio_tamano FROM tamano WHERE id_tamano = ?) +
+            (SELECT precio_decoracion FROM decoracion WHERE id_decoracion = ?) +
+            (SELECT precio_sabor FROM sabor WHERE id_sabor = ?) AS precio_total
+    ";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("iiii", $masa, $tamano, $decoracion, $sabor);
+    $stmt->execute();
+    $stmt->bind_result($precio_total);
+    $stmt->fetch();
+    $stmt->close();
+
+    // Insertar todo en la tabla personalizacion
+    $stmt = $conn->prepare("INSERT INTO personalizacion (usuario_personalizacion, sabor_personalizacion, masa_personalizacion, tamano_personalizacion, decoracion_personalizacion, fecha_personalizacion, precio_personalizacion) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("iiisssd", $usuario_id, $sabor, $masa, $tamano, $decoracion, $fecha, $precio_total);
+
+    if ($stmt->execute()) {
+        header("Location: carrito.php");
         exit();
     } else {
-        // En caso de error, mostrar mensaje
-        $_SESSION['error'] = "Hubo un problema al insertar los datos: " . $conn->error;
-        header("Location: personalization.php"); // Redirigir de nuevo al formulario
+        $_SESSION['error'] = "Hubo un problema al insertar los datos.";
+        header("Location: personalization.php");
         exit();
     }
 }
 
 $conn->close();
-?>
