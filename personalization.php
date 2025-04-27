@@ -20,7 +20,6 @@ $result4 = $conn->query($sql4);
 $decoraciones = $result4->fetch_all(MYSQLI_ASSOC);
 
 $conn->close();
-session_start();
 ?>
 
 <!DOCTYPE html>

@@ -124,7 +124,7 @@ include_once('conexion.php');
 
             echo '</div>';
             echo '<div class="cta-catalogue">
-            <a class="cta-btn" href="#">
+            <a class="cta-btn" href="catalogue.php">
                 Ver catálogo completo
             </a>
           </div>';
@@ -143,7 +143,7 @@ include_once('conexion.php');
                     <p class="common-text">¿Quieres sorprender a alguien con un regalo único y especial? En Bróllin Pastelería, creamos
                         dulces personalizados para que celebres tus momentos más especiales </p>
                     <br>
-                    <a class="cta-btn" href="#">Personalizar ahora</a>
+                    <a class="cta-btn" href="personalization.php">Personalizar ahora</a>
                 </div>
             </div>
         </section>
