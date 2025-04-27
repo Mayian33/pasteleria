@@ -61,8 +61,7 @@ $isLoggedIn = isset($_SESSION['usuario_id']) ? 'true' : 'false';
 
             <!-- Aquí añadimos un data-attribute para pasar la información de sesión al JavaScript -->
             <div id="user-session" data-logged-in="<?php echo $isLoggedIn; ?>"></div>
-            <a class="cta-btn" id="add-to-cart">Añadir al carrito</a>
-
+            <a class="cta-btn" id="add-to-cart" href="carritoInsert.php?id=<?php echo $id; ?>">Añadir al carrito</a>
         </div>
     </div>
 
