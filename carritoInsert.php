@@ -2,12 +2,11 @@
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-session_start();  // Esto siempre debe estar al principio de cada archivo PHP que utilice la sesión
+session_start();
 include_once('conexion.php');
 
-// Verificar si el usuario está logueado
 if (!isset($_SESSION['usuario_id'])) {
-    header("Location: login.php");  // Si no está logueado, redirige a login
+    header("Location: login.php");
     exit();
 }
 
