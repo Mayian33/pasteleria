@@ -39,18 +39,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->fetch();
     $stmt->close();
 
+    $imagen = '/assets/img/catalogue/personalizacion/personalizacion.jpg';
+
     // Insertar todo en la tabla personalizacion
-    $stmt = $conn->prepare("INSERT INTO personalizacion (usuario_personalizacion, sabor_personalizacion, masa_personalizacion, tamano_personalizacion, decoracion_personalizacion, fecha_personalizacion, precio_personalizacion) VALUES (?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("iiisssd", $usuario_id, $sabor, $masa, $tamano, $decoracion, $fecha, $precio_total);
+    $stmt = $conn->prepare("INSERT INTO personalizacion (usuario_personalizacion, sabor_personalizacion, masa_personalizacion, tamano_personalizacion, decoracion_personalizacion, fecha_personalizacion, precio_personalizacion, imagen_personalizacion) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("iiisssd", $usuario_id, $sabor, $masa, $tamano, $decoracion, $fecha, $precio_total, $imagen);
 
     if ($stmt->execute()) {
-        header("Location: carrito.php");
-        exit();
+        $personalizacion_id = $conn->insert_id;
+
+        $stmt = $conn->prepare("INSERT INTO pedidos (usuario_pedido, personalizacion_id, fecha_pedido, total) VALUES (?, ?, ?, ?)");
+        $stmt->bind_param("iisi", $usuario_id, $personalizacion_id, $fecha, $precio_total);
+
+        if ($stmt->execute()) {
+            header("Location: carrito.php");
+            exit();
+        } else {
+            $_SESSION['error'] = "Hubo un problema al crear el pedido.";
+            header("Location: personalization.php");
+            exit();
+        }
     } else {
-        $_SESSION['error'] = "Hubo un problema al insertar los datos.";
+        $_SESSION['error'] = "Hubo un problema al insertar los datos de personalización.";
         header("Location: personalization.php");
         exit();
     }
 }
 
 $conn->close();
+?>

@@ -6,7 +6,7 @@ session_start();
 include_once('conexion.php');
 
 if (!isset($_SESSION['usuario_id'])) {
-    header("Location: login.php"); 
+    header("Location: login.php");
     exit();
 }
 
@@ -17,11 +17,16 @@ $stmt = $conn->prepare("SELECT p.id_pedido AS id_pedido,
                                pr.precio AS producto_precio,
                                pr.imagen AS producto_imagen,
                                pm.precio_personalizacion AS personalizacion_precio,
+                               pm.imagen_personalizacion AS imagen_personalizacion,
+                               s.nombre_sabor AS sabor,
+                               t.nombre_tamano AS tamano,
                                m.nombre_masa AS masa,
                                d.nombre_decoracion AS decoracion
                         FROM pedidos p
                         LEFT JOIN productos pr ON p.producto_id = pr.id_prod
                         LEFT JOIN personalizacion pm ON p.personalizacion_id = pm.id_personalizacion
+                        LEFT JOIN sabor s ON pm.sabor_personalizacion = s.id_sabor
+                        LEFT JOIN tamano t ON pm.tamano_personalizacion = t.id_tamano
                         LEFT JOIN masa m ON pm.masa_personalizacion = m.id_masa
                         LEFT JOIN decoracion d ON pm.decoracion_personalizacion = d.id_decoracion
                         WHERE p.usuario_pedido = ?");
@@ -75,10 +80,10 @@ $result = $stmt->get_result();
 
                     $total += $pedido['producto_precio'];
                 } else {
-                    echo '<img src="ruta/img/personalizado.jpg" alt="Personalizado">';
+                    echo '<img src="'. $pedido['imagen_personalizacion'].'" >';
                     echo '<div class="info">';
                     echo '<span>Personalizado</span>';
-                    echo '<span>Masa: ' . $pedido['masa'] . ' | Decoración: ' . $pedido['decoracion'] . '</span>';
+                    echo '<span>Sabor: ' . $pedido['sabor'] . ' | Masa: ' . $pedido['masa'] . ' | Tamaño: ' . $pedido['tamano'] . ' | Decoración: ' . $pedido['decoracion'] . '</span>';
                     echo '<span class="precio">€' . number_format($pedido['personalizacion_precio'], 2) . '</span>';
                     echo '</div>';
                     echo '

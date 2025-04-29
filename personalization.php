@@ -101,7 +101,7 @@ $conn->close();
                             <?php foreach ($decoraciones as $deco): ?>
                                 <option value="<?= $deco['id_decoracion'] ?>"><?= $deco['nombre_decoracion'] ?></option>
                             <?php endforeach; ?>
-                        </select>
+                        </select>   
                     </div>
 
                     <div class="form-buttons">
