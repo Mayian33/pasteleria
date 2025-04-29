@@ -20,7 +20,7 @@ if (isset($_GET['id'])) {
 }
 
 // Verifica si el usuario está logueado
-$isLoggedIn = isset($_SESSION['usuario_id']) ? 'true' : 'false';    
+$isLoggedIn = isset($_SESSION['usuario_id']) ? 'true' : 'false';
 ?>
 
 <!DOCTYPE html>

@@ -48,6 +48,11 @@ $result = $stmt->get_result();
 <body>
     <h2>Tu Carrito</h2>
     <div class="carrito">
+
+<div>
+    <a class="cta-btn" href="pedidos.php">Ver mis pedidos</a>
+</div>
+
         <?php
         $total = 0;
 
