@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Insertar todo en la tabla personalizacion
     $stmt = $conn->prepare("INSERT INTO personalizacion (usuario_personalizacion, sabor_personalizacion, masa_personalizacion, tamano_personalizacion, decoracion_personalizacion, fecha_personalizacion, precio_personalizacion, imagen_personalizacion) VALUES (?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("iiisssd", $usuario_id, $sabor, $masa, $tamano, $decoracion, $fecha, $precio_total, $imagen);
+    $stmt->bind_param("iiiisids", $usuario_id, $sabor, $masa, $tamano, $decoracion, $fecha, $precio_total, $imagen);
 
     if ($stmt->execute()) {
         $personalizacion_id = $conn->insert_id;
