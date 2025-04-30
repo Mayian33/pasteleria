@@ -18,12 +18,15 @@ $Sesion = '';
 $Carrito = '';
 $ExtraMenu = '';
 $rol = $_SESSION["rol"] ?? null;
-$name = $_SESSION["Name"] ?? '';
+$name = $_SESSION["nombre_usuario"] ?? '';
+$email = $_SESSION["email_usuario"] ?? '';
+$picture = $_SESSION["foto_usuario"] ?? '';
+
 
 // Si está logueado
 if (!empty($name)) {
     $Sesion = '<a class="cta-btn btn-menu" href="cerrarsesion.php">Cerrar sesión</a>';
-    
+
     // Mostrar carrito solo si no es admin
     if ($rol != 1) {
         $Carrito = '<a class="cta-btn btn-menu" href="carrito.php"><img src="./assets/img/icons/carrito.png" alt="Carrito"></a>';
@@ -34,8 +37,13 @@ if (!empty($name)) {
         $ExtraMenu = '<a class="cta-btn btn-menu" href="orders.php">Ver Pedidos</a>';
     }
 
+    // Mostrar foto (Google)
+    $Sesion = "<div class='user-info'>
+    <a class='cta-btn btn-menu' href='cerrarsesion.php'>Cerrar sesión</a>
+    <img src=\"" . htmlspecialchars($picture) . "\" alt='Foto de perfil' class='profile-img'>
+</div>";
 } else {
-    $Sesion = '<a class="cta-btn btn-menu" href="login.php"><span>Iniciar sesión</span> <img class="icono-carrito" src="./assets/img/icons/login.png" alt="Icono de sesion"></a>';
+    $Sesion = '<a class="cta-btn btn-menu" href="callback.php"><span>Iniciar sesión</span> <img class="icono-carrito" src="./assets/img/icons/login.png" alt="Icono de sesion"></a>';
 }
 
 // Menú completo
@@ -61,9 +69,8 @@ $Menu = '
                 <a href="#">Reseñas</a>
                 <a href="./personalization.php">Personalización</a>
                 <a href="#">Contacto</a>
-                ' . $Sesion . $Carrito . $ExtraMenu . '
+                '   . $ExtraMenu . $Carrito .  $Sesion . '
             </nav>
         </nav>
     </div>
 ';
-?>

@@ -1,16 +1,14 @@
 <?php
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-
 session_start();
 include_once('conexion.php');
 
-if (!isset($_SESSION['usuario_id'])) {
-    header("Location: login.php");
+if (!isset($_SESSION['usuario_id'])) {  // Usamos 'usuario_id' en vez de 'id_usuario'
+    echo "<script>alert('Por favor, inicia sesión para ver tu carrito.'); window.location.href='compra.php';</script>";
     exit();
 }
 
-$usuario_id = $_SESSION['usuario_id'];
+$usuario_id = $_SESSION['usuario_id'];  // Usamos 'usuario_id' aquí también
+
 
 $stmt = $conn->prepare("SELECT p.id_pedido AS id_pedido,
                                pr.nombre_prod AS producto_nombre,
@@ -85,7 +83,7 @@ $result = $stmt->get_result();
 
                     $total += $pedido['producto_precio'];
                 } else {
-                    echo '<img src="'. $pedido['imagen_personalizacion'].'" >';
+                    echo '<img src="' . $pedido['imagen_personalizacion'] . '" alt="Personalizado">';
                     echo '<div class="info">';
                     echo '<span>Personalizado</span>';
                     echo '<span>Sabor: ' . $pedido['sabor'] . ' | Masa: ' . $pedido['masa'] . ' | Tamaño: ' . $pedido['tamano'] . ' | Decoración: ' . $pedido['decoracion'] . '</span>';
@@ -116,7 +114,6 @@ $result = $stmt->get_result();
     </div>
 
     <script src="js/carrito.js"></script>
-    </script>
 
 </body>
 

@@ -1,16 +1,15 @@
 <?php
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-
 session_start();
 include_once('conexion.php');
 
-if (!isset($_SESSION['usuario_id'])) {
-    header("Location: login.php");
+// Verificar si el usuario está logueado
+if (!isset($_SESSION['usuario_id'])) { 
+    echo "<script>alert('Por favor, inicia sesión para ver tu carrito.'); window.location.href='compra.php';</script>";
     exit();
 }
 
 $usuario_id = $_SESSION['usuario_id'];
+ // Usamos 'id_usuario' aquí también
 
 if (isset($_GET['id'])) {
     $producto_id = intval($_GET['id']);
@@ -21,6 +20,7 @@ if (isset($_GET['id'])) {
     $stmt->execute();
 }
 
+// Redirigir al carrito después de añadir el producto
 header("Location: carrito.php");
 exit();
 ?>

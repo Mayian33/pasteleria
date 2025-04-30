@@ -291,7 +291,8 @@ a.cta-btn:hover {
 
 /* Asegúrate de que el color del texto también esté aplicado correctamente */
 a.cta-btn span {
-  color: inherit; /* Hereda el color correcto */
+  color: inherit;
+  /* Hereda el color correcto */
 }
 
 .btn-menu {
@@ -308,4 +309,10 @@ a.cta-btn span {
 
 .title-info {
   font-family: subtitle;
+}
+
+.profile-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
 }

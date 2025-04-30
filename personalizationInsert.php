@@ -39,11 +39,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->fetch();
     $stmt->close();
 
-    $imagen = '/assets/img/catalogue/personalizacion/personalizacion.jpg';
+    $imagen = 'http://localhost/PROYECTO/pasteleria/assets/img/catalogue/personalizacion/personalizacion.jpg';
 
-    // Insertar todo en la tabla personalizacion
-    $stmt = $conn->prepare("INSERT INTO personalizacion (usuario_personalizacion, sabor_personalizacion, masa_personalizacion, tamano_personalizacion, decoracion_personalizacion, fecha_personalizacion, precio_personalizacion, imagen_personalizacion) VALUES (?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("iiiisids", $usuario_id, $sabor, $masa, $tamano, $decoracion, $fecha, $precio_total, $imagen);
+    // Insertar todo en la tabla personalizacion iiiiisds
+    $stmt = $conn->prepare("INSERT INTO personalizacion (usuario_personalizacion, sabor_personalizacion, masa_personalizacion, tamano_personalizacion, decoracion_personalizacion, fecha_personalizacion, precio_personalizacion, imagen_personalizacion) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("iiiiisds", $usuario_id, $sabor, $masa, $tamano, $decoracion, $fecha, $precio_total, $imagen);
 
     if ($stmt->execute()) {
         $personalizacion_id = $conn->insert_id;
@@ -67,4 +68,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 $conn->close();
-?>

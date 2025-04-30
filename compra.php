@@ -1,4 +1,5 @@
 <?php
+session_start();
 include_once('conexion.php');
 
 if (isset($_GET['id'])) {
@@ -106,20 +107,6 @@ $isLoggedIn = isset($_SESSION['usuario_id']) ? 'true' : 'false';
     }
     ?>
 
-    <!-- Modal de Login -->
-    <div id="login-modal" class="modal">
-        <div class="modal-content">
-            <span id="close-modal" class="close">&times;</span>
-            <h3 class="common-text">¡Oops!</h3>
-            <p class="common-text">No estás logueado. ¿Quieres iniciar sesión?</p>
-            <div class="modal-actions">
-                <a class="cta-btn" id="go-to-login">Sí, iniciar sesión</a>
-                <a class="cta-btn" id="cancel-login">No, gracias</a>
-            </div>
-        </div>
-    </div>
-
-    <script src="js/compra.js"></script>
 </body>
 
 </html>
