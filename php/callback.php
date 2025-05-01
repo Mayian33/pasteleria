@@ -96,8 +96,14 @@ if ($result->num_rows > 0) {
     }
 }
 
-// Redirigir a la página principal
-header("Location: http://localhost/PROYECTO/pasteleria/pages/index.php");
-exit();
+// Redirigir según rol
+if ($_SESSION["rol"] == 1) {
+    header("Location: http://localhost/PROYECTO/pasteleria/pages/orders.php");
+    exit();
+} else {
+    header("Location: http://localhost/PROYECTO/pasteleria/pages/index.php");
+    exit();
+}
+
 
 

@@ -33,9 +33,9 @@ if (!empty($name)) {
         $Carrito = '<a class="cta-btn btn-menu" href="../pages/carrito.php"><img src="../assets/img/icons/carrito.png" alt="Carrito"></a>';
     }
 
-    // Opción solo para admin
+    // Opción solo para admin (ahora como elemento de menú)
     if ($rol == 1) {
-        $ExtraMenu = '<a class="cta-btn btn-menu" href="../pages/orders.php">Ver Pedidos</a>';
+        $ExtraMenu = '<a href="../pages/orders.php">Pedidos</a>';
     }
 
     // Mostrar foto (Google)
@@ -47,6 +47,18 @@ if (!empty($name)) {
     $Sesion = '<a class="cta-btn btn-menu" href="../php/callback.php"><span>Iniciar sesión</span> <img class="icono-carrito" src="../assets/img/icons/login.png" alt="Icono de sesion"></a>';
 }
 
+// Elementos solo para cliente (rol 2)
+$ClienteMenu = '';
+if ($rol == 2|| empty($rol)) {
+    $ClienteMenu = '
+        <a href="./index.php">Home</a>
+        <a href="#sobremi">Sobre mi</a>
+        <a href="./catalogue.php">Catalogo</a>
+        <a href="./personalization.php">Personalización</a>
+    ';
+}
+
+
 // Menú completo
 $Menu = '
     <div class="navbar" id="home">
@@ -56,16 +68,12 @@ $Menu = '
             </div>
             <div class="menu-toggle" onclick="toggleMenu()">☰</div>
             <nav class="nav">
-                <a href="./index.php">Home</a>
-                <a href="#sobremi">Sobre mi</a>
-                <div class="dropdown">
-                </div>
-                <a href="./catalogue.php">Catalogo</a>
+                ' . $ClienteMenu . '
                 <a href="#">Reseñas</a>
-                <a href="./personalization.php">Personalización</a>
                 <a href="#">Contacto</a>
-                '   . $ExtraMenu . $Carrito .  $Sesion . '
+                ' . $ExtraMenu . $Carrito . $Sesion . '
             </nav>
         </nav>
     </div>
 ';
+
