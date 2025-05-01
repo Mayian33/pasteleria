@@ -311,9 +311,36 @@ a.cta-btn span {
   font-family: subtitle;
 }
 
-/* imagen de perfil cuenta google */
+/* contenedor lado derecho del menu */
+
+.right-menu {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 20px;
+  margin-right: 1rem;
+}
+
+.right-menu a,
+.right-menu .user-info {
+  margin: 0;
+}
+
 .profile-img {
   width: 50px;
   height: 50px;
   border-radius: 50%;
+  margin-left: 1rem;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.right-menu .user-info,
+.right-menu .profile-img {
+  margin-top: 0;
+  margin-bottom: 0;
 }

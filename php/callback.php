@@ -86,7 +86,7 @@ if ($result->num_rows > 0) {
     if ($conn->query($query) === TRUE) {
         // Nuevo usuario insertado
         $user_id = $conn->insert_id;
-        $_SESSION["usuario_id"] = $user_id;  // Cambiar a "usuario_id"
+        $_SESSION["usuario_id"] = $user_id;
         $_SESSION["nombre_usuario"] = $name;
         $_SESSION["email_usuario"] = $email;
         $_SESSION["foto_usuario"] = $picture;

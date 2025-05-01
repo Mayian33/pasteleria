@@ -25,8 +25,11 @@ $picture = $_SESSION["foto_usuario"] ?? '';
 
 // Si está logueado
 if (!empty($name)) {
-    // PORQUE HAY 2 BOTONES DE CERRAR SESION??????????
-    $Sesion = '<a class="cta-btn btn-menu" href="../php/cerrarsesion.php">Cerrar sesión</a>';
+    // Mostrar foto y cerrar sesión
+    $Sesion = "<div class='user-info'>
+    <a class='cta-btn btn-menu' href='../php/cerrarsesion.php'>Cerrar sesión</a>
+    <img src=\"" . htmlspecialchars($picture) . "\" alt='Foto de perfil' class='profile-img'>
+</div>";
 
     // Mostrar carrito solo si no es admin
     if ($rol != 1) {
@@ -37,19 +40,14 @@ if (!empty($name)) {
     if ($rol == 1) {
         $ExtraMenu = '<a href="../pages/orders.php">Pedidos</a>';
     }
-
-    // Mostrar foto (Google)
-    $Sesion = "<div class='user-info'>
-    <a class='cta-btn btn-menu' href='../php/cerrarsesion.php'>Cerrar sesión</a>
-    <img src=\"" . htmlspecialchars($picture) . "\" alt='Foto de perfil' class='profile-img'>
-</div>";
 } else {
     $Sesion = '<a class="cta-btn btn-menu" href="../php/callback.php"><span>Iniciar sesión</span> <img class="icono-carrito" src="../assets/img/icons/login.png" alt="Icono de sesion"></a>';
 }
 
+
 // Elementos solo para cliente (rol 2)
 $ClienteMenu = '';
-if ($rol == 2|| empty($rol)) {
+if ($rol == 2 || empty($rol)) {
     $ClienteMenu = '
         <a href="./index.php">Home</a>
         <a href="#sobremi">Sobre mi</a>
@@ -68,12 +66,13 @@ $Menu = '
             </div>
             <div class="menu-toggle" onclick="toggleMenu()">☰</div>
             <nav class="nav">
-                ' . $ClienteMenu . '
+                ' . $ClienteMenu . $ExtraMenu . '
                 <a href="#">Reseñas</a>
                 <a href="#">Contacto</a>
-                ' . $ExtraMenu . $Carrito . $Sesion . '
             </nav>
+            <div class="right-menu">
+                ' . $Carrito  . $Sesion . '
+            </div>
         </nav>
     </div>
 ';
-
