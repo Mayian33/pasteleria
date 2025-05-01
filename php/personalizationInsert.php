@@ -1,6 +1,6 @@
 <?php
 session_start();
-include_once('conexion.php');
+include_once('../php/conexion.php');
 
 // Verificar si el usuario está logueado
 if (!isset($_SESSION['usuario_id'])) {
@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (empty($sabor) || empty($masa) || empty($tamano) || empty($decoracion)) {
         $_SESSION['error'] = "Por favor, selecciona todas las opciones.";
-        header("Location: personalization.php");
+        header("Location: ../pages/personalization.php");
         exit();
     }
 
@@ -49,20 +49,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($stmt->execute()) {
         $personalizacion_id = $conn->insert_id;
 
-        $stmt = $conn->prepare("INSERT INTO pedidos (usuario_pedido, personalizacion_id, fecha_pedido, total) VALUES (?, ?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO carrito (usuario_carrito, personalizacion_id, fecha_carrito, total_carrito) VALUES (?, ?, ?, ?)");
         $stmt->bind_param("iisi", $usuario_id, $personalizacion_id, $fecha, $precio_total);
 
         if ($stmt->execute()) {
-            header("Location: carrito.php");
+            header("Location: ../pages/carrito.php");
             exit();
         } else {
             $_SESSION['error'] = "Hubo un problema al crear el pedido.";
-            header("Location: personalization.php");
+            header("Location: ../pages/personalization.php");
             exit();
         }
     } else {
         $_SESSION['error'] = "Hubo un problema al insertar los datos de personalización.";
-        header("Location: personalization.php");
+        header("Location: ../pages/personalization.php");
         exit();
     }
 }

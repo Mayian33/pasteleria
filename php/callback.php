@@ -7,7 +7,7 @@ error_reporting(E_ALL);
 // Variables de Google
 $client_id = "610173823970-2ghtoc8eet06j6vdjggt4262gjfrdpol.apps.googleusercontent.com";
 $client_secret = "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";
-$redirect_uri = "http://localhost/PROYECTO/pasteleria/callback.php"; // URL de callback
+$redirect_uri = "http://localhost/PROYECTO/pasteleria/php/callback.php"; // URL de callback
 
 // Conexión a la base de datos
 $conn = new mysqli("localhost", "root", "", "brollin");
@@ -97,7 +97,7 @@ if ($result->num_rows > 0) {
 }
 
 // Redirigir a la página principal
-header("Location: http://localhost/PROYECTO/pasteleria/index.php");
+header("Location: http://localhost/PROYECTO/pasteleria/pages/index.php");
 exit();
 
 

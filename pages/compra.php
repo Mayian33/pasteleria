@@ -1,6 +1,6 @@
 <?php
 session_start();
-include_once('conexion.php');
+include_once('../php/conexion.php');
 
 if (isset($_GET['id'])) {
     $id = intval($_GET['id']);
@@ -32,11 +32,11 @@ $isLoggedIn = isset($_SESSION['usuario_id']) ? 'true' : 'false';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Compra</title>
 
-    <link rel="preload" href="css/estilos-comunes.css" as="style" />
-    <link href="css/estilos-comunes.css" rel="stylesheet" />
+    <link rel="preload" href="../css/estilos-comunes.css" as="style" />
+    <link href="../css/estilos-comunes.css" rel="stylesheet" />
 
-    <link rel="preload" href="css/compra.css" as="style" />
-    <link href="css/compra.css" rel="stylesheet" />
+    <link rel="preload" href="../css/compra.css" as="style" />
+    <link href="../css/compra.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -62,7 +62,7 @@ $isLoggedIn = isset($_SESSION['usuario_id']) ? 'true' : 'false';
 
             <!-- Aquí añadimos un data-attribute para pasar la información de sesión al JavaScript -->
             <div id="user-session" data-logged-in="<?php echo $isLoggedIn; ?>"></div>
-            <a class="cta-btn" id="add-to-cart" href="carritoInsert.php?id=<?php echo $id; ?>">Añadir al carrito</a>
+            <a class="cta-btn" id="add-to-cart" data-id="<?php echo $id; ?>">Añadir al carrito</a>
         </div>
     </div>
 
@@ -106,7 +106,7 @@ $isLoggedIn = isset($_SESSION['usuario_id']) ? 'true' : 'false';
         echo "No hay productos disponibles.";
     }
     ?>
-
+<script src="../js/compra.js"></script>
 </body>
 
 </html>

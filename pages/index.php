@@ -1,33 +1,5 @@
 <?php
-include_once('conexion.php');
-
-// // Inicializar variables
-// $Exist = false;
-// $Name = "";
-// $Hello = "";
-// $Cerrar = "";
-// $rolMensaje = "";
-
-// // Verificar si existe un nombre en la sesión
-// if (isset($_SESSION["Name"]) && $_SESSION["Name"] != "") {
-//     $Exist = true;
-//     $Name = $_SESSION["Name"];
-//     $Hello = "Bienvenida " . $Name . "</br>";
-//     $Cerrar = '<a class="nav-link" href="CerrarSesion.php">Cerrar sesión</a>';
-
-//     // Verificar el rol del usuario y mostrar el mensaje correspondiente
-//     if (isset($_SESSION['Id_Rol'])) {
-//         if ($_SESSION['Id_Rol'] == 1) {
-//             $rolMensaje = "Bienvenido Admin";
-//         } elseif ($_SESSION['Id_Rol'] == 2) {
-//             $rolMensaje = "Bienvenido Cliente";
-//         } else {
-//             $rolMensaje = "Bienvenido Invitado";
-//         }
-//     }
-// } else {
-//     $rolMensaje = "Bienvenido, por favor inicie sesión.";
-// }
+include_once('../php/conexion.php');
 ?>
 
 <!DOCTYPE html>
@@ -38,11 +10,11 @@ include_once('conexion.php');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pagina principal</title>
 
-    <link rel="preload" href="css/estilos-comunes.css" as="style" />
-    <link href="css/estilos-comunes.css" rel="stylesheet" />
+    <link rel="preload" href="../css/estilos-comunes.css" as="style" />
+    <link href="../css/estilos-comunes.css" rel="stylesheet" />
 
-    <link rel="preload" href="css/index.css" as="style" />
-    <link href="css/index.css" rel="stylesheet" />
+    <link rel="preload" href="../css/index.css" as="style" />
+    <link href="../css/index.css" rel="stylesheet" />
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -68,7 +40,7 @@ include_once('conexion.php');
                 </div>
 
                 <div class="image-content">
-                    <img alt="image-principal" src="./assets/img/principal/principal-img.jpg" />
+                    <img alt="image-principal" src="../assets/img/principal/principal-img.jpg" />
                 </div>
             </div>
         </div>
@@ -76,7 +48,7 @@ include_once('conexion.php');
         <!-- SECTION INFO -->
         <section id="sobremi">
             <div class="container-info">
-                <img class="img-info" src="./assets/img/principal/info-img.jpg">
+                <img class="img-info" src="../assets/img/principal/info-img.jpg">
                 <div class="content-info">
                     <h2 class="regular-title subtitle-info">Sobre mi</h2>
                     <h1 class="subtitle-text title-info">El <span>Sabor</span> Que necesitas, para tu placer.</h1>
@@ -136,7 +108,7 @@ include_once('conexion.php');
         <!-- SECCION PERSONALIZACION -->
         <section id="personalization" class="personalization-section">
             <div class="personalization-wrapper">
-                <img class="img-personalization" src="./assets/img/principal/principal-img.jpg">
+                <img class="img-personalization" src="../assets/img/principal/principal-img.jpg">
                 <div class="personalization-content">
                     <h2 class="regular-title subtitle-perso">Personalización</h2>
                     <h1 class="subtitle-text title-info">Dulces <span>Personalizados</span> para tus momentos especiales</h1>
@@ -152,7 +124,7 @@ include_once('conexion.php');
         <footer>
             <div class="footer-card">
                 <div class="logo-footer">
-                    <img src="./assets//img/logos/logo_menu.png" alt="logo">
+                    <img src="../assets//img/logos/logo_menu.png" alt="logo">
                 </div>
 
                 <div class="footer-text">
@@ -164,9 +136,9 @@ include_once('conexion.php');
                 </div>
 
                 <div class="logos">
-                    <img src="./assets/img/logos/instagram.png" alt="logo1">
-                    <img src="./assets/img/logos/marker.png" alt="logo2">
-                    <img src="./assets/img/logos/whatsapp.png" alt="logo3">
+                    <img src="../assets/img/logos/instagram.png" alt="logo1">
+                    <img src="../assets/img/logos/marker.png" alt="logo2">
+                    <img src="../assets/img/logos/whatsapp.png" alt="logo3">
                 </div>
 
                 <div class="footer-info common-text">

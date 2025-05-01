@@ -1,5 +1,5 @@
 <?php
-include_once('conexion.php');
+include_once('../php/conexion.php');
 
 // Consultas
 $sql1 = "SELECT * FROM sabor";
@@ -30,11 +30,11 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Personalización</title>
 
-    <link rel="preload" href="css/estilos-comunes.css" as="style" />
-    <link href="css/estilos-comunes.css" rel="stylesheet" />
+    <link rel="preload" href="../css/estilos-comunes.css" as="style" />
+    <link href="../css/estilos-comunes.css" rel="stylesheet" />
 
-    <link rel="preload" href="css/personalizacion.css" as="style" />
-    <link href="css/personalizacion.css" rel="stylesheet" />
+    <link rel="preload" href="../css/personalizacion.css" as="style" />
+    <link href="../css/personalizacion.css" rel="stylesheet" />
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
@@ -57,7 +57,7 @@ $conn->close();
             <?php endif; ?>
 
             <?php if (count($masas) > 0): ?>
-                <form id="mainForm" class="formulario-personalizacion" action="personalizationInsert.php" method="POST">
+                <form id="mainForm" class="formulario-personalizacion" action="../php/personalizationInsert.php" method="POST">
                     <p class="common-text info-text"><b> Elige entre las siguientes opciones:</b></p>
 
                     <!-- Sabor -->

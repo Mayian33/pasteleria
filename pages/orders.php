@@ -7,30 +7,30 @@ if (!isset($_SESSION['rol']) || $_SESSION['rol'] != 1) {
     exit();
 }
 
-include_once 'conexion.php';
+include_once('../php/conexion.php');
 
 $sql = "SELECT 
-    p.id_pedido, 
-    p.usuario_pedido,
-    p.fecha_pedido,
-    p.total,
+    cr.id_carrito, 
+    cr.usuario_carrito,
+    cr.fecha_carrito,
+    cr.total_carrito,
     u.nombre_usuario, 
     prod.nombre_prod,
     pers.sabor_personalizacion,
     c.nombre_categ
-FROM pedidos p
-LEFT JOIN usuarios u ON p.usuario_pedido = u.id_usuario
-LEFT JOIN productos prod ON p.producto_id = prod.id_prod
-LEFT JOIN personalizacion pers ON p.personalizacion_id = pers.id_personalizacion
+FROM carrito cr
+LEFT JOIN usuarios u ON cr.usuario_carrito = u.id_usuario
+LEFT JOIN productos prod ON cr.producto_id = prod.id_prod
+LEFT JOIN personalizacion pers ON cr.personalizacion_id = pers.id_personalizacion
 LEFT JOIN categorias c ON prod.categoria = c.id_categ
-ORDER BY p.usuario_pedido, p.fecha_pedido DESC"; // Ordenamos por usuario y luego por fecha
+ORDER BY cr.usuario_carrito, cr.fecha_carrito DESC";
 
 $result = $conn->query($sql);
 
 // Agrupar los pedidos por usuario
-$pedidos_por_usuario = [];
+$carrito_por_usuario = [];
 while ($row = $result->fetch_assoc()) {
-    $pedidos_por_usuario[$row['usuario_pedido']][] = $row;
+    $carrito_por_usuario[$row['usuario_carrito']][] = $row;
 }
 ?>
 
@@ -40,8 +40,8 @@ while ($row = $result->fetch_assoc()) {
 <head>
     <meta charset="UTF-8">
     <title>Pedidos | Admin</title>
-    <link rel="preload" href="css/estilos-comunes.css" as="style" />
-    <link href="css/estilos-comunes.css" rel="stylesheet" />
+    <link rel="preload" href="../css/estilos-comunes.css" as="style" />
+    <link href="../css/estilos-comunes.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -54,14 +54,14 @@ while ($row = $result->fetch_assoc()) {
     <div class="main">
         <h1 class="title">Pedidos Recibidos</h1>
         <div class="pedidos">
-            <?php if (!empty($pedidos_por_usuario)): ?>
-                <?php foreach ($pedidos_por_usuario as $usuario_id => $pedidos): ?>
+            <?php if (!empty($carrito_por_usuario)): ?>
+                <?php foreach ($carrito_por_usuario as $usuario_id => $carrito): ?>
                     <div class="usuario-pedidos">
-                        <h2 class="regular-title">Pedidos de: <?= htmlspecialchars($pedidos[0]['nombre_usuario']) ?></h2>
-                        <?php foreach ($pedidos as $row): ?>
+                        <h2 class="regular-title">Pedidos de: <?= htmlspecialchars($carrito[0]['nombre_usuario']) ?></h2>
+                        <?php foreach ($carrito as $row): ?>
                             <div class="pedido-card">
                                 <br>
-                                <p class="common-text"><strong>Fecha:</strong> <?= $row['fecha_pedido'] ?></p>
+                                <p class="common-text"><strong>Fecha:</strong> <?= $row['fecha_carrito'] ?></p>
                                 <p class="common-text">
                                     <strong>Producto:</strong>
                                     <?php
@@ -74,7 +74,7 @@ while ($row = $result->fetch_assoc()) {
                                     }
                                     ?>
                                 </p>
-                                <p class="common-text"><strong>Total:</strong> <?= $row['total'] ?> €</p>
+                                <p class="common-text"><strong>Total:</strong> <?= $row['total_carrito'] ?> €</p>
                             </div>
                         <?php endforeach; ?>
                     </div>

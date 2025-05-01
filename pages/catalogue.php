@@ -1,5 +1,5 @@
 <?php
-include_once('conexion.php');
+include_once('../php/conexion.php');
 ?>
 
 <!DOCTYPE html>
@@ -9,11 +9,11 @@ include_once('conexion.php');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catálogo</title>
-    <link rel="preload" href="css/estilos-comunes.css" as="style" />
-    <link href="css/estilos-comunes.css" rel="stylesheet" />
+    <link rel="preload" href="../css/estilos-comunes.css" as="style" />
+    <link href="../css/estilos-comunes.css" rel="stylesheet" />
 
-    <link rel="preload" href="css/catalogue.css" as="style" />
-    <link href="css/catalogue.css" rel="stylesheet" />
+    <link rel="preload" href="../css/catalogue.css" as="style" />
+    <link href="../css/catalogue.css" rel="stylesheet" />
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -35,7 +35,7 @@ include_once('conexion.php');
             <a class="cta-btn common-text" href="./personalization.php">Personalización</a>
             <a class="cta-btn common-text donation">
                 Donaciones
-                <img src="./assets/img/icons/donation.png" alt="Icono de donaciones" class="icono">
+                <img src="../assets/img/icons/donation.png" alt="Icono de donaciones" class="icono">
             </a>
         </div>
 
@@ -78,7 +78,7 @@ include_once('conexion.php');
                     foreach ($productos as $producto) {
                         echo "<div class='card-wrapper'>";
                         echo "<div class='card-1 card-object card-object-hf'>";
-                        echo "<a class='face front' href='compra.php?id=" . $producto['id_prod'] . "' style='background-image: url(" . htmlspecialchars($producto['imagen']) . ");'>";
+                        echo "<a class='face front' href='../pages/compra.php?id=" . $producto['id_prod'] . "' style='background-image: url(" . htmlspecialchars($producto['imagen']) . ");'>";
                         echo "<div class='title-wrapper'>";
                         echo "<div class='card-font'>" . htmlspecialchars($producto['nombre_prod']) . "</div>";
                         echo "<div class='card-font-text'>" . htmlspecialchars($producto['descripcion_prod']) . "</div>";
