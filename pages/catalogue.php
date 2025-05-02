@@ -6,17 +6,14 @@ include_once('../php/conexion.php');
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Catálogo</title>
+
     <link rel="preload" href="../css/estilos-comunes.css" as="style" />
     <link href="../css/estilos-comunes.css" rel="stylesheet" />
-
     <link rel="preload" href="../css/catalogue.css" as="style" />
     <link href="../css/catalogue.css" rel="stylesheet" />
-
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
@@ -25,14 +22,14 @@ include_once('../php/conexion.php');
         <?php echo $Menu ?>
     </header>
 
-    <!-- Sección de catálogo de productos -->
+    <!-- Sección catálogo -->
     <section id="catalogo">
         <div class="container-catalogue">
             <h1 class="subtitle-text title-info">Catálogo de Productos <span>Caseros</span></h1>
         </div>
 
         <div class="cta-catalogue btn-wrapper">
-            <a class="cta-btn common-text" href="./personalization.php">Personalización</a>
+            <a class="cta-btn common-text" href="../pages/personalization.php">Personalización</a>
             <a class="cta-btn common-text donation">
                 Donaciones
                 <img src="../assets/img/icons/donation.png" alt="Icono de donaciones" class="icono">
@@ -47,20 +44,19 @@ include_once('../php/conexion.php');
             if ($result->num_rows > 0) {
                 $productosPorCategoria = [];
 
-                // Mapeo de categorías
+                // Mapear categorías con nombres exactos (asegúrate de que coincidan con los nombres en index)
                 $categorias = [
-                    '1' => 'Tarta',
-                    '2' => 'Bizcocho',
-                    '3' => 'Ponche'
+                    '1' => 'tartas',
+                    '2' => 'bizcochos',
+                    '3' => 'ponches'
                 ];
 
                 while ($row = $result->fetch_assoc()) {
-                    $categoria = $row['categoria'];
-                    // Convertir el número de categoría a texto
-                    if (isset($categorias[$categoria])) {
-                        $categoriaTexto = $categorias[$categoria];
+                    $categoriaNum = $row['categoria'];
+                    if (isset($categorias[$categoriaNum])) {
+                        $categoriaTexto = $categorias[$categoriaNum];
                     } else {
-                        $categoriaTexto = 'Otra'; // Para categorías no mapeadas
+                        $categoriaTexto = 'otra';
                     }
 
                     if (!isset($productosPorCategoria[$categoriaTexto])) {
@@ -69,16 +65,17 @@ include_once('../php/conexion.php');
                     $productosPorCategoria[$categoriaTexto][] = $row;
                 }
 
-                // Mostrar productos organizados por categoría
                 foreach ($productosPorCategoria as $categoria => $productos) {
-                    echo "<div class='cards-title'>"; // Contenedor para el título de la categoría
-                    echo "<h2 class='subtitle-text title-info categoria-titulo'>" . htmlspecialchars(ucfirst($categoria)) . "</h2>"; // Muestra el nombre de la categoría
-                    echo " </div>";
-                    echo "<div class='productos'>"; // Contenedor para los productos
+                    // IDs en minúsculas según categoría
+                    echo "<div id='" . $categoria . "' class='categoria-container' style='scroll-margin-top: 80px;'>"; // Ajusta offset visual si tienes header fijo
+                    echo "<div class='cards-title'>";
+                    echo "<h2 class='subtitle-text title-info categoria-titulo'>" . ucfirst($categoria) . "</h2>";
+                    echo "</div>";
+                    echo "<div class='productos'>";
                     foreach ($productos as $producto) {
                         echo "<div class='card-wrapper'>";
                         echo "<div class='card-1 card-object card-object-hf'>";
-                        echo "<a class='face front' href='../pages/compra.php?id=" . $producto['id_prod'] . "' style='background-image: url(" . htmlspecialchars($producto['imagen']) . ");'>";
+                        echo "<a class='face front' href='../pages/compra.php?id=" . htmlspecialchars($producto['id_prod']) . "' style='background-image: url(" . htmlspecialchars($producto['imagen']) . ");'>";
                         echo "<div class='title-wrapper'>";
                         echo "<div class='card-font'>" . htmlspecialchars($producto['nombre_prod']) . "</div>";
                         echo "<div class='card-font-text'>" . htmlspecialchars($producto['descripcion_prod']) . "</div>";
@@ -87,22 +84,34 @@ include_once('../php/conexion.php');
                         echo "<div class='img-wrapper'>";
                         echo "<div class='avatar' style='background-image: url(" . htmlspecialchars($producto['imagen']) . ");'></div>";
                         echo "</div></a>";
-                        echo "</div>"; // Cierra card-1
-                        echo "</div>"; // Cierra card-wrapper
+                        echo "</div>";
+                        echo "</div>";
                     }
-                    echo "</div>"; // Cierra el contenedor de productos
+                    echo "</div>";
+                    echo "</div>"; 
                 }
             } else {
                 echo "<p>No hay productos disponibles.</p>";
             }
-
             $conn->close();
             ?>
-        </div> <!-- Fin cards-wrapper -->
-    </section> <!-- Fin sección catálogo -->
+        </div>
+    </section>
 
-    <!-- SCRIPTS -->
-    <script src="js/catalogue.js"></script>
+    <script>
+      // Scroll suave si hay hash en la URL
+      window.addEventListener('load', () => {
+        const hash = window.location.hash;
+        if (hash) {
+          const el = document.querySelector(hash);
+          if (el) {
+            setTimeout(() => {
+              el.scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+          }
+        }
+      });
+    </script>
 </body>
 
 </html>

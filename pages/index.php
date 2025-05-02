@@ -67,43 +67,43 @@ include_once('../php/conexion.php');
 
         <!-- CARDS -->
         <?php
-        $sql = "SELECT id_categ, nombre_categ, descripcion_categ FROM categorias";
-        $result = $conn->query($sql);
+$sql = "SELECT id_categ, nombre_categ, descripcion_categ FROM categorias";
+$result = $conn->query($sql);
 
-        if ($result->num_rows > 0) {
-            echo '<div class="cards-title">
-            <h1 class="title-text subtitle-text"> <span>Delicias Caseras:</span> El Sabor de lo Hecho con Amor</h1>
-            <p class="common-text">Un catálogo de productos frescos y auténticos para endulzar tus momentos</p>
-          </div>';
-            echo '<div class="cards-wrapper">';
+if ($result->num_rows > 0) {
+    echo '<div class="cards-title">
+    <h1 class="title-text subtitle-text"> <span>Delicias Caseras:</span> El Sabor de lo Hecho con Amor</h1>
+    <p class="common-text">Un catálogo de productos frescos y auténticos para endulzar tus momentos</p>
+  </div>';
+    echo '<div class="cards-wrapper">';
 
-            // Recorre cada producto y genera una card
-            while ($row = $result->fetch_assoc()) {
-                $nombre_categ = $row['nombre_categ'];
-                $descripcion_categ = $row['descripcion_categ'];
-
-                echo '<div class="card-wrapper">
-                <div class="card-' . htmlspecialchars($row['id_categ']) . ' card-object card-object-hf">
-                    <a class="face front" href="catalogue.php#">
-                        <div class="title-wrapper">
-                            <div class="card-font">' . htmlspecialchars($nombre_categ) . '</div>
-                            <div class="card-font-text common-text">' . htmlspecialchars($descripcion_categ) . '</div>
-                        </div>
-                    </a>
+    while ($row = $result->fetch_assoc()) {
+        $nombre_categ = $row['nombre_categ'];
+        $descripcion_categ = $row['descripcion_categ'];
+        // Generar id_categ consistentemente con nombre en minúsculas sin espacios
+        $id_categ = strtolower(trim($nombre_categ)); 
+        echo '<div class="card-wrapper">
+        <div class="card-' . htmlspecialchars($row['id_categ']) . ' card-object card-object-hf">
+            <a class="face front" href="catalogue.php#' . $id_categ . '">
+                <div class="title-wrapper">
+                    <div class="card-font">' . htmlspecialchars($nombre_categ) . '</div>
+                    <div class="card-font-text common-text">' . htmlspecialchars($descripcion_categ) . '</div>
                 </div>
-              </div>';
-            }
-
-            echo '</div>';
-            echo '<div class="cta-catalogue">
-            <a class="cta-btn" href="catalogue.php">
-                Ver catálogo completo
             </a>
-          </div>';
-        } else {
-            echo "No hay productos disponibles.";
-        }
-        ?>
+        </div>
+      </div>';
+    }
+
+    echo '</div>';
+    echo '<div class="cta-catalogue">
+    <a class="cta-btn" href="catalogo.php">
+        Ver catálogo completo
+    </a>
+  </div>';
+} else {
+    echo "No hay productos disponibles.";
+}
+?>
 
         <!-- SECCION PERSONALIZACION -->
         <section id="personalization" class="personalization-section">

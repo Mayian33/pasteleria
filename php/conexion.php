@@ -16,7 +16,7 @@ if ($conn->connect_error) {
 // Variables iniciales
 $Sesion = '';
 $Carrito = '';
-$ExtraMenu = '';
+$Pedido = '';
 $rol = $_SESSION["rol"] ?? null;
 $name = $_SESSION["nombre_usuario"] ?? '';
 $email = $_SESSION["email_usuario"] ?? '';
@@ -38,7 +38,7 @@ if (!empty($name)) {
 
     // Opción solo para admin (ahora como elemento de menú)
     if ($rol == 1) {
-        $ExtraMenu = '<a href="../pages/orders.php">Pedidos</a>';
+        $Pedido = '<a href="../pages/orders.php">Pedidos</a>';
     }
 } else {
     $Sesion = '<a class="cta-btn btn-menu" href="../php/callback.php"><span>Iniciar sesión</span> <img class="icono-carrito" src="../assets/img/icons/login.png" alt="Icono de sesion"></a>';
@@ -56,7 +56,6 @@ if ($rol == 2 || empty($rol)) {
     ';
 }
 
-
 // Menú completo
 $Menu = '
     <div class="navbar" id="home">
@@ -66,8 +65,8 @@ $Menu = '
             </div>
             <div class="menu-toggle" onclick="toggleMenu()">☰</div>
             <nav class="nav">
-                ' . $ClienteMenu . $ExtraMenu . '
-                <a href="#">Reseñas</a>
+                ' . $ClienteMenu . $Pedido . '
+                <a href="../pages/reseñas.php">Reseñas</a>
                 <a href="#">Contacto</a>
             </nav>
             <div class="right-menu">
