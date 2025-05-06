@@ -98,6 +98,7 @@
     display: flex;
     justify-content: center;
     min-height: 250px;
+      
 }
 
 @media (max-width: 768px) {
@@ -332,4 +333,17 @@
     .card-wrapper {
         width: 90%;
     }
+}
+
+.btn-editar {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+.edit-button-container {
+    clear: both; /* Asegura que el botón esté debajo de cualquier elemento flotante */
+    margin-top: 8px; /* Espacio entre la tarjeta y el botón */
+    text-align: center; /* Centra el botón */
 }

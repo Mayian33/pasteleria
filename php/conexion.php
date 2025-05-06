@@ -22,26 +22,24 @@ $name = $_SESSION["nombre_usuario"] ?? '';
 $email = $_SESSION["email_usuario"] ?? '';
 $picture = $_SESSION["foto_usuario"] ?? '';
 
-
 // Si está logueado
+
+
 if (!empty($name)) {
-    // Mostrar foto y cerrar sesión
-    $Sesion = "<div class='user-info'>
-    <a class='cta-btn btn-menu' href='../php/cerrarsesion.php'>Cerrar sesión</a>
-    <img src=\"" . htmlspecialchars($picture) . "\" alt='Foto de perfil' class='profile-img'>
-</div>";
-
-    // Mostrar carrito solo si no es admin
-    if ($rol != 1) {
-        $Carrito = '<a class="cta-btn btn-menu" href="../pages/carrito.php"><img src="../assets/img/icons/carrito.png" alt="Carrito"></a>';
-    }
-
-    // Opción solo para admin (ahora como elemento de menú)
-    if ($rol == 1) {
-        $Pedido = '<a href="../pages/orders.php">Pedidos</a>';
-    }
+    $Sesion = "
+    <div class='user-info'>
+        <label for='menu-toggle-account' class='account-label'>
+            <img src=\"" . htmlspecialchars($picture) . "\" alt='Foto de perfil' class='profile-img'>
+            <span class='common-text'>" . htmlspecialchars($name) . "</span>
+        </label>
+        <input type='checkbox' id='menu-toggle-account' class='menu-toggle-account'>
+        <div class='dropdown-menu'>
+            <a class='common-text' href='../pages/carrito.php'>Ver Carrito <img src='../assets/img/icons/carrito.png' alt='Carrito' class='icono-carrito'> </a>
+            <a class='common-text' href='../php/cerrarsesion.php'>Cerrar sesión <img src='../assets/img/icons/salida.png' alt='Carrito' class='icono-cerrar'> </a>
+        </div>
+    </div>";
 } else {
-    $Sesion = '<a class="cta-btn btn-menu" href="../php/callback.php"><span>Iniciar sesión</span> <img class="icono-carrito" src="../assets/img/icons/login.png" alt="Icono de sesion"></a>';
+    $Sesion = '<a class="cta-btn btn-menu" href="../php/callback.php"><span>Iniciar sesión</span> <img class="icono-carrito" src="../assets/img/icons/ingresar.png" alt="Icono de sesion"></a>';
 }
 
 
@@ -63,11 +61,13 @@ $Menu = '
             <div class="logo">
                 <img alt="logo" src="../assets/img/logos/logo_menu.png" />
             </div>
-            <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+            <div class="menu-toggle-account" onclick="toggleMenu()">☰</div>
             <nav class="nav">
                 ' . $ClienteMenu . $Pedido . '
                 <a href="../pages/reseñas.php">Reseñas</a>
                 <a href="#">Contacto</a>
+                <a href="../pages/stock.php">Stock</a>
+                        <a href="./catalogue.php">Catalogo</a>
             </nav>
             <div class="right-menu">
                 ' . $Carrito  . $Sesion . '

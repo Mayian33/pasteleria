@@ -57,7 +57,9 @@ $isLoggedIn = isset($_SESSION['usuario_id']) ? 'true' : 'false';
         </div>
         <div class="content-info">
             <h1 class="title"><?php echo htmlspecialchars($producto['nombre_prod']); ?></h1>
-            <p><?php echo htmlspecialchars($producto['descripcion_prod']); ?></p>
+            <!-- mantiene el formato del texto de la base de datos -->
+            <p><?php echo nl2br(htmlspecialchars($producto['descripcion_detallada_prod'])); ?></p>
+
             <h1><?php echo htmlspecialchars($producto['precio']); ?> €</h1>
 
             <!-- Aquí añadimos un data-attribute para pasar la información de sesión al JavaScript -->

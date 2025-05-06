@@ -2,12 +2,12 @@
 session_start();
 include_once('../php/conexion.php');
 
-if (!isset($_SESSION['usuario_id'])) {  // Usamos 'usuario_id' en vez de 'id_usuario'
+if (!isset($_SESSION['usuario_id'])) {  
     echo "<script>alert('Por favor, inicia sesión para ver tu carrito.'); window.location.href='../pages/compra.php';</script>";
     exit();
 }
 
-$usuario_id = $_SESSION['usuario_id'];  // Usamos 'usuario_id' aquí también
+$usuario_id = $_SESSION['usuario_id']; 
 
 
 $stmt = $conn->prepare("SELECT c.id_carrito AS id_carrito,
@@ -58,7 +58,7 @@ $result = $stmt->get_result();
     <div class="carrito">
 
         <div>
-            <a class="cta-btn" href="../pages/pedidos.php">Ver mis pedidos</a>
+            <a class="cta-btn" href="../pages/payedOrders.php">Ver mis pedidos</a>
         </div>
 
         <?php

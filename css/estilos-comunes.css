@@ -263,12 +263,6 @@ nav {
   }
 }
 
-/* Flecha menu desplegable */
-.dropdown>a::after {
-  content: " ⮟";
-  font-size: 12px;
-}
-
 /* BOTON */
 a.cta-btn {
   background-color: var(--btn-color);
@@ -343,4 +337,39 @@ a.cta-btn span {
 .right-menu .profile-img {
   margin-top: 0;
   margin-bottom: 0;
+}
+
+/* Estilos para el menú desplegable */
+.menu-toggle-account {
+  display: none;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 60px;
+  right: 4rem;
+  background-color: var(--background);
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  content: " ⮟";
+}
+
+.dropdown-menu a {
+  padding: 10px;
+  color: var(--details);
+  text-decoration: none;
+  display: block;
+}
+/* Mostrar el menú cuando el checkbox está marcado */
+.menu-toggle-account:checked+.dropdown-menu {
+  display: block;
+}
+
+.account-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
 }

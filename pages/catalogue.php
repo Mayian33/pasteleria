@@ -1,5 +1,9 @@
 <?php
 include_once('../php/conexion.php');
+
+
+// Verifica si el usuario es administrador con rol 1
+$isAdmin = isset($_SESSION['rol']) && $_SESSION['rol'] == 1;
 ?>
 
 <!DOCTYPE html>
@@ -12,6 +16,7 @@ include_once('../php/conexion.php');
 
     <link rel="preload" href="../css/estilos-comunes.css" as="style" />
     <link href="../css/estilos-comunes.css" rel="stylesheet" />
+
     <link rel="preload" href="../css/catalogue.css" as="style" />
     <link href="../css/catalogue.css" rel="stylesheet" />
 </head>
@@ -44,7 +49,6 @@ include_once('../php/conexion.php');
             if ($result->num_rows > 0) {
                 $productosPorCategoria = [];
 
-                // Mapear categorías con nombres exactos (asegúrate de que coincidan con los nombres en index)
                 $categorias = [
                     '1' => 'tartas',
                     '2' => 'bizcochos',
@@ -66,30 +70,40 @@ include_once('../php/conexion.php');
                 }
 
                 foreach ($productosPorCategoria as $categoria => $productos) {
-                    // IDs en minúsculas según categoría
-                    echo "<div id='" . $categoria . "' class='categoria-container' style='scroll-margin-top: 80px;'>"; // Ajusta offset visual si tienes header fijo
-                    echo "<div class='cards-title'>";
+                    echo "<div id='" . $categoria . "' class='categoria-container' style='scroll-margin-top: 80px;'>"; // Inicio de la categoría
+                    echo "<div class='cards-title'>"; // Inicio del título de la categoría
                     echo "<h2 class='subtitle-text title-info categoria-titulo'>" . ucfirst($categoria) . "</h2>";
-                    echo "</div>";
-                    echo "<div class='productos'>";
+                    echo "</div>"; // Fin del título de la categoría
+                    echo "<div class='productos'>"; // Inicio del contenedor de productos
                     foreach ($productos as $producto) {
-                        echo "<div class='card-wrapper'>";
-                        echo "<div class='card-1 card-object card-object-hf'>";
-                        echo "<a class='face front' href='../pages/compra.php?id=" . htmlspecialchars($producto['id_prod']) . "' style='background-image: url(" . htmlspecialchars($producto['imagen']) . ");'>";
-                        echo "<div class='title-wrapper'>";
+                        echo "<div class='card-wrapper'>"; // Inicio de la tarjeta del producto
+                        echo "<div class='card-1 card-object card-object-hf'>"; // Inicio del objeto de la tarjeta
+                        echo "<a class='face front' href='../pages/compra.php?id=" . htmlspecialchars($producto['id_prod']) . "' style='background-image: url(" . htmlspecialchars($producto['imagen']) . ");'>"; // Inicio de la cara frontal de la tarjeta
+                        echo "<div class='title-wrapper'>"; // Inicio del contenedor del título del producto
                         echo "<div class='card-font'>" . htmlspecialchars($producto['nombre_prod']) . "</div>";
                         echo "<div class='card-font-text'>" . htmlspecialchars($producto['descripcion_prod']) . "</div>";
-                        echo "</div></a>";
-                        echo "<a class='face back' href='#'>";
-                        echo "<div class='img-wrapper'>";
+                        echo "</div>"; // Fin del contenedor del título del producto
+                        echo "</a>"; // Fin de la cara frontal de la tarjeta
+                        echo "<a class='face back' href='#'>"; // Inicio de la cara trasera de la tarjeta
+                        echo "<div class='img-wrapper'>"; // Inicio del contenedor de la imagen
                         echo "<div class='avatar' style='background-image: url(" . htmlspecialchars($producto['imagen']) . ");'></div>";
-                        echo "</div></a>";
-                        echo "</div>";
-                        echo "</div>";
+                        echo "</div>"; // Fin del contenedor de la imagen
+                        echo "</a>"; // Fin de la cara trasera de la tarjeta
+                        echo "</div>"; // Fin del objeto de la tarjeta
+                        echo "</div>"; // Fin de la tarjeta del producto
+
+                        // Botón de editar solo para admin
+                        if ($isAdmin) {
+                            echo "<div class='edit-button-container'>";
+                            echo "<a href='../pages/editarProducto.php?id=" . htmlspecialchars($producto['id_prod']) . "' class='btn-editar cta-btn'>Editar</a>";
+                            echo "</div>";
+                        }
                     }
-                    echo "</div>";
-                    echo "</div>"; 
+                    echo "</div>"; // Fin del contenedor de productos
+                    echo "</div>"; // Fin de la categoría
                 }
+                echo "<a class='cta-btn' href='../pages/anadir.php'>Añadir más productos</a>";
+                
             } else {
                 echo "<p>No hay productos disponibles.</p>";
             }
@@ -99,18 +113,19 @@ include_once('../php/conexion.php');
     </section>
 
     <script>
-      // Scroll suave si hay hash en la URL
-      window.addEventListener('load', () => {
-        const hash = window.location.hash;
-        if (hash) {
-          const el = document.querySelector(hash);
-          if (el) {
-            setTimeout(() => {
-              el.scrollIntoView({ behavior: 'smooth' });
-            }, 100);
-          }
-        }
-      });
+        window.addEventListener('load', () => {
+            const hash = window.location.hash;
+            if (hash) {
+                const el = document.querySelector(hash);
+                if (el) {
+                    setTimeout(() => {
+                        el.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }, 100);
+                }
+            }
+        });
     </script>
 </body>
 
