@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $imagen_tamano = $_FILES['imagen']['size'];
 
         // Validamos el tipo y tamaño de la imagen
-        $allowed_types = ['image/jpeg', 'image/png', 'image/gif']; // Tipos de imágenes permitidos
+        $allowed_types = ['image/jpeg', 'image/png']; 
         $max_size = 2 * 1024 * 1024; // 2 MB en bytes
 
         if (in_array($imagen_tipo, $allowed_types) && $imagen_tamano <= $max_size) {
@@ -59,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($stmt->execute()) {
         // Redirigir con mensaje de éxito
-        header("Location: ../pages/anadir.php?mensaje=Producto agregado con éxito");
+        header("Location: ../pages/catalogue.php?mensaje=Producto agregado con éxito");
         exit;
     } else {
         echo "Error al agregar producto: " . $conn->error;

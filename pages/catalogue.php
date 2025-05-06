@@ -70,10 +70,10 @@ $isAdmin = isset($_SESSION['rol']) && $_SESSION['rol'] == 1;
                 }
 
                 foreach ($productosPorCategoria as $categoria => $productos) {
-                    echo "<div id='" . $categoria . "' class='categoria-container' style='scroll-margin-top: 80px;'>"; // Inicio de la categoría
-                    echo "<div class='cards-title'>"; // Inicio del título de la categoría
+                    echo "<div id='" . $categoria . "' class='categoria-container' style='scroll-margin-top: 80px;'>"; 
+                    echo "<div class='cards-title'>"; 
                     echo "<h2 class='subtitle-text title-info categoria-titulo'>" . ucfirst($categoria) . "</h2>";
-                    echo "</div>"; // Fin del título de la categoría
+                    echo "</div>"; 
                     echo "<div class='productos'>"; // Inicio del contenedor de productos
                     foreach ($productos as $producto) {
                         echo "<div class='card-wrapper'>"; // Inicio de la tarjeta del producto
@@ -95,7 +95,7 @@ $isAdmin = isset($_SESSION['rol']) && $_SESSION['rol'] == 1;
                         // Botón de editar solo para admin
                         if ($isAdmin) {
                             echo "<div class='edit-button-container'>";
-                            echo "<a href='../pages/editarProducto.php?id=" . htmlspecialchars($producto['id_prod']) . "' class='btn-editar cta-btn'>Editar</a>";
+                            echo "<a href='../pages/editar.php?id=" . htmlspecialchars($producto['id_prod']) . "' class='btn-editar cta-btn'>Editar</a>";
                             echo "</div>";
                         }
                     }
