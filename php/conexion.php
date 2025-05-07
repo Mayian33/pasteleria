@@ -43,14 +43,24 @@ if (!empty($name)) {
 }
 
 
-// Elementos solo para cliente (rol 2)
+// Menú para cliente/invitado
 $ClienteMenu = '';
 if ($rol == 2 || empty($rol)) {
     $ClienteMenu = '
-        <a href="./index.php">Home</a>
-        <a href="#sobremi">Sobre mi</a>
+        <a href="../pages/index.php">Home</a>
+        <a href="../pages/catalogue.php">Catalogo</a>
+        <a href="../pages/personalization.php">Personalización</a>
+        <a href="../pages/donacion.php">Donaciones</a>
+    ';
+}
+
+// Menú para admin
+$AdminMenu = '';
+if ($rol == 1) {
+    $AdminMenu = '
+        <a href="../pages/reseñas.php">Reseñas</a>
+        <a href="../pages/stock.php">Stock</a>
         <a href="./catalogue.php">Catalogo</a>
-        <a href="./personalization.php">Personalización</a>
     ';
 }
 
@@ -63,11 +73,7 @@ $Menu = '
             </div>
             <div class="menu-toggle-account" onclick="toggleMenu()">☰</div>
             <nav class="nav">
-                ' . $ClienteMenu . $Pedido . '
-                <a href="../pages/reseñas.php">Reseñas</a>
-                <a href="#">Contacto</a>
-                <a href="../pages/stock.php">Stock</a>
-                        <a href="./catalogue.php">Catalogo</a>
+                ' . $ClienteMenu . $AdminMenu . '
             </nav>
             <div class="right-menu">
                 ' . $Carrito  . $Sesion . '
