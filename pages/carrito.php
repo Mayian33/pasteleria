@@ -2,12 +2,12 @@
 session_start();
 include_once('../php/conexion.php');
 
-if (!isset($_SESSION['usuario_id'])) {  
+if (!isset($_SESSION['usuario_id'])) {
     echo "<script>alert('Por favor, inicia sesión para ver tu carrito.'); window.location.href='../pages/compra.php';</script>";
     exit();
 }
 
-$usuario_id = $_SESSION['usuario_id']; 
+$usuario_id = $_SESSION['usuario_id'];
 
 
 $stmt = $conn->prepare("SELECT c.id_carrito AS id_carrito,
@@ -54,13 +54,16 @@ $result = $stmt->get_result();
         <?php echo $Menu ?>
     </header>
 
-    <h2 class="title">Tu Carrito</h2>
-    <div class="carrito">
-
-        <div>
+    <div class="container-title">
+        <h2 class="title">Tu Carrito</h2>
+        <div class="botons">
             <a class="cta-btn" href="../pages/payedOrders.php">Ver mis pedidos</a>
+            <a class="cta-btn" href="../pages/catalogue.php">Ver catalogo</a>
         </div>
 
+    </div>
+
+    <div class="carrito">
         <?php
         $total = 0;
 

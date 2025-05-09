@@ -72,6 +72,7 @@
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
+    margin-bottom:3rem;
 }
 
 /* seccion card dinamica */
@@ -88,35 +89,17 @@
 }
 
 .card-wrapper {
+    display: flex;
+    flex-direction: column;
     display: block;
     position: relative;
-    margin: 0;
+ 
     width: 28%;
     height: auto;
-    padding: 10% 0% 15%;
     perspective: 700px;
     display: flex;
     justify-content: center;
     min-height: 250px;
-      
-}
-
-@media (max-width: 768px) {
-    .cards-wrapper {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .card-wrapper {
-        width: 100%;
-        margin-bottom: 20px;
-    }
-}
-
-@media (max-width: 480px) {
-    .card-wrapper {
-        width: 90%;
-    }
 }
 
 .card-object {
@@ -142,6 +125,7 @@
     gap: 20px;
 }
 
+/* 
 .card-wrapper {
     display: block;
     float: left;
@@ -151,7 +135,7 @@
     height: 0;
     padding: 10% 1rem 1rem;
     perspective: 700px;
-}
+} */
 
 .face {
     color: var(--white);
@@ -316,6 +300,7 @@
     .cards-wrapper {
         flex-direction: column;
         align-items: center;
+       
     }
 
     .card-font {
@@ -326,6 +311,7 @@
         width: 100%;
         height: auto;
         margin-bottom: 20px;
+         margin-right: 2rem;
     }
 }
 
@@ -343,7 +329,37 @@
 }
 
 .edit-button-container {
-    clear: both; /* Asegura que el botón esté debajo de cualquier elemento flotante */
-    margin-top: 8px; /* Espacio entre la tarjeta y el botón */
-    text-align: center; /* Centra el botón */
+    clear: both;
+    margin: 2rem;
+    text-align: center;
+}
+
+.card-1 {
+    width: 100%;
+    aspect-ratio: 1/1;
+    position: relative;
+}
+
+.edit-button-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 5rem;
+    width: 100%;
+}
+
+.btn-editar {
+    padding: 8px 16px;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.btn-anadir {
+    display: block;
+    margin: 20px auto; /* esto lo centra horizontalmente */
+    text-align: center;
 }

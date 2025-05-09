@@ -36,7 +36,7 @@ $conn->close();
     <link rel="preload" href="../css/personalizacion.css" as="style" />
     <link href="../css/personalizacion.css" rel="stylesheet" />
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
 </head>
 
 <body>

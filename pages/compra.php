@@ -6,7 +6,11 @@ if (isset($_GET['id'])) {
     $id = intval($_GET['id']);
 
     // Consulta para obtener la información del producto
-    $sql = "SELECT * FROM productos WHERE id_prod = $id";
+    $sql = "SELECT p.*, c.nombre_categ 
+    FROM productos p
+    LEFT JOIN categorias c ON p.categoria = c.id_categ
+    WHERE p.id_prod = $id";
+
     $result = $conn->query($sql);
 
     if ($result->num_rows == 1) {
@@ -56,19 +60,28 @@ $isLoggedIn = isset($_SESSION['usuario_id']) ? 'true' : 'false';
             </div>
         </div>
         <div class="content-info">
-            <h1 class="title"><?php echo htmlspecialchars($producto['nombre_prod']); ?></h1>
+            <h1 class="title categoria_nombre"><?php echo htmlspecialchars($producto['nombre_categ']); ?></h1>
+            <h1 class="title nombre_prod"><?php echo htmlspecialchars($producto['nombre_prod']); ?></h1>
+
+
             <!-- mantiene el formato del texto de la base de datos -->
-            <p><?php echo nl2br(htmlspecialchars($producto['descripcion_detallada_prod'])); ?></p>
+            <p class="descripcion"><?php echo nl2br(htmlspecialchars($producto['descripcion_detallada_prod'])); ?></p>
 
             <h1><?php echo htmlspecialchars($producto['precio']); ?> €</h1>
 
             <!-- Aquí añadimos un data-attribute para pasar la información de sesión al JavaScript -->
             <div id="user-session" data-logged-in="<?php echo $isLoggedIn; ?>"></div>
-            <a class="cta-btn" id="add-to-cart" data-id="<?php echo $id; ?>">Añadir al carrito</a>
+            <div class="btn-compra"> <a class="cta-btn" id="add-to-cart" data-id="<?php echo $id; ?>">Añadir al carrito</a>
+                <a class="cta-btn" id="add-to-cart" data-id="<?php echo $id; ?>">Donar
+                    <img src='../assets/img/icons/donation.png' alt='Icono de donaciones' class='icono'>
+                </a>
+            </div>
+
         </div>
     </div>
 
-    <hr>
+    <div class="line"></div>
+
 
     <!-- CARDS -->
     <?php
@@ -76,6 +89,7 @@ $isLoggedIn = isset($_SESSION['usuario_id']) ? 'true' : 'false';
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
+        echo '<div class="cards-container">';
         echo '<div class="cards-title">
                 <h1 class="subtitle-text title-info"> Ver más productos</h1>
             </div>';
@@ -95,20 +109,22 @@ $isLoggedIn = isset($_SESSION['usuario_id']) ? 'true' : 'false';
                             </div>
                         </a>
                     </div>
+                    
                 </div>';
         }
 
         echo '</div>';
         echo '<div class="cta-catalogue">
-                <a class="cta-btn" href="#">
+                <a class="cta-btn" href="../pages/catalogue.php">
                     Ver catálogo completo
                 </a>
+            </div>
             </div>';
     } else {
         echo "No hay productos disponibles.";
     }
     ?>
-<script src="../js/compra.js"></script>
+    <script src="../js/compra.js"></script>
 </body>
 
 </html>

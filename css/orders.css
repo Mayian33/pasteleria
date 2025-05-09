@@ -1,0 +1,82 @@
+.pedidos {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.usuario-pedidos {
+    background-color: var(--white);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+.pedido-card {
+    border: 1px solid var(--secondary);
+    border-radius: 15px;
+    padding: 15px;
+    margin-top: 15px;
+    transition: transform 0.2s;
+}
+
+h1.title {
+    text-align: center;
+    margin-bottom: 30px;
+}
+h2.regular-title {
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    color: var(--details);
+    border-bottom: 2px solid var(--secondary);
+}
+p.common-text {
+    margin: 5px 0;
+}
+
+/* Estilo general del dropdown */
+.custom-dropdown {
+    background-color: var(--white);
+    color: var(--details);
+    font-family: text;
+    font-size: 16px;
+    padding: 5px 10px;
+    border: 2px solid var(--secondary);
+    border-radius: 2rem;
+
+    max-width: 300px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 10px 0;
+}
+
+/* Foco (cuando el dropdown está activo) */
+.custom-dropdown:focus {
+    outline: none;
+    border-color: var(--hover);
+    box-shadow: 0 0 5px rgba(233, 10, 115, 0.5);
+}
+
+/* Estilo de las opciones */
+.custom-dropdown option {
+    background-color: var(--white);
+    color: var(--details);
+    padding: 10px;
+}
+
+/* Hover para las opciones */
+.custom-dropdown option:hover {
+    background-color: var(--hover);
+    color: var(--white);
+}
+
+/* Opción deshabilitada (Estado por defecto) */
+.custom-dropdown option:disabled {
+    color: #bbb;
+    background-color: var(--background);
+}
+
+/* Estilo para el dropdown en pantallas pequeñas */
+@media (max-width: 768px) {
+    .custom-dropdown {
+        font-size: 14px;
+        max-width: 250px;
+    }
+}

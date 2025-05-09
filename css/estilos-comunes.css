@@ -23,7 +23,8 @@ html {
   --hover: #e90a73;
   --white: #fff;
   --details: #320a28;
-  --error: #ff0000;
+  --delete: #ec4654;
+  --hover-delete: #db404d;
   --btn-color: #eb2380;
 }
 
@@ -47,6 +48,7 @@ html {
 .subtitle-text {
   font-size: 50px;
   color: var(--details);
+  font-family: subtitle;
 }
 
 .title-text {
@@ -293,6 +295,24 @@ a.cta-btn span {
   margin: 20px;
 }
 
+.btn-borrar{
+  background-color: var(--delete);
+  color: var(--white);
+  padding: 15px 30px;
+  border: none;
+  border-radius: 3rem;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-borrar:hover{
+  background-color: var(--hover-delete);
+  color: var(--white);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
 .cta-catalogue {
   display: flex;
   justify-content: center;
@@ -347,13 +367,12 @@ a.cta-btn span {
 .dropdown-menu {
   display: none;
   position: absolute;
-  top: 60px;
-  right: 4rem;
+  top: 100%;
+  left: 0;
   background-color: var(--background);
   border-radius: 10px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   z-index: 10;
-  content: " ⮟";
 }
 
 .dropdown-menu a {
@@ -362,8 +381,12 @@ a.cta-btn span {
   text-decoration: none;
   display: block;
 }
-/* Mostrar el menú cuando el checkbox está marcado */
+
 .menu-toggle-account:checked+.dropdown-menu {
+  display: block;
+}
+
+.user-info:hover .dropdown-menu {
   display: block;
 }
 
@@ -372,4 +395,8 @@ a.cta-btn span {
   align-items: center;
   gap: 8px;
   cursor: pointer;
+}
+
+.user-info {
+  position: relative;
 }

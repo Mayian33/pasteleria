@@ -110,3 +110,30 @@
 .form-buttons button:hover {
     background-color: var(--secondary);
 }
+
+
+/* TABLET: hasta 768px */
+@media (max-width: 768px) {
+  .personalization-content {
+    margin-left: 2rem;
+    margin-right: 2rem;
+  }
+
+  .personalization-content h1 {
+    font-size: 2rem;
+    text-align: center;
+  }
+}
+
+/* MÓVIL: hasta 480px */
+@media (max-width: 480px) {
+  .personalization-content {
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+
+  .personalization-content h1 {
+    font-size: 2rem;
+    text-align: center;
+  }
+}

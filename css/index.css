@@ -1,4 +1,5 @@
 /* CONTAINER PRINCIPAL*/
+
 .container,
 .footer-card {
   background-color: var(--white);
@@ -451,6 +452,90 @@
   opacity: 0.7;
 }
 
+/* CARRUSEL */
+* {
+  box-sizing: border-box;
+}
+
+.carrusel-body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 10px;
+  /* Reduje el padding vertical */
+  /* Elimina min-height: 100vh */
+  height: auto;
+  /* Altura automática según contenido */
+}
+
+input[type=radio] {
+  display: none;
+}
+
+.carrusel-container {
+  width: 50rem;
+  max-width: 800px;
+  transform-style: preserve-3d;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.carrusel-cards {
+  height: 300px;
+  /* Altura más compacta para las imágenes */
+  margin-bottom: 10px;
+  /* Menos espacio debajo */
+}
+
+
+.carrusel-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+  transition: box-shadow 0.4s ease;
+}
+
+/* Efectos para las tarjetas laterales */
+.carrusel-card {
+  position: absolute;
+  width: 60%;
+  height: 100%;
+  left: 0;
+  right: 0;
+  margin: auto;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+  cursor: pointer;
+  opacity: 0;
+  z-index: 0;
+  transform: translateX(0) scale(0.8);
+}
+
+/* Tarjeta activa (centro) */
+input[type="radio"]:checked~.carrusel-container .carrusel-cards .carrusel-card {
+  /* Estado base para todas las tarjetas */
+  transform: translateX(40%) scale(0.8);
+  opacity: 0.4;
+  z-index: 0;
+}
+
+/* Tarjeta seleccionada (centro) */
+input[type="radio"]:checked~.carrusel-container .carrusel-cards>.carrusel-card:first-of-type {
+  transform: translateX(0) scale(1);
+  opacity: 1;
+  z-index: 1;
+}
+
+/* Tarjeta anterior (izquierda) */
+input[type="radio"]:checked~.carrusel-container .carrusel-cards>.carrusel-card:nth-of-type(2) {
+  transform: translateX(-40%) scale(0.8);
+  opacity: 0.4;
+  z-index: 0;
+}
+
+/* MEDIA QUERYS */
 @media (max-width: 768px) {
   .cards-wrapper {
     flex-direction: column;

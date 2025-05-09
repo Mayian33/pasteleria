@@ -23,9 +23,8 @@ $email = $_SESSION["email_usuario"] ?? '';
 $picture = $_SESSION["foto_usuario"] ?? '';
 
 // Si está logueado
-
-
 if (!empty($name)) {
+    // Comenzamos el contenido del dropdown
     $Sesion = "
     <div class='user-info'>
         <label for='menu-toggle-account' class='account-label'>
@@ -33,15 +32,29 @@ if (!empty($name)) {
             <span class='common-text'>" . htmlspecialchars($name) . "</span>
         </label>
         <input type='checkbox' id='menu-toggle-account' class='menu-toggle-account'>
-        <div class='dropdown-menu'>
-            <a class='common-text' href='../pages/carrito.php'>Ver Carrito <img src='../assets/img/icons/carrito.png' alt='Carrito' class='icono-carrito'> </a>
-            <a class='common-text' href='../php/cerrarsesion.php'>Cerrar sesión <img src='../assets/img/icons/salida.png' alt='Carrito' class='icono-cerrar'> </a>
+        <div class='dropdown-menu'>";
+
+    // Si es cliente o invitado (rol 2 o vacío), mostrar la opción de Carrito
+    if ($rol == 2 || empty($rol)) {
+        $Sesion .= "
+            <a class='common-text' href='../pages/carrito.php'>Ver Carrito 
+                <img src='../assets/img/icons/carrito.png' alt='Carrito' class='icono-carrito'>
+            </a>";
+    }
+
+    // Mostrar siempre la opción de Cerrar sesión
+    $Sesion .= "
+        <a class='common-text' href='../php/cerrarsesion.php'>Cerrar sesión 
+            <img src='../assets/img/icons/salida.png' alt='Cerrar' class='icono-cerrar'>
+        </a>";
+
+    // Cerrar div del dropdown
+    $Sesion .= "
         </div>
     </div>";
 } else {
     $Sesion = '<a class="cta-btn btn-menu" href="../php/callback.php"><span>Iniciar sesión</span> <img class="icono-carrito" src="../assets/img/icons/ingresar.png" alt="Icono de sesion"></a>';
 }
-
 
 // Menú para cliente/invitado
 $ClienteMenu = '';
@@ -58,6 +71,7 @@ if ($rol == 2 || empty($rol)) {
 $AdminMenu = '';
 if ($rol == 1) {
     $AdminMenu = '
+     <a href="./orders.php">Pedidos</a>
         <a href="../pages/reseñas.php">Reseñas</a>
         <a href="../pages/stock.php">Stock</a>
         <a href="./catalogue.php">Catalogo</a>
@@ -76,7 +90,7 @@ $Menu = '
                 ' . $ClienteMenu . $AdminMenu . '
             </nav>
             <div class="right-menu">
-                ' . $Carrito  . $Sesion . '
+                ' . $Carrito . $Sesion . '
             </div>
         </nav>
     </div>

@@ -34,11 +34,18 @@ $isAdmin = isset($_SESSION['rol']) && $_SESSION['rol'] == 1;
         </div>
 
         <div class="cta-catalogue btn-wrapper">
-            <a class="cta-btn common-text" href="../pages/personalization.php">Personalización</a>
-            <a class="cta-btn common-text donation">
+            <?php
+            if ($isAdmin) {
+                echo "<a class='cta-btn btn-anadir' href='../pages/anadir.php'>Añadir más productos</a>";
+            } else {
+                echo "<a class='cta-btn common-text' href='../pages/personalization.php'>Personalización</a>";
+                echo "   <a class='cta-btn common-text donation'>
                 Donaciones
-                <img src="../assets/img/icons/donation.png" alt="Icono de donaciones" class="icono">
-            </a>
+                <img src='../assets/img/icons/donation.png' alt='Icono de donaciones' class='icono'>
+            </a>";
+            }
+            ?>
+
         </div>
 
         <div class="cards-wrapper">
@@ -70,40 +77,48 @@ $isAdmin = isset($_SESSION['rol']) && $_SESSION['rol'] == 1;
                 }
 
                 foreach ($productosPorCategoria as $categoria => $productos) {
-                    echo "<div id='" . $categoria . "' class='categoria-container' style='scroll-margin-top: 80px;'>"; 
-                    echo "<div class='cards-title'>"; 
+                    echo "<div id='" . $categoria . "' class='categoria-container' style='scroll-margin-top: 80px;'>";
+                    echo "<div class='cards-title'>";
                     echo "<h2 class='subtitle-text title-info categoria-titulo'>" . ucfirst($categoria) . "</h2>";
-                    echo "</div>"; 
+                    echo "</div>";
                     echo "<div class='productos'>"; // Inicio del contenedor de productos
                     foreach ($productos as $producto) {
-                        echo "<div class='card-wrapper'>"; // Inicio de la tarjeta del producto
-                        echo "<div class='card-1 card-object card-object-hf'>"; // Inicio del objeto de la tarjeta
-                        echo "<a class='face front' href='../pages/compra.php?id=" . htmlspecialchars($producto['id_prod']) . "' style='background-image: url(" . htmlspecialchars($producto['imagen']) . ");'>"; // Inicio de la cara frontal de la tarjeta
-                        echo "<div class='title-wrapper'>"; // Inicio del contenedor del título del producto
+                        echo "<div class='card-wrapper'>"; // INICIO card-wrapper
+
+                        echo "<div class='card-1 card-object card-object-hf'>"; // INICIO card-object
+
+                        // CARA FRONTAL
+                        echo "<a class='face front' href='../pages/compra.php?id=" . htmlspecialchars($producto['id_prod']) . "' style='background-image: url(" . htmlspecialchars($producto['imagen']) . ");'>";
+                        echo "<div class='title-wrapper'>";
                         echo "<div class='card-font'>" . htmlspecialchars($producto['nombre_prod']) . "</div>";
                         echo "<div class='card-font-text'>" . htmlspecialchars($producto['descripcion_prod']) . "</div>";
-                        echo "</div>"; // Fin del contenedor del título del producto
-                        echo "</a>"; // Fin de la cara frontal de la tarjeta
-                        echo "<a class='face back' href='#'>"; // Inicio de la cara trasera de la tarjeta
-                        echo "<div class='img-wrapper'>"; // Inicio del contenedor de la imagen
-                        echo "<div class='avatar' style='background-image: url(" . htmlspecialchars($producto['imagen']) . ");'></div>";
-                        echo "</div>"; // Fin del contenedor de la imagen
-                        echo "</a>"; // Fin de la cara trasera de la tarjeta
-                        echo "</div>"; // Fin del objeto de la tarjeta
-                        echo "</div>"; // Fin de la tarjeta del producto
+                        echo "</div>";
+                        echo "</a>";
 
-                        // Botón de editar solo para admin
+                        // CARA TRASERA (puedes mantenerla o quitarla si no la usas mucho)
+                        echo "<a class='face back' href='#'>";
+                        echo "<div class='img-wrapper'>";
+                        echo "<div class='avatar' style='background-image: url(" . htmlspecialchars($producto['imagen']) . ");'></div>";
+                        echo "</div>";
+                        echo "</a>";
+
+                        echo "</div>"; // FIN card-object
+
+                        // METEMOS AQUÍ los botones de editar/borrar
                         if ($isAdmin) {
                             echo "<div class='edit-button-container'>";
                             echo "<a href='../pages/editar.php?id=" . htmlspecialchars($producto['id_prod']) . "' class='btn-editar cta-btn'>Editar</a>";
+                            echo "<a href='../php/borrarProducto.php?id=" . htmlspecialchars($producto['id_prod']) . "' class='btn-borrar'>Borrar</a>";
                             echo "</div>";
                         }
+
+                        echo "</div>"; // FIN card-wrapper
+
                     }
                     echo "</div>"; // Fin del contenedor de productos
+
                     echo "</div>"; // Fin de la categoría
                 }
-                echo "<a class='cta-btn' href='../pages/anadir.php'>Añadir más productos</a>";
-                
             } else {
                 echo "<p>No hay productos disponibles.</p>";
             }
