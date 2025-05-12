@@ -28,7 +28,7 @@ $isAdmin = isset($_SESSION['rol']) && $_SESSION['rol'] == 1;
     </header>
 
     <!-- Sección catálogo -->
-    <section id="catalogo">
+    <section id="catalogo" class="main">
         <div class="container-catalogue">
             <h1 class="subtitle-text title-info">Catálogo de Productos <span>Caseros</span></h1>
         </div>
@@ -125,6 +125,10 @@ $isAdmin = isset($_SESSION['rol']) && $_SESSION['rol'] == 1;
             $conn->close();
             ?>
         </div>
+        
+        <?php
+        echo $Footer
+        ?>
     </section>
 
     <script>

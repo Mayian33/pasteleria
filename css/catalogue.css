@@ -115,27 +115,12 @@
 
 .cards-wrapper {
     position: relative;
-    height: auto;
     list-style: none;
-    margin: 0;
-    padding: 0 5%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 20px;
 }
-
-/* 
-.card-wrapper {
-    display: block;
-    float: left;
-    position: relative;
-    margin: 0;
-    width: 28%;
-    height: 0;
-    padding: 10% 1rem 1rem;
-    perspective: 700px;
-} */
 
 .face {
     color: var(--white);

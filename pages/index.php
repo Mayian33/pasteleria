@@ -206,36 +206,9 @@ if ($result->num_rows > 0) {
             </div>
         </section>
 
-        <!-- footer -->
-        <footer>
-            <div class="footer-card">
-                <div class="logo-footer">
-                    <img src="../assets//img/logos/logo_menu.png" alt="logo">
-                </div>
-
-                <div class="footer-text">
-
-                    <div class="frase common-text">
-                        <p>Endulzando tus días con cada creación casera.</p>
-                        <b>¡Gracias por confiar en nosotros!</b>
-                    </div>
-                </div>
-
-                <div class="logos">
-                    <img src="../assets/img/logos/instagram.png" alt="logo1">
-                    <img src="../assets/img/logos/marker.png" alt="logo2">
-                    <img src="../assets/img/logos/whatsapp.png" alt="logo3">
-                </div>
-
-                <div class="footer-info common-text">
-                    <p>© 2025 - Bróllin | pasteleria</p>
-                    <div class="footer-policies">
-                     <a href="../pages/politica_privacidad.php">Política de Privacidad</a>
-                        <a>Política de Cookies</a>
-                    </div>
-                </div>
-            </div>
-        </footer>
+        <?php
+        echo $Footer
+        ?>
     </section>
 
     <!-- SCRIPTS -->

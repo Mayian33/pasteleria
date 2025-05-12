@@ -50,7 +50,7 @@ $conn->close();
         <?php echo $Menu ?>
     </header>
 
-    <section class="personalization-wrapper">
+    <section class="personalization-wrapper main">
         <div class="personalization-content">
             <h1 class="subtitle-text title-info">Personaliza Tu Tarta</h1>
             <p class="common-text">¿Qué te apetece hoy?</p>
@@ -132,6 +132,10 @@ $conn->close();
                 <p class="common-text">No hay tipos de productos disponibles.</p>
             <?php endif; ?>
         </div>
+
+        <?php
+        echo $Footer
+        ?>
     </section>
 
 

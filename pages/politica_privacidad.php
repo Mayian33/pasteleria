@@ -19,7 +19,7 @@ include_once('../php/conexion.php');
     <header>
         <?php echo $Menu ?>
     </header>
-    <main class="main-policies">
+    <section class="main">
 
         <section>
             <h1 class="subtitle-text">POLÍTICA DE PRIVACIDAD</h1>
@@ -47,14 +47,14 @@ include_once('../php/conexion.php');
         <section>
             <b class="common-text">DATOS DE IDENTIFICACIÓN</b>
             <div class="common-text">
-                <p>El responsable y titular de este sitio web es William Correa Rincon</p>
+                <p>El responsable y titular de este sitio web es Maïna Boza Le Berre</p>
 
                 <ul>
-                    <li>Nombre: William Correa Rincon</li>
-                    <li>NIF: 26639120Z</li>
-                    <li>Domicilio Social: C/Llano de Zaidia n14, Valencia</li>
-                    <li>Actividad del sitio web: distribución de contenido relacionado con (https://pasteleria.cupcakesytartas.com), muestra de publicidad, y recomendación de productos de afiliado.</li>
-                    <li>Correo electrónico: contacto@cupcakesytartas.com</li>
+                    <li>Nombre: Maïna Boza Le Berre</li>
+                    <li>NIF: 12345678</li>
+                    <li>Domicilio Social: C/Llano de MiCasa n33, Valencia</li>
+                    <li>Actividad del sitio web: distribución de contenido relacionado con (https://pasteleria.brollin.com), muestra de publicidad, y recomendación de productos de afiliado.</li>
+                    <li>Correo electrónico: contacto@brollin.com</li>
                 </ul>
 
                 <p>Los datos que nos facilites con tu consentimiento, y de acuerdo al uso establecido en esta Política de Privacidad, serán incorporados a un fichero automatizado debidamente inscrito en la Agencia Española de Protección de Datos, en el que el responsable de dicho fichero es: (CRP). Esto quiere decir que tus datos están seguros, de acuerdo a lo que establece la ley.</p>
@@ -158,9 +158,11 @@ include_once('../php/conexion.php');
             </div>
         </section>
 
+        <?php
+        echo $Footer
+        ?>
+    </section>
 
-
-    </main>
 </body>
 
 </html>
