@@ -1,3 +1,22 @@
+function mostrarMensaje(texto, tipo) {
+    const mensajeDiv = document.getElementById('mensaje');
+    mensajeDiv.textContent = texto;
+    mensajeDiv.style.display = "block";
+    mensajeDiv.style.marginTop = "15px";
+    mensajeDiv.style.padding = "10px";
+    mensajeDiv.style.borderRadius = "5px";
+    mensajeDiv.style.fontWeight = "bold";
+
+    if (tipo === "error") {
+        mensajeDiv.style.backgroundColor = "#f8d7da";
+        mensajeDiv.style.color = "#721c24";
+        mensajeDiv.style.border = "1px solid #f5c6cb";
+    } else if (tipo === "exito") {
+        mensajeDiv.style.backgroundColor = "#d4edda";
+        mensajeDiv.style.color = "#155724";
+        mensajeDiv.style.border = "1px solid #c3e6cb";
+    }
+}
 
 function validarFormulario() {
     const sabor = document.getElementById('saborSelect').value;
@@ -6,7 +25,7 @@ function validarFormulario() {
     const decoracion = document.getElementById('decoracionSelect').value;
 
     if (!sabor || !masa || !tamano || !decoracion) {
-        alert("Por favor, selecciona todas las opciones antes de continuar.");
+        mostrarMensaje("Por favor, selecciona todas las opciones antes de continuar.", "error");
         return false;
     }
 
@@ -15,13 +34,14 @@ function validarFormulario() {
 
 function redirigirComprar() {
     if (validarFormulario()) {
-        alert("Formulario válido. Redirigiendo a comprar...");
+        mostrarMensaje("Formulario válido. Redirigiendo a comprar...", "exito");
     }
 }
 
 function redirigirAnadir() {
     if (validarFormulario()) {
-        alert("Formulario válido. Añadiendo al carrito...");
+        mostrarMensaje("Formulario válido. Añadiendo al carrito...", "exito");
     }
 }
+
 

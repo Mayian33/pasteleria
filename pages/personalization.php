@@ -19,6 +19,11 @@ $tamanos = $result3->fetch_all(MYSQLI_ASSOC);
 $result4 = $conn->query($sql4);
 $decoraciones = $result4->fetch_all(MYSQLI_ASSOC);
 
+$sql5 = "SELECT * FROM opciones";
+$result5 = $conn->query($sql5);
+$opciones = $result5->fetch_all(MYSQLI_ASSOC);
+
+
 $conn->close();
 ?>
 
@@ -47,7 +52,7 @@ $conn->close();
 
     <section class="personalization-wrapper">
         <div class="personalization-content">
-            <h1 class="subtitle-text title-info">Personalización</h1>
+            <h1 class="subtitle-text title-info">Personaliza Tu Tarta</h1>
             <p class="common-text">¿Qué te apetece hoy?</p>
 
             <!-- Mostrar errores si existen -->
@@ -101,12 +106,27 @@ $conn->close();
                             <?php foreach ($decoraciones as $deco): ?>
                                 <option value="<?= $deco['id_decoracion'] ?>"><?= $deco['nombre_decoracion'] ?></option>
                             <?php endforeach; ?>
-                        </select>   
+                        </select>
                     </div>
 
+                    <!-- Opciones de personalización alimentaria -->
+                    <p class="common-text info-text"><b> Opciones adicionales:</b></p>
+
+
+                    <?php foreach ($opciones as $opcion): ?>
+                        <div class="form-group-option">
+                            <label class="common-text" for="opcion-<?= $opcion['nombre_opcion'] ?>">
+                                <input type="checkbox" id="opcion-<?= $opcion['nombre_opcion'] ?>" name="opciones[]" value="<?= $opcion['nombre_opcion'] ?>">
+                                <?= $opcion['nombre_opcion'] ?>
+                            </label>
+                        </div>
+                    <?php endforeach; ?>
+
+
                     <div class="form-buttons">
-                        <button type="submit" class="cta-btn">Añadir</button>
+                        <button type="submit" class="cta-btn common-text">Añadir</button>
                     </div>
+
                 </form>
             <?php else: ?>
                 <p class="common-text">No hay tipos de productos disponibles.</p>
@@ -114,7 +134,12 @@ $conn->close();
         </div>
     </section>
 
+
+
+
+
     <!-- <script src="js/catalogue.js"></script> -->
 
 </body>
+
 </html>

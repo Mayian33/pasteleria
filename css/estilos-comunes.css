@@ -64,6 +64,16 @@ html {
   font-size: 16px;
 }
 
+/* textos comunes */
+.title-info {
+  font-family: subtitle;
+}
+
+.subtitle-info {
+  color: var(--secondary);
+  font-family: subtitle;
+}
+
 /* FIN TEXTOS */
 
 body {
@@ -319,11 +329,7 @@ a.cta-btn span {
   margin-bottom: 4rem;
 }
 
-/* textos comunes */
 
-.title-info {
-  font-family: subtitle;
-}
 
 /* contenedor lado derecho del menu */
 
@@ -399,4 +405,10 @@ a.cta-btn span {
 
 .user-info {
   position: relative;
+}
+
+/* P0LICIES */
+.main-policies{
+  margin-left: 10cm;
+  margin-right: 20rem;
 }

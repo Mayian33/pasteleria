@@ -42,8 +42,7 @@ if ($result->num_rows > 0) {
             <div class="content-card">
                 <div class="text-content">
                     <h1 class="title">Dulce<br />&amp;<span>Pasión</span></h1>
-                    <p class="common-text">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia
-                        consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</p>
+                    <p class="common-text">Pastelería artesanal y casera, hecha con amor y dedicación. Tartas, bizcochos y ponches únicos para endulzar tus momentos más especiales. ¡Sabor auténtico, como en casa!</p>
                     <a class="cta-btn" href="../pages/catalogue.php">
                         Compra Online
                     </a>
@@ -197,7 +196,7 @@ if ($result->num_rows > 0) {
             <div class="personalization-wrapper">
                 <img class="img-personalization" src="../assets/img/principal/principal-img.jpg">
                 <div class="personalization-content">
-                    <h2 class="regular-title subtitle-perso">Personalización</h2>
+                    <h2 class="regular-title subtitle-info">Personalización</h2>
                     <h1 class="subtitle-text title-info">Dulces <span>Personalizados</span> para tus momentos especiales</h1>
                     <p class="common-text">¿Quieres sorprender a alguien con un regalo único y especial? En Bróllin Pastelería, creamos
                         dulces personalizados para que celebres tus momentos más especiales </p>
@@ -231,8 +230,8 @@ if ($result->num_rows > 0) {
                 <div class="footer-info common-text">
                     <p>© 2025 - Bróllin | pasteleria</p>
                     <div class="footer-policies">
-                        <p>Política de Privacidad</p>
-                        <p>Política de Cookies</p>
+                     <a href="../pages/politica_privacidad.php">Política de Privacidad</a>
+                        <a>Política de Cookies</a>
                     </div>
                 </div>
             </div>

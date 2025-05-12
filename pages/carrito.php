@@ -85,7 +85,7 @@ $result = $stmt->get_result();
                         <button onclick="cambiarCantidad(this, 1)">+</button>
                         <form method="POST" action="../php/eliminar_carrito.php" onsubmit="return confirm(\'¿Eliminar este producto?\');">
                             <input type="hidden" name="id_carrito" value="' . $carrito['id_carrito'] . '">
-                            <button type="submit" class="papelera">🗑️</button>
+                            <button type="submit" class="papelera"><img src="../assets/img/icons/trash.svg" alt="Eliminar"></button>
                         </form>
                     </div>';
 
@@ -105,7 +105,7 @@ $result = $stmt->get_result();
                         <button onclick="cambiarCantidad(this, 1)">+</button>
                         <form method="POST" action="../php/eliminar_carrito.php" onsubmit="return confirm(\'¿Eliminar este producto?\');">
                             <input type="hidden" name="id_carrito" value="' . $carrito['id_carrito'] . '">
-                            <button type="submit" class="papelera">🗑️</button>
+                            <button type="submit" class="papelera"><img src="../assets/img/icons/trash.svg" alt="Eliminar"></button>
                         </form>
                     </div>';;
                     $total += $carrito['personalizacion_precio'];
@@ -118,6 +118,7 @@ $result = $stmt->get_result();
         } else {
             echo '<p>No hay productos en el carrito.</p>';
         }
+        echo '<div class="boton-pagar"><a href="../pages/checkout.php" class="cta-btn">Pagar</a></div>';
         ?>
     </div>
 

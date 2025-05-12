@@ -145,11 +145,7 @@
 }
 
 /* SECTION INFO Y PERSONALIZACION */
-.subtitle-info,
-.subtitle-perso {
-  color: var(--secondary);
-  font-family: subtitle;
-}
+
 
 .title-info {
   margin: 10px 0;
@@ -493,7 +489,7 @@ input[type=radio] {
 .carrusel-img {
   width: 100%;
   height: 100%;
-  border-radius: 10px;
+  border-radius: 3rem;
   object-fit: cover;
   transition: box-shadow 0.4s ease;
 }
@@ -514,26 +510,25 @@ input[type=radio] {
 }
 
 /* Tarjeta activa (centro) */
+input[type="radio"]:checked~.carrusel-container .carrusel-cards .carrusel-card:nth-child(1),
 input[type="radio"]:checked~.carrusel-container .carrusel-cards .carrusel-card {
-  /* Estado base para todas las tarjetas */
-  transform: translateX(40%) scale(0.8);
-  opacity: 0.4;
-  z-index: 0;
-}
-
-/* Tarjeta seleccionada (centro) */
-input[type="radio"]:checked~.carrusel-container .carrusel-cards>.carrusel-card:first-of-type {
-  transform: translateX(0) scale(1);
   opacity: 1;
   z-index: 1;
+  transform: translateX(0) scale(1);
 }
 
 /* Tarjeta anterior (izquierda) */
-input[type="radio"]:checked~.carrusel-container .carrusel-cards>.carrusel-card:nth-of-type(2) {
+input[type="radio"]:checked~.carrusel-container .carrusel-cards .carrusel-card:nth-child(1)~.carrusel-card {
+  transform: translateX(40%) scale(0.8);
+  opacity: 0.4;
+}
+
+/* Tarjeta siguiente (derecha) - solo para el primer caso */
+input[type="radio"]:checked~.carrusel-container .carrusel-cards .carrusel-card:has(~ input[type="radio"]:checked ~ .carrusel-card) {
   transform: translateX(-40%) scale(0.8);
   opacity: 0.4;
-  z-index: 0;
 }
+
 
 /* MEDIA QUERYS */
 @media (max-width: 768px) {
@@ -594,14 +589,13 @@ input[type="radio"]:checked~.carrusel-container .carrusel-cards>.carrusel-card:n
   gap: 20px;
 }
 
-.footer-policies p {
+.footer-policies a {
   position: relative;
-  display: inline-block;
-
-  padding-bottom: 5px;
+  text-decoration: none;
+  color: black;
 }
 
-.footer-policies p::after {
+.footer-policies a::after {
   content: "";
   position: absolute;
   left: 0;
@@ -612,7 +606,7 @@ input[type="radio"]:checked~.carrusel-container .carrusel-cards>.carrusel-card:n
   transition: width 0.3s ease-in-out;
 }
 
-.footer-policies p:hover::after {
+.footer-policies a:hover::after {
   width: 100%;
 }
 
