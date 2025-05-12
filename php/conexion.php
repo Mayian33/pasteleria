@@ -44,9 +44,10 @@ if (!empty($name)) {
 
     // Mostrar siempre la opción de Cerrar sesión
     $Sesion .= "
-        <a class='common-text' href='../php/cerrarsesion.php'>Cerrar sesión 
-            <img src='../assets/img/icons/salida.png' alt='Cerrar' class='icono-cerrar'>
-        </a>";
+       <a class='common-text' href='#' onclick='logoutGoogle()'>Cerrar sesión 
+    <img src='../assets/img/icons/salida.png' alt='Cerrar' class='icono-cerrar'>
+</a>
+";
 
     // Cerrar div del dropdown
     $Sesion .= "
@@ -127,3 +128,15 @@ $Footer = '
             </div>
         </footer>
 ';
+?>
+
+
+<!-- Esto va fuera de PHP -->
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script>
+    const userEmail = "<?php echo $_SESSION['email_usuario'] ?? ''; ?>";
+</script>
+<script src="../js/logout.js" defer></script>
+
+
+

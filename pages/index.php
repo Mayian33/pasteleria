@@ -1,6 +1,10 @@
 <?php
 include_once('../php/conexion.php');
 
+
+
+
+
 // Obtener las imágenes de la base de datos
 $sql = "SELECT imagen FROM productos";
 $result = $conn->query($sql);

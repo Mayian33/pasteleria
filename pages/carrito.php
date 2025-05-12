@@ -71,23 +71,34 @@ $result = $stmt->get_result();
             while ($carrito = $result->fetch_assoc()) {
                 echo '<div class="producto">';
 
+
+                // Suponiendo que la sesión ya está iniciada y se tiene acceso al carrito en $_SESSION
                 if (!empty($carrito['producto_nombre'])) {
+                    // Mostrar la imagen del producto
                     echo '<img src="' . $carrito['producto_imagen'] . '" alt="' . $carrito['producto_nombre'] . '">';
                     echo '<div class="info">';
                     echo '<span>' . $carrito['producto_nombre'] . '</span>';
                     echo '<span class="precio">€' . number_format($carrito['producto_precio'], 2) . '</span>';
                     echo '</div>';
+
+                    // Aquí usamos la cantidad de la sesión (si está disponible) o 1 por defecto
+                    $cantidad = isset($_SESSION['carrito'][$carrito['id_carrito']]['cantidad']) ? $_SESSION['carrito'][$carrito['id_carrito']]['cantidad'] : 1;
+
                     echo '
-                    <div class="cantidad">
-                        <button onclick="cambiarCantidad(this, -1)">−</button>
-                        <span class="cantidad-numero">1</span>
-                        <input type="hidden" value="1">
-                        <button onclick="cambiarCantidad(this, 1)">+</button>
+                    <div class="cantidad" data-id="' . $carrito['id_carrito'] . '">
+                        <button class="restar" type="button">−</button>
+                        <span class="cantidad-numero">' . $cantidad . '</span>
+                        <input type="hidden" value="' . $cantidad . '">
+                        <button class="sumar" type="button">+</button>
                         <form method="POST" action="../php/eliminar_carrito.php" onsubmit="return confirm(\'¿Eliminar este producto?\');">
                             <input type="hidden" name="id_carrito" value="' . $carrito['id_carrito'] . '">
                             <button type="submit" class="papelera"><img src="../assets/img/icons/trash.svg" alt="Eliminar"></button>
                         </form>
                     </div>';
+
+
+
+
 
                     $total += $carrito['producto_precio'];
                 } else {
@@ -97,17 +108,18 @@ $result = $stmt->get_result();
                     echo '<span>Sabor: ' . $carrito['sabor'] . ' | Masa: ' . $carrito['masa'] . ' | Tamaño: ' . $carrito['tamano'] . ' | Decoración: ' . $carrito['decoracion'] . '</span>';
                     echo '<span class="precio">€' . number_format($carrito['personalizacion_precio'], 2) . '</span>';
                     echo '</div>';
+                    $cantidad = isset($_SESSION['carrito'][$carrito['id_carrito']]['cantidad']) ? $_SESSION['carrito'][$carrito['id_carrito']]['cantidad'] : 1;
                     echo '
-                    <div class="cantidad">
-                        <button onclick="cambiarCantidad(this, -1)">−</button>
-                        <span class="cantidad-numero">1</span>
-                        <input type="hidden" value="1">
-                        <button onclick="cambiarCantidad(this, 1)">+</button>
+                    <div class="cantidad" data-id="' . $carrito['id_carrito'] . '">
+                        <button class="restar" type="button">−</button>
+                        <span class="cantidad-numero">' . $cantidad . '</span>
+                        <input type="hidden" value="' . $cantidad . '">
+                        <button class="sumar" type="button">+</button>
                         <form method="POST" action="../php/eliminar_carrito.php" onsubmit="return confirm(\'¿Eliminar este producto?\');">
                             <input type="hidden" name="id_carrito" value="' . $carrito['id_carrito'] . '">
                             <button type="submit" class="papelera"><img src="../assets/img/icons/trash.svg" alt="Eliminar"></button>
                         </form>
-                    </div>';;
+                    </div>';
                     $total += $carrito['personalizacion_precio'];
                 }
 
