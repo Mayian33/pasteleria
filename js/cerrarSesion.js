@@ -6,7 +6,9 @@ async function logout() {
       google.accounts.id.disableAutoSelect();
       const userEmail = localStorage.getItem('userEmail');
       if (userEmail) {
-        google.accounts.id.revoke(userEmail);
+        await new Promise((resolve) => {
+          google.accounts.id.revoke(userEmail, resolve);
+        });
       }
     }
 

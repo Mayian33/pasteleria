@@ -5,9 +5,9 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 // Variables de Google
-$client_id = "610173823970-2ghtoc8eet06j6vdjggt4262gjfrdpol.apps.googleusercontent.com"; // Coloca aquí tu client_id
-$client_secret = "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"; // Coloca aquí tu client_secret
-$redirect_uri = "http://localhost/PROYECTO/pasteleria/php/callback.php"; // URL de callback
+$client_id = "610173823970-2ghtoc8eet06j6vdjggt4262gjfrdpol.apps.googleusercontent.com"; 
+$client_secret = "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"; 
+$redirect_uri = "http://localhost/PROYECTO/pasteleria/php/callback.php"; 
 
 // Conexión a la base de datos
 $conn = new mysqli("localhost", "root", "", "brollin");

@@ -215,9 +215,6 @@ if ($result->num_rows > 0) {
         ?>
     </section>
 
-    <!-- SCRIPTS -->
-    <script src="../js/index.js"></script>
-
 </body>
 
 </html>
