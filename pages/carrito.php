@@ -9,11 +9,26 @@ if (!isset($_SESSION['usuario_id'])) {
 
 $usuario_id = $_SESSION['usuario_id'];
 
+// Obtener opciones adicionales agrupadas por id_personalizacion
+$opciones_personalizadas = [];
 
+$sql_opciones = "SELECT oa.id_personalizacion AS id_personalizacion_opcion, o.nombre_opcion
+                 FROM opciones_adicionales oa
+                 JOIN opciones o ON oa.id_opcion = o.opcion_id";
+$result_opciones = $conn->query($sql_opciones);
+
+if ($result_opciones && $result_opciones->num_rows > 0) {
+    while ($fila = $result_opciones->fetch_assoc()) {
+        $opciones_personalizadas[$fila['id_personalizacion_opcion']][] = $fila['nombre_opcion'];
+    }
+}
+
+// Consulta principal del carrito
 $stmt = $conn->prepare("SELECT c.id_carrito AS id_carrito,
                                pr.nombre_prod AS producto_nombre,
                                pr.precio AS producto_precio,
                                pr.imagen AS producto_imagen,
+                               pm.id_personalizacion AS personalizacion_id, -- añadido
                                pm.precio_personalizacion AS personalizacion_precio,
                                pm.imagen_personalizacion AS imagen_personalizacion,
                                s.nombre_sabor AS sabor,
@@ -34,16 +49,14 @@ $result = $stmt->get_result();
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carrito</title>
-
     <link rel="preload" href="../css/estilos-comunes.css" as="style" />
     <link href="../css/estilos-comunes.css" rel="stylesheet" />
-
     <link rel="preload" href="../css/carrito.css" as="style" />
     <link href="../css/carrito.css" rel="stylesheet" />
 </head>
@@ -58,69 +71,70 @@ $result = $stmt->get_result();
         <h2 class="title">Tu Carrito</h2>
         <div class="botons">
             <a class="cta-btn" href="../pages/payedOrders.php">Ver mis pedidos</a>
-            <a class="cta-btn" href="../pages/catalogue.php">Ver catalogo</a>
+            <a class="cta-btn" href="../pages/catalogue.php">Ver catálogo</a>
         </div>
-
     </div>
 
     <div class="carrito">
         <?php
         $total = 0;
-
+        echo '<div class="common-text">';
         if ($result && $result->num_rows > 0) {
             while ($carrito = $result->fetch_assoc()) {
                 echo '<div class="producto">';
 
-
-                // Suponiendo que la sesión ya está iniciada y se tiene acceso al carrito en $_SESSION
                 if (!empty($carrito['producto_nombre'])) {
-                    // Mostrar la imagen del producto
                     echo '<img src="' . $carrito['producto_imagen'] . '" alt="' . $carrito['producto_nombre'] . '">';
                     echo '<div class="info">';
-                    echo '<span>' . $carrito['producto_nombre'] . '</span>';
+                    echo '<span>' . ucfirst(strtolower($carrito['producto_nombre'])) . '</span>';
+                    echo '<span>Sabor: ' . $carrito['sabor'] . ' | Masa: ' . $carrito['masa'] . ' | Tamaño: ' . $carrito['tamano'] . ' | Decoración: ' . $carrito['decoracion'] . '</span>';
                     echo '<span class="precio">€' . number_format($carrito['producto_precio'], 2) . '</span>';
                     echo '</div>';
 
-                    // Aquí usamos la cantidad de la sesión (si está disponible) o 1 por defecto
                     $cantidad = isset($_SESSION['carrito'][$carrito['id_carrito']]['cantidad']) ? $_SESSION['carrito'][$carrito['id_carrito']]['cantidad'] : 1;
 
                     echo '
-                    <div class="cantidad" data-id="' . $carrito['id_carrito'] . '">
-                        <button class="restar" type="button">−</button>
-                        <span class="cantidad-numero">' . $cantidad . '</span>
-                        <input type="hidden" value="' . $cantidad . '">
-                        <button class="sumar" type="button">+</button>
-                        <form method="POST" action="../php/eliminar_carrito.php" onsubmit="return confirm(\'¿Eliminar este producto?\');">
-                            <input type="hidden" name="id_carrito" value="' . $carrito['id_carrito'] . '">
-                            <button type="submit" class="papelera"><img src="../assets/img/icons/trash.svg" alt="Eliminar"></button>
-                        </form>
-                    </div>';
-
-
-
-
+                <div class="cantidad" data-id="' . $carrito['id_carrito'] . '">
+                    <button class="restar" type="button">−</button>
+                    <span class="cantidad-numero">' . $cantidad . '</span>
+                    <input type="hidden" value="' . $cantidad . '">
+                    <button class="sumar" type="button">+</button>
+                    <form method="POST" action="../php/eliminar_carrito.php" onsubmit="return confirm(\'¿Eliminar este producto?\');">
+                        <input type="hidden" name="id_carrito" value="' . $carrito['id_carrito'] . '">
+                        <button type="submit" class="papelera"><img src="../assets/img/icons/trash.svg" alt="Eliminar"></button>
+                    </form>
+                </div>';
 
                     $total += $carrito['producto_precio'];
-                } else {
+                } elseif (!empty($carrito['personalizacion_precio'])) {
                     echo '<img src="' . $carrito['imagen_personalizacion'] . '" alt="Personalizado">';
                     echo '<div class="info">';
                     echo '<span>Personalizado</span>';
                     echo '<span>Sabor: ' . $carrito['sabor'] . ' | Masa: ' . $carrito['masa'] . ' | Tamaño: ' . $carrito['tamano'] . ' | Decoración: ' . $carrito['decoracion'] . '</span>';
-                    echo '<span class="precio">€' . number_format($carrito['personalizacion_precio'], 2) . '</span>';
+
+                    $id_personalizacion = $carrito['personalizacion_id'];
+                    if (isset($opciones_personalizadas[$id_personalizacion])) {
+                        echo '<span>Opciones adicionales: ' . implode(', ', $opciones_personalizadas[$id_personalizacion]) . '</span>';
+                    }
+
+                    echo '<span class="precio">€' . number_format($carrito['personalizacion_precio'] ?? 0, 2) . '</span>';
                     echo '</div>';
+
                     $cantidad = isset($_SESSION['carrito'][$carrito['id_carrito']]['cantidad']) ? $_SESSION['carrito'][$carrito['id_carrito']]['cantidad'] : 1;
+
                     echo '
-                    <div class="cantidad" data-id="' . $carrito['id_carrito'] . '">
-                        <button class="restar" type="button">−</button>
-                        <span class="cantidad-numero">' . $cantidad . '</span>
-                        <input type="hidden" value="' . $cantidad . '">
-                        <button class="sumar" type="button">+</button>
-                        <form method="POST" action="../php/eliminar_carrito.php" onsubmit="return confirm(\'¿Eliminar este producto?\');">
-                            <input type="hidden" name="id_carrito" value="' . $carrito['id_carrito'] . '">
-                            <button type="submit" class="papelera"><img src="../assets/img/icons/trash.svg" alt="Eliminar"></button>
-                        </form>
-                    </div>';
-                    $total += $carrito['personalizacion_precio'];
+                <div class="cantidad" data-id="' . $carrito['id_carrito'] . '">
+                    <button class="restar" type="button">−</button>
+                    <span class="cantidad-numero">' . $cantidad . '</span>
+                    <input type="hidden" value="' . $cantidad . '">
+                    <button class="sumar" type="button">+</button>
+                    <form method="POST" action="../php/eliminar_carrito.php" onsubmit="return confirm(\'¿Eliminar este producto?\');">
+                        <input type="hidden" name="id_carrito" value="' . $carrito['id_carrito'] . '">
+                        <button type="submit" class="papelera"><img src="../assets/img/icons/trash.svg" alt="Eliminar"></button>
+                    </form>
+                </div>';
+
+                    $total += $carrito['personalizacion_precio'] ?? 0;
                 }
 
                 echo '</div>';
@@ -130,6 +144,7 @@ $result = $stmt->get_result();
         } else {
             echo '<p>No hay productos en el carrito.</p>';
         }
+        echo '</div>';
         echo '<div class="boton-pagar"><a href="../pages/checkout.php" class="cta-btn">Pagar</a></div>';
         ?>
     </div>

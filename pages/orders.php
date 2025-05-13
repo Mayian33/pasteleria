@@ -10,11 +10,10 @@ if (!isset($_SESSION['rol']) || $_SESSION['rol'] != 1) {
 include_once('../php/conexion.php');
 
 $sql = "SELECT 
-    cr.id_carrito, 
+    cr.id_carrito,
     cr.usuario_carrito,
     cr.fecha_carrito,
-    cr.total_carrito,
-    u.nombre_usuario, 
+    u.nombre_usuario,
     u.telefono_usuario,
     u.direccion_usuario,
     u.email_usuario,
@@ -22,15 +21,20 @@ $sql = "SELECT
     prod.precio,
     pers.sabor_personalizacion,
     c.nombre_categ,
-    e.nombre_estado
+    e.nombre_estado,
+    p.pedido_id,
+    e.id_estado
+
 FROM carrito cr
 LEFT JOIN usuarios u ON cr.usuario_carrito = u.id_usuario
 LEFT JOIN productos prod ON cr.producto_id = prod.id_prod
 LEFT JOIN personalizacion pers ON cr.personalizacion_id = pers.id_personalizacion
 LEFT JOIN categorias c ON prod.categoria = c.id_categ
-LEFT JOIN pedidos p ON u.id_usuario = p.usuario_id
+LEFT JOIN detalle_pedido dp ON dp.producto = cr.producto_id
+LEFT JOIN pedidos p ON dp.pedido = p.pedido_id AND p.usuario_id = cr.usuario_carrito
 LEFT JOIN estados e ON p.estado_pedido = e.id_estado
-ORDER BY cr.usuario_carrito, cr.fecha_carrito DESC";
+ORDER BY cr.usuario_carrito, cr.fecha_carrito DESC;
+";
 
 
 $result = $conn->query($sql);
@@ -61,6 +65,32 @@ while ($row = $result->fetch_assoc()) {
 </head>
 
 <body>
+
+<script>
+function guardarEstado(event, pedidoId) {
+    event.preventDefault();
+    
+    const form = event.target;
+    const estado = form.querySelector('select[name="estado"]').value;
+
+    fetch('../php/actualizar_estado.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `pedido_id=${pedidoId}&estado_id=${estado}`
+    })
+    .then(response => response.text())
+    .then(data => {
+        alert(data); // Reemplaza esto si prefieres mostrar el mensaje dentro del formulario
+    })
+    .catch(error => {
+        console.error('Error al actualizar el estado:', error);
+    });
+}
+</script>
+
+
 
     <!-- MENU NAVBAR -->
     <header>
@@ -109,15 +139,18 @@ while ($row = $result->fetch_assoc()) {
                                     ?>
                                 </p>
 
-                                <select name="estado" onchange="actualizarEstado(this.value, <?= $row['id_carrito'] ?>)" class="custom-dropdown">
-                                    <option value="" disabled <?= $row['nombre_estado'] == "" ? 'selected' : '' ?>>Estado</option>
-                                    <?php foreach ($estados as $estado): ?>
-                                        <option value="<?= $estado['nombre_estado'] ?>"
-                                            <?= $row['nombre_estado'] == $estado['nombre_estado'] ? 'selected' : '' ?>>
-                                            <?= $estado['nombre_estado'] ?>
-                                        </option>
-                                    <?php endforeach; ?>
-                                </select>
+                                <form onsubmit="guardarEstado(event, <?= $row['pedido_id'] ?>)">
+                                    <select name="estado" class="custom-dropdown">
+                                        <option value="" disabled selected>Estado por defecto</option>
+                                        <?php foreach ($estados as $estado): ?>
+                                            <option value="<?= $estado['id_estado'] ?>" <?= $row['id_estado'] == $estado['id_estado'] ? 'selected' : '' ?>>
+                                                <?= $estado['nombre_estado'] ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                    <button type="submit" class="guardar-btn cta-btn">Guardar</button>
+                                </form>
+
 
 
                             </div>

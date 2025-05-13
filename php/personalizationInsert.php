@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $usuario_id = $_SESSION['usuario_id'];
     $fecha = date("Y-m-d H:i:s");
 
-    // Aquí hacemos una sola consulta para traer todos los precios
+    // Calcular precio total (aunque ya no se guarda en carrito)
     $sql = "
         SELECT 
             (SELECT precio_masa FROM masa WHERE id_masa = ?) +
@@ -41,16 +41,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $imagen = 'http://localhost/PROYECTO/pasteleria/assets/img/catalogue/personalizacion/personalizacion.jpg';
 
-    // Insertar todo en la tabla personalizacion iiiiisds
-    $stmt = $conn->prepare("INSERT INTO personalizacion (usuario_personalizacion, sabor_personalizacion, masa_personalizacion, tamano_personalizacion, decoracion_personalizacion, fecha_personalizacion, precio_personalizacion, imagen_personalizacion) 
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    // Insertar en tabla personalizacion
+    $stmt = $conn->prepare("INSERT INTO personalizacion (
+        usuario_personalizacion, sabor_personalizacion, masa_personalizacion, tamano_personalizacion, 
+        decoracion_personalizacion, fecha_personalizacion, precio_personalizacion, imagen_personalizacion) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
     $stmt->bind_param("iiiiisds", $usuario_id, $sabor, $masa, $tamano, $decoracion, $fecha, $precio_total, $imagen);
 
     if ($stmt->execute()) {
         $personalizacion_id = $conn->insert_id;
 
-        $stmt = $conn->prepare("INSERT INTO carrito (usuario_carrito, personalizacion_id, fecha_carrito, total_carrito) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("iisi", $usuario_id, $personalizacion_id, $fecha, $precio_total);
+        // Opciones adicionales
+        if (isset($_POST['opciones']) && is_array($_POST['opciones'])) {
+            foreach ($_POST['opciones'] as $nombre_opcion) {
+                $stmt_op = $conn->prepare("SELECT opcion_id FROM opciones WHERE nombre_opcion = ?");
+                $stmt_op->bind_param("s", $nombre_opcion);
+                $stmt_op->execute();
+                $result = $stmt_op->get_result();
+                if ($row = $result->fetch_assoc()) {
+                    $id_opcion = $row['opcion_id'];
+                    $stmt_insert_op = $conn->prepare("INSERT INTO opciones_adicionales (id_personalizacion, id_opcion) VALUES (?, ?)");
+                    $stmt_insert_op->bind_param("ii", $personalizacion_id, $id_opcion);
+                    $stmt_insert_op->execute();
+                    $stmt_insert_op->close();
+                }
+                $stmt_op->close();
+            }
+        }
+
+        // Insertar en carrito (sin total ni cantidad)
+        $producto_id = NULL;
+        $stmt = $conn->prepare("INSERT INTO carrito (usuario_carrito, producto_id, personalizacion_id, fecha_carrito) VALUES (?, ?, ?, ?)");
+        $stmt->bind_param("iiis", $usuario_id, $producto_id, $personalizacion_id, $fecha);
 
         if ($stmt->execute()) {
             header("Location: ../pages/carrito.php");
