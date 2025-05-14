@@ -149,6 +149,7 @@ function guardarEstado(event, pedidoId) {
                                         <?php endforeach; ?>
                                     </select>
                                     <button type="submit" class="guardar-btn cta-btn">Guardar</button>
+                                    <button type="submit" class="guardar-btn cta-btn">Borrar</button>
                                 </form>
 
 
