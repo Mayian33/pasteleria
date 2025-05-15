@@ -1,17 +1,5 @@
 <?php
-include_once('../php/conexion.php');
-
-
-
-
-// Verificar si la sesión está activa
-if (isset($_SESSION['usuario_id'])) {
-    echo "Bienvenido, " . $_SESSION['nombre_usuario'];
-} else {
-    echo "No has iniciado sesión.";
-}
-
-
+include_once('../php/layout.php');
 
 // Verifica si el usuario es administrador con rol 1
 $isAdmin = isset($_SESSION['rol']) && $_SESSION['rol'] == 1;

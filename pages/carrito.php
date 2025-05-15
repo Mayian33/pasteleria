@@ -1,6 +1,6 @@
 <?php
 session_start();
-include_once('../php/conexion.php');
+include_once('../php/layout.php');
 
 if (!isset($_SESSION['usuario_id'])) {
     echo "<script>alert('Por favor, inicia sesión para ver tu carrito.'); window.location.href='../pages/compra.php';</script>";
@@ -34,9 +34,11 @@ $stmt = $conn->prepare("SELECT c.id_carrito AS id_carrito,
                                s.nombre_sabor AS sabor,
                                t.nombre_tamano AS tamano,
                                m.nombre_masa AS masa,
-                               d.nombre_decoracion AS decoracion
+                               d.nombre_decoracion AS decoracion,
+                               cat.nombre_categ AS categoria
                         FROM carrito c
                         LEFT JOIN productos pr ON c.producto_id = pr.id_prod
+                        LEFT JOIN categorias cat ON pr.categoria = cat.id_categ
                         LEFT JOIN personalizacion pm ON c.personalizacion_id = pm.id_personalizacion
                         LEFT JOIN sabor s ON pm.sabor_personalizacion = s.id_sabor
                         LEFT JOIN tamano t ON pm.tamano_personalizacion = t.id_tamano
@@ -86,7 +88,9 @@ $result = $stmt->get_result();
                 if (!empty($carrito['producto_nombre'])) {
                     echo '<img src="' . $carrito['producto_imagen'] . '" alt="' . $carrito['producto_nombre'] . '">';
                     echo '<div class="info">';
-                    echo '<span>' . ucfirst(strtolower($carrito['producto_nombre'])) . '</span>';
+                    $categoria = ucfirst(strtolower($carrito['categoria'] ?? 'Producto'));
+                    $nombre = ucfirst(strtolower($carrito['producto_nombre']));
+                    echo '<span>' . $categoria . ' ' . $nombre . '</span>';
                     echo '<span>Sabor: ' . $carrito['sabor'] . ' | Masa: ' . $carrito['masa'] . ' | Tamaño: ' . $carrito['tamano'] . ' | Decoración: ' . $carrito['decoracion'] . '</span>';
                     echo '<span class="precio">€' . number_format($carrito['producto_precio'], 2) . '</span>';
                     echo '</div>';
@@ -145,8 +149,52 @@ $result = $stmt->get_result();
             echo '<p>No hay productos en el carrito.</p>';
         }
         echo '</div>';
-        echo '<div class="boton-pagar"><a href="../pages/checkout.php" class="cta-btn">Pagar</a></div>';
         ?>
+        <button id="mostrar-formulario" class="cta-btn common-text  btn-carrito">Realizar pedido</button>
+
+        <div id="formulario-pedido" style="display:none; margin-top:20px;">
+            <form method="POST" action="../pages/stripe/checkout.php" class="formulario-envio">
+                <label class="common-text">
+                    Nombre completo:
+                    <input type="text" name="nombre" required>
+                </label>
+
+                <label class="common-text">
+                    Email:
+                    <input type="email" name="email" required>
+                </label>
+
+                <label class="common-text">
+                    Teléfono:
+                    <input type="tel" name="telefono" required pattern="[0-9]{9}" title="Introduce un número válido">
+                </label>
+
+                <label class="common-text">
+                    Dirección:
+                    <input type="text" name="direccion" required placeholder="Calle, número, piso...">
+                </label>
+
+                <label class="common-text">
+                    Ciudad:
+                    <input type="text" name="ciudad" required>
+                </label>
+
+                <label class="common-text">
+                    Código postal:
+                    <input type="text" name="cp" required pattern="[0-9]{5}" title="Introduce un CP válido">
+                </label>
+                <button type="submit" class="cta-btn common-text btn-carrito">Pagar</button>
+            </form>
+
+        </div>
+
+        <script>
+            document.getElementById('mostrar-formulario').addEventListener('click', function() {
+                document.getElementById('formulario-pedido').style.display = 'block';
+                this.style.display = 'none';
+            });
+        </script>
+
     </div>
 
     <script src="../js/carrito.js"></script>

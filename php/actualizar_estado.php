@@ -1,20 +1,16 @@
 <?php
-include_once('conexion.php');
+require './conexion.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $pedido_id = intval($_POST['pedido_id']);
-    $estado_id = intval($_POST['estado_id']);
+foreach ($_POST as $key => $estado_id) {
+    if (strpos($key, 'estado_') === 0) {
+        $pedido_id = intval(str_replace('estado_', '', $key));
+        $estado_id = intval($estado_id);
 
-    $stmt = $conn->prepare("UPDATE pedidos SET estado_pedido = ? WHERE pedido_id = ?");
-    $stmt->bind_param("ii", $estado_id, $pedido_id);
-
-    if ($stmt->execute()) {
-        echo "✔ Estado actualizado correctamente.";
-    } else {
-        echo "❌ Error al actualizar el estado.";
+        $stmt = $conn->prepare("UPDATE pedidos SET estado_pedido = ? WHERE pedido_id = ?");
+        $stmt->bind_param("ii", $estado_id, $pedido_id);
+        $stmt->execute();
     }
-
-    $stmt->close();
-    $conn->close();
 }
-?>
+
+header("Location: ../pages/orders.php"); // o tu ruta
+exit();

@@ -276,7 +276,7 @@ nav {
 }
 
 /* BOTON */
-a.cta-btn {
+a.cta-btn, button.cta-btn {
   background-color: var(--btn-color);
   color: var(--white);
   padding: 15px 30px;
@@ -288,14 +288,15 @@ a.cta-btn {
   font-family: text;
 }
 
-a.cta-btn:hover {
+a.cta-btn:hover, 
+button.cta-btn:hover {
   background-color: var(--hover);
   color: var(--white);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   cursor: pointer;
 }
 
-/* Asegúrate de que el color del texto también esté aplicado correctamente */
+/* El color del texto también esté aplicado correctamente */
 a.cta-btn span {
   color: inherit;
   /* Hereda el color correcto */

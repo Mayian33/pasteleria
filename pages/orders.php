@@ -6,35 +6,39 @@ if (!isset($_SESSION['rol']) || $_SESSION['rol'] != 1) {
     header("Location: index.php");
     exit();
 }
+include_once('../php/layout.php');
 
-include_once('../php/conexion.php');
-
+// Consulta principal
 $sql = "SELECT 
-    cr.id_carrito,
-    cr.usuario_carrito,
-    cr.fecha_carrito,
-    u.nombre_usuario,
-    u.telefono_usuario,
-    u.direccion_usuario,
-    u.email_usuario,
-    prod.nombre_prod,
-    prod.precio,
-    pers.sabor_personalizacion,
-    c.nombre_categ,
+    p.*, 
+    dp.*, 
     e.nombre_estado,
-    p.pedido_id,
-    e.id_estado
+    pr.nombre_prod,
+    per.id_personalizacion,
+    t.nombre_tamano,
+    m.nombre_masa,
+    s.nombre_sabor,
+    d.nombre_decoracion,
+    per.tamano_personalizacion,
+    per.masa_personalizacion,
+    per.sabor_personalizacion,
+    per.decoracion_personalizacion
 
-FROM carrito cr
-LEFT JOIN usuarios u ON cr.usuario_carrito = u.id_usuario
-LEFT JOIN productos prod ON cr.producto_id = prod.id_prod
-LEFT JOIN personalizacion pers ON cr.personalizacion_id = pers.id_personalizacion
-LEFT JOIN categorias c ON prod.categoria = c.id_categ
-LEFT JOIN detalle_pedido dp ON dp.producto = cr.producto_id
-LEFT JOIN pedidos p ON dp.pedido = p.pedido_id AND p.usuario_id = cr.usuario_carrito
-LEFT JOIN estados e ON p.estado_pedido = e.id_estado
-ORDER BY cr.usuario_carrito, cr.fecha_carrito DESC;
-";
+FROM pedidos p
+JOIN detalle_pedido dp ON p.pedido_id = dp.pedido_id
+JOIN estados e ON p.estado_pedido = e.id_estado
+LEFT JOIN productos pr ON dp.producto_id = pr.id_prod
+LEFT JOIN personalizacion per ON dp.personalizacion_id = per.id_personalizacion
+LEFT JOIN tamano t ON per.tamano_personalizacion = t.id_tamano
+LEFT JOIN masa m ON per.masa_personalizacion = m.id_masa
+LEFT JOIN sabor s ON per.sabor_personalizacion = s.id_sabor
+LEFT JOIN decoracion d ON per.decoracion_personalizacion = d.id_decoracion
+
+WHERE p.estado_pedido != 5
+
+ORDER BY p.fecha_pedido DESC";
+
+
 
 
 $result = $conn->query($sql);
@@ -43,11 +47,10 @@ $result = $conn->query($sql);
 $estadosQuery = $conn->query("SELECT id_estado, nombre_estado FROM estados");
 $estados = $estadosQuery->fetch_all(MYSQLI_ASSOC);
 
-
 // Agrupar los pedidos por usuario
-$carrito_por_usuario = [];
+$pedidos_por_usuario = [];
 while ($row = $result->fetch_assoc()) {
-    $carrito_por_usuario[$row['usuario_carrito']][] = $row;
+    $pedidos_por_usuario[$row['usuario_id']][] = $row;
 }
 ?>
 
@@ -59,110 +62,106 @@ while ($row = $result->fetch_assoc()) {
     <title>Pedidos | Admin</title>
     <link rel="preload" href="../css/estilos-comunes.css" as="style" />
     <link href="../css/estilos-comunes.css" rel="stylesheet" />
-
     <link rel="preload" href="../css/orders.css" as="style" />
     <link href="../css/orders.css" rel="stylesheet" />
 </head>
 
 <body>
 
-<script>
-function guardarEstado(event, pedidoId) {
-    event.preventDefault();
-    
-    const form = event.target;
-    const estado = form.querySelector('select[name="estado"]').value;
+    <script>
+        function guardarEstado(event, pedidoId) {
+            event.preventDefault();
 
-    fetch('../php/actualizar_estado.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: `pedido_id=${pedidoId}&estado_id=${estado}`
-    })
-    .then(response => response.text())
-    .then(data => {
-        alert(data); // Reemplaza esto si prefieres mostrar el mensaje dentro del formulario
-    })
-    .catch(error => {
-        console.error('Error al actualizar el estado:', error);
-    });
-}
-</script>
+            const form = event.target;
+            const estado = form.querySelector('select[name="estado"]').value;
 
+            fetch('../php/actualizar_estado.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `pedido_id=${pedidoId}&estado_id=${estado}`
+                })
+                .then(response => response.text())
+                .then(data => {
+                    alert(data);
+                })
+                .catch(error => {
+                    console.error('Error al actualizar el estado:', error);
+                });
+        }
+    </script>
 
-
-    <!-- MENU NAVBAR -->
     <header>
         <?php echo $Menu ?>
     </header>
 
     <div class="main">
         <h1 class="title">Pedidos Recibidos</h1>
-        <div class="pedidos">
-            <?php if (!empty($carrito_por_usuario)): ?>
-                <?php foreach ($carrito_por_usuario as $usuario_id => $carrito): ?>
-                    <div class="usuario-pedidos">
-                        <h2 class="regular-title title-info">Pedidos de: <?= htmlspecialchars($carrito[0]['nombre_usuario']) ?></h2>
 
-                        <!-- Nueva info del usuario -->
-                        <p class="common-text"><strong>Email:</strong> <?= htmlspecialchars($carrito[0]['email_usuario'] ?? 'No disponible') ?></p>
-                        <p class="common-text"><strong>Teléfono:</strong> <?= htmlspecialchars($carrito[0]['telefono_usuario'] ?? 'No disponible') ?></p>
-                        <p class="common-text"><strong>Dirección:</strong> <?= htmlspecialchars($carrito[0]['direccion_usuario'] ?? 'No disponible') ?></p>
 
-                        <?php foreach ($carrito as $row): ?>
-                            <div class="pedido-card">
-                                <br>
-                                <p class="common-text"><strong>Fecha:</strong> <?= $row['fecha_carrito'] ?></p>
-                                <p class="common-text">
-                                    <strong>Producto:</strong>
-                                    <?php
-                                    if (!empty($row['nombre_prod'])) {
-                                        echo htmlspecialchars($row['nombre_prod']) . ' (' . htmlspecialchars($row['nombre_categ']) . ')';
-                                    } elseif (!empty($row['sabor_personalizacion'])) {
-                                        echo 'Personalizado - ' . htmlspecialchars($row['sabor_personalizacion']);
-                                    } else {
-                                        echo 'Producto desconocido';
-                                    }
-                                    ?>
-                                </p>
-                                <p class="common-text">
-                                    <strong>Total:</strong>
-                                    <?php
-                                    if (!empty($row['nombre_prod'])) {
-                                        echo number_format($row['precio'], 2) . ' €';
-                                    } elseif (!empty($row['sabor_personalizacion'])) {
-                                        echo number_format($row['total_carrito'], 2) . ' €';
-                                    } else {
-                                        echo '0.00 €';
-                                    }
-                                    ?>
-                                </p>
+        <form method="POST" action="../php/actualizar_estado.php">
+            <button type="submit" class="guardar-btn cta-btn common-text">Guardar cambios</button>
+            <div class="pedidos">
+                <?php if (!empty($pedidos_por_usuario)): ?>
+                    <?php foreach ($pedidos_por_usuario as $usuario_id => $pedidos): ?>
+                        <div class="usuario-pedidos">
+                            <h2 class="regular-title title-info">Pedido de: <?= htmlspecialchars($pedidos[0]['nombre_pedido']) ?></h2>
 
-                                <form onsubmit="guardarEstado(event, <?= $row['pedido_id'] ?>)">
-                                    <select name="estado" class="custom-dropdown">
-                                        <option value="" disabled selected>Estado por defecto</option>
+                            <!-- Datos del cliente -->
+                            <p class="common-text"><strong>Email:</strong> <?= htmlspecialchars($pedidos[0]['email_pedido']) ?></p>
+                            <p class="common-text"><strong>Teléfono:</strong> <?= htmlspecialchars($pedidos[0]['telefono_pedido']) ?></p>
+                            <p class="common-text"><strong>Dirección:</strong> <?= htmlspecialchars($pedidos[0]['direccion_pedido']) ?>, <?= htmlspecialchars($pedidos[0]['ciudad']) ?> (<?= htmlspecialchars($pedidos[0]['cp']) ?>)</p>
+
+                            <?php foreach ($pedidos as $row): ?>
+                                <div class="pedido-card">
+                                    <p class="common-text"><strong>Fecha:</strong> <?= $row['fecha_pedido'] ?></p>
+
+                                    <?php if (!empty($row['nombre_prod'])): ?>
+                                        <p class="common-text"><strong>Producto:</strong> <?= htmlspecialchars($row['nombre_prod']) ?></p>
+
+                                    <?php elseif (!empty($row['id_personalizacion'])): ?>
+                                        <p class="common-text"><strong>Producto personalizado</strong></p>
+                                        <ul class="common-text">
+                                            <li><strong>Tamaño:</strong> <?= htmlspecialchars($row['nombre_tamano'] ?? 'No especificada') ?></li>
+                                            <li><strong>Masa:</strong> <?= htmlspecialchars($row['nombre_masa'] ?? 'No especificada') ?></li>
+                                            <li><strong>Sabor:</strong> <?= htmlspecialchars($row['nombre_sabor'] ?? 'No especificado') ?></li>
+                                            <li><strong>Decoración:</strong> <?= htmlspecialchars($row['nombre_decoracion'] ?? 'No especificada') ?></li>
+                                        </ul>
+
+                                    <?php else: ?>
+                                        <p class="common-text"><strong>Producto:</strong> Producto desconocido</p>
+                                    <?php endif; ?>
+
+
+
+
+                                    <p class="common-text"><strong>Cantidad:</strong> <?= $row['cantidad'] ?></p>
+                                    <p class="common-text"><strong>Precio unitario:</strong> <?= number_format($row['total_pedido'], 2) ?> €</p>
+
+                                    <select name="estado_<?= $row['pedido_id'] ?>" class="custom-dropdown">
+
                                         <?php foreach ($estados as $estado): ?>
-                                            <option value="<?= $estado['id_estado'] ?>" <?= $row['id_estado'] == $estado['id_estado'] ? 'selected' : '' ?>>
+                                            <option value="<?= $estado['id_estado'] ?>" <?= $row['estado_pedido'] == $estado['id_estado'] ? 'selected' : '' ?>>
                                                 <?= $estado['nombre_estado'] ?>
                                             </option>
                                         <?php endforeach; ?>
                                     </select>
-                                    <button type="submit" class="guardar-btn cta-btn">Guardar</button>
-                                    <button type="submit" class="guardar-btn cta-btn">Borrar</button>
-                                </form>
 
 
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <p class="common-text">No hay pedidos registrados.</p>
+                <?php endif; ?>
+            </div>
+            <div style="text-align:center; margin-top:2rem;">
 
-                            </div>
-                        <?php endforeach; ?>
+            </div>
+        </form>
 
-                    </div>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <p class="common-text">No hay pedidos registrados.</p>
-            <?php endif; ?>
-        </div>
     </div>
 </body>
 

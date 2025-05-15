@@ -1,5 +1,5 @@
 <?php
-include_once('../php/conexion.php');
+include_once('../php/layout.php');
 
 
 // Verifica si el usuario es administrador con rol 1
@@ -47,7 +47,6 @@ $isAdmin = isset($_SESSION['rol']) && $_SESSION['rol'] == 1;
                 color: var(--white);
                 font-family: title;
             }
-
         </style>
     </head>
 

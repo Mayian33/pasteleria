@@ -1,9 +1,5 @@
 <?php
-include_once('../php/conexion.php');
-
-
-
-
+include_once('../php/layout.php');
 
 // Obtener las imágenes de la base de datos
 $sql = "SELECT imagen FROM productos";

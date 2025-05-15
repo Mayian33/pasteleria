@@ -1,5 +1,5 @@
 <?php
-include_once('../php/conexion.php');
+include_once('../php/layout.php');
 
 $sql_categorias = "SELECT * FROM categorias";
 $result = $conn->query($sql_categorias);

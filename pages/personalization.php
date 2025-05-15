@@ -1,5 +1,5 @@
 <?php
-include_once('../php/conexion.php');
+include_once('../php/layout.php');
 
 // Consultas
 $sql1 = "SELECT * FROM sabor";

@@ -160,6 +160,43 @@
   justify-content: end;
 }
 
+/* Estilo del formulario de pedido */
+.formulario-envio {
+    max-width: 500px;
+    margin: 0 auto;
+    background-color: var(--background);
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.formulario-envio label {
+    display: flex;
+    flex-direction: column;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.formulario-envio input {
+    padding: 0.6rem 1rem;
+    margin-top: 0.3rem;
+    border: 1px solid var(--background);
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.formulario-envio input:focus {
+    border-color: var(--background);
+    box-shadow: 0 0 0 2px rgba(216, 107, 160, 0.2);
+    outline: none;
+}
+
+
 
 @media (max-width: 768px) {
   .producto {

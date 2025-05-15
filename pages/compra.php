@@ -1,6 +1,6 @@
 <?php
 session_start();
-include_once('../php/conexion.php');
+include_once('../php/layout.php');
 
 if (isset($_GET['id'])) {
     $id = intval($_GET['id']);

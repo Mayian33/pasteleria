@@ -1,5 +1,5 @@
 <?php
-include_once('../php/conexion.php');
+include_once('../php/layout.php');
 
 // Verificar si se recibió el id por GET
 if (!isset($_GET['id']) || empty($_GET['id'])) {
