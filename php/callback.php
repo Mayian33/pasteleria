@@ -4,10 +4,16 @@ session_start();
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-// Variables de Google
-$client_id = "610173823970-2ghtoc8eet06j6vdjggt4262gjfrdpol.apps.googleusercontent.com"; 
-$client_secret = "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"; 
-$redirect_uri = "http://localhost/PROYECTO/pasteleria/php/callback.php"; 
+require __DIR__ . '/../vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv->load();
+
+// ✅ Ahora sí estás usando las claves reales del .env
+$client_id = $_ENV['GOOGLE_CLIENT_ID'];
+$client_secret = $_ENV['GOOGLE_CLIENT_SECRET'];
+$redirect_uri = "http://localhost/PROYECTO/pasteleria/php/callback.php";
+
 
 // Conexión a la base de datos
 $conn = new mysqli("localhost", "root", "", "brollin");

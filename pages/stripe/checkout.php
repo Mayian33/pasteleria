@@ -1,7 +1,10 @@
 <?php
-// 1. Guardar datos del cliente en sesión
 session_start();
-$_SESSION['cliente'] = [
+require 'config.php';
+require '../../php/conexion.php';
+
+// Guardar datos del cliente
+$cliente = [
   'nombre'    => $_POST['nombre'] ?? '',
   'email'     => $_POST['email'] ?? '',
   'telefono'  => $_POST['telefono'] ?? '',
@@ -12,10 +15,7 @@ $_SESSION['cliente'] = [
   'pais'      => $_POST['pais'] ?? '',
 ];
 
-// 2. Cargar Stripe y BD
-require 'config.php';
-require '../../php/conexion.php';
-
+// Verificar sesión
 if (!isset($_SESSION['usuario_id'])) {
     echo "<script>alert('Debes iniciar sesión.'); window.location.href='carrito.php';</script>";
     exit(); 
@@ -23,12 +23,8 @@ if (!isset($_SESSION['usuario_id'])) {
 
 $usuario_id = $_SESSION['usuario_id'];
 
-// 3. Consultar productos en carrito
-$stmt = $conn->prepare("SELECT c.id_carrito, 
-                               pr.nombre_prod, 
-                               pr.precio AS producto_precio, 
-                               pm.precio_personalizacion, 
-                               pm.id_personalizacion
+// Cargar productos del carrito
+$stmt = $conn->prepare("SELECT c.id_carrito, c.producto_id, pr.nombre_prod, pr.precio AS producto_precio, pm.precio_personalizacion, pm.id_personalizacion
                         FROM carrito c
                         LEFT JOIN productos pr ON c.producto_id = pr.id_prod
                         LEFT JOIN personalizacion pm ON c.personalizacion_id = pm.id_personalizacion
@@ -37,42 +33,56 @@ $stmt->bind_param("i", $usuario_id);
 $stmt->execute();
 $result = $stmt->get_result();
 
-$line_items = [];
+$carrito_items = [];
 $total = 0;
+$line_items = [];
 
 while ($item = $result->fetch_assoc()) {
-    $cantidad = isset($_SESSION['carrito'][$item['id_carrito']]['cantidad']) ? $_SESSION['carrito'][$item['id_carrito']]['cantidad'] : 1;
+    $id_carrito = $item['id_carrito'];
+    $cantidad = 1;
     $nombre = $item['nombre_prod'] ?? 'Tarta personalizada';
     $precio = $item['producto_precio'] ?? $item['precio_personalizacion'] ?? 0;
 
-    // Añadir al array de Stripe
+    $carrito_items[$id_carrito] = [
+        'producto_id' => $item['producto_id'],
+        'personalizacion_id' => $item['id_personalizacion'],
+        'cantidad' => $cantidad
+    ];
+
     $line_items[] = [
         'price_data' => [
             'currency' => 'eur',
-            'product_data' => [
-                'name' => $nombre,
-            ],
+            'product_data' => ['name' => $nombre],
             'unit_amount' => intval($precio * 100),
         ],
         'quantity' => $cantidad,
     ];
 
-    // Calcular total en euros
     $total += $precio * $cantidad;
 }
 
-// 4. Guardar el total calculado
-$_SESSION['total_pedido'] = $total;
+// Crear un token único
+$token = bin2hex(random_bytes(16));
 
-// 5. Crear sesión de pago en Stripe
+// Guardar la info temporal en archivo JSON
+$temp_data = [
+    'usuario_id' => $usuario_id,
+    'cliente' => $cliente,
+    'carrito' => $carrito_items,
+    'total' => $total
+];
+
+file_put_contents(__DIR__ . "/temp_" . $token . ".json", json_encode($temp_data));
+
+// Crear sesión de pago en Stripe
 $YOUR_DOMAIN = 'http://localhost/PROYECTO/pasteleria/';
-
 $checkout_session = \Stripe\Checkout\Session::create([
     'line_items' => $line_items,
     'mode' => 'payment',
-    'success_url' => $YOUR_DOMAIN . 'php/success.php',
+    'success_url' => $YOUR_DOMAIN . 'pages/stripe/success.php?token=' . $token,
     'cancel_url' => $YOUR_DOMAIN . 'pages/stripe/cancel.html',
 ]);
 
 header("Location: " . $checkout_session->url);
 exit;
+?>

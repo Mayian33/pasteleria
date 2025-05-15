@@ -1,0 +1,12 @@
+# Archivos sensibles
+.env
+
+# Archivos temporales de Stripe
+temp_*.json
+
+# Dependencias de Composer
+/vendor/
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
