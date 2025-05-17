@@ -17,7 +17,7 @@ if (file_exists(__DIR__ . '/../vendor/autoload.php')) {
 // Obtener datos desde variables de entorno
 $host = getenv('DB_HOST') ?: 'localhost';
 $user = getenv('DB_USER') ?: 'root';
-$pass = getenv('DB_PASS') ?: '';
+$pass = getenv('DB_PASSWORD') ?: '';
 $db   = getenv('DB_NAME') ?: 'brollin';
 $port = getenv('DB_PORT') ?: 3306;
 
