@@ -15,14 +15,16 @@ if (file_exists(__DIR__ . '/../vendor/autoload.php')) {
 }
 
 // Obtener datos desde variables de entorno
-$host = getenv('DB_HOST') ?: 'localhost';
-$user = getenv('DB_USER') ?: 'root';
-$pass = getenv('DB_PASSWORD') ?: '';
-$db   = getenv('DB_NAME') ?: 'brollin';
-$port = getenv('DB_PORT') ?: 3306;
+$host = 'host.docker.internal'; // <- muy importante
+$user = 'root';
+$pass = ''; // sin contraseña
+$db   = 'brollin';
+$port = 3306;
 
-// Conexión a la base de datos
 $conn = new mysqli($host, $user, $pass, $db, $port);
+
 if ($conn->connect_error) {
     die("Conexión fallida: " . $conn->connect_error);
 }
+
+

@@ -57,7 +57,7 @@ $Sesion = "
 $ClienteMenu = '';
 if ($rol == 2 || empty($rol)) {
     $ClienteMenu = '
-<a href="../pages/index.php">Home</a>
+<a href="../pages/principal.php">Home</a>
 <a href="../pages/catalogue.php">Catalogo</a>
 <a href="../pages/personalization.php">Personalización</a>
 <a href="../pages/donacion.php">Donaciones</a>
