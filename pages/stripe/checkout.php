@@ -39,7 +39,8 @@ $line_items = [];
 
 while ($item = $result->fetch_assoc()) {
     $id_carrito = $item['id_carrito'];
-    $cantidad = 1;
+    $cantidad = $_SESSION['carrito'][$id_carrito]['cantidad'] ?? 1;
+
     $nombre = $item['nombre_prod'] ?? 'Tarta personalizada';
     $precio = $item['producto_precio'] ?? $item['precio_personalizacion'] ?? 0;
 
@@ -60,6 +61,7 @@ while ($item = $result->fetch_assoc()) {
 
     $total += $precio * $cantidad;
 }
+
 
 // Crear un token único
 $token = bin2hex(random_bytes(16));

@@ -1,3 +1,15 @@
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Pago exitoso</title>
+        <link rel="preload" href="../../css/estilos-comunes.css" as="style" />
+        <link href="../../css/estilos-comunes.css" rel="stylesheet" />
+    </head>
+
+    <body>
 <?php
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
@@ -11,7 +23,10 @@ $dotenv->load();
 // Obtener token desde URL
 $token = $_GET['token'] ?? null;
 if (!$token || !file_exists(__DIR__ . "/temp_" . $token . ".json")) {
-    echo "<p>Error: No se encontró la información del pedido.</p>";
+    echo '<div class="container-stripe ">';
+    echo '<p class="common-text">❌Error: No se encontró la información del pedido.</p>';
+    echo '<a class="cta-btn" href="../catalogue.php">Volver al catálogo</a>';
+    echo '</div>';
     exit;
 }
 
@@ -68,10 +83,19 @@ if ($stmt->execute()) {
 
     $conn->query("DELETE FROM carrito WHERE usuario_carrito = $usuario_id");
 
-    echo "<h1>🎉 ¡Gracias por tu compra!</h1>";
-    echo "<p>Tu pedido ha sido registrado correctamente.</p>";
-    echo '<a href="../pages/catalogue.php">Volver al catálogo</a>';
+    echo '<div class="container-stripe">';
+    echo '<h1 class="subtitle-text">🎉 ¡Gracias por tu compra!</h1>';
+    echo '<p class="common-text">Tu pedido ha sido registrado correctamente.</p>';
+    echo '<a class="cta-btn" href="../catalogue.php">Volver al catálogo</a>';
+    echo '</div>';
 } else {
-    echo "<p><strong>❌ Error al guardar el pedido:</strong> " . $stmt->error . "</p>";
+    echo '<div class="container-stripe">';
+    echo '<p class="common-text">❌ Ocurrió un error al guardar tu pedido. Por favor, inténtalo de nuevo más tarde.</p>';
+    echo '<a class="cta-btn" href="../catalogue.php">Volver al catálogo</a>';
+    echo '</div>';
 }
-?>
+    ?>
+
+    </body>
+
+    </html>

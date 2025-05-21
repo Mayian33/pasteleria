@@ -45,13 +45,14 @@ $Sesion = "
         ";
 
     // Cerrar div del dropdown
-    $Sesion .= "
+$Sesion .= "
     </div>
 </div>";
 } else {
     // vuelve a mostrar la seleccion de cuentas a cada vez que se inicia sesion
-    $Sesion = '<a class="cta-btn btn-menu" href="https://accounts.google.com/o/oauth2/v2/auth?client_id=610173823970-2ghtoc8eet06j6vdjggt4262gjfrdpol.apps.googleusercontent.com&redirect_uri=http://localhost/PROYECTO/pasteleria/php/callback.php&response_type=token&scope=profile%20email&prompt=select_account"><span>Iniciar sesión</span> <img class="icono-carrito" src="../assets/img/icons/ingresar.png" alt="Icono de sesion"></a>';
+    $Sesion = '<a class="cta-btn btn-menu" href="https://accounts.google.com/o/oauth2/v2/auth?client_id=610173823970-2ghtoc8eet06j6vdjggt4262gjfrdpol.apps.googleusercontent.com&redirect_uri=http://localhost/PROYECTO/pasteleria/php/callback.php&response_type=code&scope=profile%20email&prompt=select_account"><span>Iniciar sesión</span> <img class="icono-carrito" src="../assets/img/icons/ingresar.png" alt="Icono de sesion"></a>';
 }
+
 
 // Menú para cliente/invitado
 $ClienteMenu = '';

@@ -71,8 +71,11 @@ $conn->close();
                         <select name="sabor" id="saborSelect">
                             <option value="">Elige un sabor</option>
                             <?php foreach ($sabores as $sabor): ?>
-                                <option value="<?= $sabor['id_sabor'] ?>"><?= $sabor['nombre_sabor'] ?></option>
+                                <option value="<?= $sabor['id_sabor'] ?>">
+                                    <?= $sabor['nombre_sabor'] ?> - <?= number_format($sabor['precio_sabor'], 2) ?>€
+                                </option>
                             <?php endforeach; ?>
+
                         </select>
                     </div>
 
@@ -82,8 +85,11 @@ $conn->close();
                         <select name="masa" id="masaSelect">
                             <option value="">Elige una masa</option>
                             <?php foreach ($masas as $masa): ?>
-                                <option value="<?= $masa['id_masa'] ?>"><?= $masa['nombre_masa'] ?></option>
+                                <option value="<?= $masa['id_masa'] ?>">
+                                    <?= $masa['nombre_masa'] ?> - <?= number_format($masa['precio_masa'], 2) ?>€
+                                </option>
                             <?php endforeach; ?>
+
                         </select>
                     </div>
 
@@ -93,8 +99,11 @@ $conn->close();
                         <select name="tamano" id="tamanoSelect">
                             <option value="">Elige un tamaño</option>
                             <?php foreach ($tamanos as $tamano): ?>
-                                <option value="<?= $tamano['id_tamano'] ?>"><?= $tamano['nombre_tamano'] ?></option>
+                                <option value="<?= $tamano['id_tamano'] ?>">
+                                    <?= $tamano['nombre_tamano'] ?> - <?= number_format($tamano['precio_tamano'], 2) ?>€
+                                </option>
                             <?php endforeach; ?>
+
                         </select>
                     </div>
 
@@ -104,15 +113,16 @@ $conn->close();
                         <select name="decoracion" id="decoracionSelect">
                             <option value="">Elige una decoración</option>
                             <?php foreach ($decoraciones as $deco): ?>
-                                <option value="<?= $deco['id_decoracion'] ?>"><?= $deco['nombre_decoracion'] ?></option>
+                                <option value="<?= $deco['id_decoracion'] ?>">
+                                    <?= $deco['nombre_decoracion'] ?> - <?= number_format($deco['precio_decoracion'], 2) ?>€
+                                </option>
                             <?php endforeach; ?>
+
                         </select>
                     </div>
 
                     <!-- Opciones de personalización alimentaria -->
                     <p class="common-text info-text"><b> Opciones adicionales:</b></p>
-
-
                     <?php foreach ($opciones as $opcion): ?>
                         <div class="form-group-option">
                             <label class="common-text" for="opcion-<?= $opcion['nombre_opcion'] ?>">
@@ -121,6 +131,9 @@ $conn->close();
                             </label>
                         </div>
                     <?php endforeach; ?>
+                    <p class="italic-text">
+                        Sin coste adicional porque creemos en una repostería inclusiva para todos
+                    </p>
 
 
                     <div class="form-buttons">

@@ -38,7 +38,7 @@ if ($result->num_rows > 0) {
 
     <section class="main">
         <!-- CONTAINER PRINCIPAL -->
-        <div class="container container-principal">
+        <div class="container ">
             <div class="content-card">
                 <div class="text-content">
                     <h1 class="title">Dulce<br />&amp;<span>Pasión</span></h1>

@@ -38,7 +38,7 @@ include_once('../php/layout.php');
             text-align: justify;
         }
 
-        .bible-verse {
+        .italic-text {
             font-style: italic;
             margin-top: 2rem;
             text-align: center;
@@ -99,7 +99,7 @@ include_once('../php/layout.php');
             <p class="about-text common-text">
                 Mi objetivo es que cada bocado no solo endulce tu día, sino que también refleje un poquito del amor de Dios. Gracias por apoyar este proyecto, que es un regalo y una misión para mí.
             </p>
-            <p class="bible-verse">
+            <p class="italic-text">
                 "Y todo lo que hagáis, hacedlo de corazón, como para el Señor y no para los hombres."<br>
                 — Colosenses 3:23
             </p>

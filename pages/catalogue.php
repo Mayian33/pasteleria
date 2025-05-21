@@ -38,7 +38,7 @@ $isAdmin = isset($_SESSION['rol']) && $_SESSION['rol'] == 1;
                 echo "<a class='cta-btn btn-anadir' href='../pages/anadir.php'>Añadir más productos</a>";
             } else {
                 echo "<a class='cta-btn common-text' href='../pages/personalization.php'>Personalización</a>";
-                echo "   <a class='cta-btn common-text donation'>
+                echo "   <a class='cta-btn common-text donation' href='../pages/donacion.php'>
                 Donaciones
                 <img src='../assets/img/icons/donation.png' alt='Icono de donaciones' class='icono'>
             </a>";

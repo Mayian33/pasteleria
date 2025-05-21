@@ -13,6 +13,6 @@ if (isset($_COOKIE[session_name()])) {
 }
 
 // Redirigir a la página principal (o donde quieras)
-header("Location: ../pages/index.php"); 
+header("Location: ../pages/principal.php"); 
 exit();
 ?>

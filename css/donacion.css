@@ -1,0 +1,21 @@
+.content-card {
+    padding: 2rem;
+}
+
+.title {
+    margin-bottom: 0.5rem;
+}
+
+.common-text.text-info {
+    margin-top: 2rem;
+}
+
+.logos-asoc {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.text-asco{
+    text-align: center;
+}
