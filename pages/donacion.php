@@ -10,7 +10,7 @@ include_once('../php/layout.php');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Donaciones Solidarias</title>
 
-        <link rel="preload" href="../css/donacion.css" as="style" />
+    <link rel="preload" href="../css/donacion.css" as="style" />
     <link href="../css/donacion.css" rel="stylesheet" />
 
     <link rel="preload" href="../css/estilos-comunes.css" as="style" />
@@ -33,20 +33,17 @@ include_once('../php/layout.php');
 
                 <h2 class="subtitle-text" style="margin-top: 3rem;">¿Cómo funciona?</h2>
                 <ul class="common-text" style="margin-top: 1rem; list-style: disc; padding-left: 2rem;">
-                    <li>Cuando elijas un producto, podrás marcar la opción para donarlo.</li>
-                    <li>Ese producto no será entregado a ti, sino a la asociación elegida.</li>
-                    <li>Nos encargamos de llevarlo personalmente a la organización correspondiente.</li>
+                    <li>Al elegir un producto, puedes marcar la opción para donarlo.</li>
+                    <li>Recibirás tu pedido normalmente, pero parte del importe será destinado a una asociación con la que colaboramos.</li>
+                    <li>Tu gesto solidario ayudará a apoyar proyectos sociales de forma directa.</li>
+
                 </ul>
 
-                <h2 class="subtitle-text">Asociaciones activas</h2>
+                <h2 class="subtitle-text">Asociación activa</h2>
                 <div class="logos-asoc">
                     <div class="text-asco">
                         <img src="../assets/img/logos/asociaciones/asoc1.png" alt="Logo Asociación Sonrisas Dulces" style="width: 150px;">
                         <p class="common-text"><strong>Asociación Sonrisas Dulces</strong><br> Lleva dulces a niños en hospitales.</p>
-                    </div>
-                    <div style="text-align: center;">
-                        <img src="../assets/img/logos/asociaciones/asoc2.png" alt="Logo Comida Solidaria" style="width: 150px;">
-                        <p class="common-text"><strong>Comida Solidaria</strong><br> Reparte postres a personas sin hogar.</p>
                     </div>
                 </div>
 
@@ -57,6 +54,8 @@ include_once('../php/layout.php');
                     <p class="common-text text-info">
                         Gracias por colaborar. Cada aportación suma.
                     </p>
+                    <form action="procesar_donacion.php" method="POST">
+
                 </div>
             </div>
         </div>

@@ -188,22 +188,20 @@ $result = $stmt->get_result();
 
         </div>
 
-
-
     </div>
-<script>
-    document.getElementById('mostrar-formulario').addEventListener('click', function () {
-        const productos = document.querySelectorAll('.producto');
+    <script>
+        document.getElementById('mostrar-formulario').addEventListener('click', function() {
+            const productos = document.querySelectorAll('.producto');
 
-        if (productos.length === 0) {
-            alert('Tu carrito está vacío. Añade productos antes de realizar un pedido.');
-            return;
-        }
+            if (productos.length === 0) {
+                alert('Tu carrito está vacío. Añade productos antes de realizar un pedido.');
+                return;
+            }
 
-        document.getElementById('formulario-pedido').style.display = 'block';
-        this.style.display = 'none';
-    });
-</script>
+            document.getElementById('formulario-pedido').style.display = 'block';
+            this.style.display = 'none';
+        });
+    </script>
 
 
     <script src="../js/carrito.js"></script>

@@ -15,9 +15,9 @@ if (file_exists(__DIR__ . '/../vendor/autoload.php')) {
 }
 
 // Obtener datos desde variables de entorno
-$host = 'host.docker.internal'; // <- muy importante
+$host = 'localhost'; // <- muy importante
 $user = 'root';
-$pass = ''; // sin contraseña
+$pass = ''; 
 $db   = 'brollin';
 $port = 3306;
 

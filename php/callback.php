@@ -61,35 +61,29 @@ $userinfo_url = "https://www.googleapis.com/oauth2/v2/userinfo?access_token=" . 
 $userinfo_response = file_get_contents($userinfo_url);
 $userinfo = json_decode($userinfo_response, true);
 
-// Verificamos si la información del usuario está disponible
 if (isset($userinfo["error"])) {
     die("Error al obtener la información del usuario: " . $userinfo["error"]);
 }
 
-// Datos obtenidos de Google
 $name = $userinfo['name'];
 $email = $userinfo['email'];
 $picture = $userinfo['picture'];
 
-// Verificar si el usuario ya existe en la base de datos
 $query = "SELECT * FROM usuarios WHERE email_usuario = '$email'";
 $result = $conn->query($query);
 
 if ($result->num_rows > 0) {
-    // El usuario ya existe, obtenemos los datos de sesión
     $user = $result->fetch_assoc();
-    $_SESSION["usuario_id"] = $user["id_usuario"];  // Cambiar a "usuario_id"
+    $_SESSION["usuario_id"] = $user["id_usuario"];  
     $_SESSION["nombre_usuario"] = $user["nombre_usuario"];
     $_SESSION["email_usuario"] = $user["email_usuario"];
     $_SESSION["foto_usuario"] = $user["foto_usuario"];
-    $_SESSION["rol"] = $user["rol"];  // Obtener el rol del usuario
+    $_SESSION["rol"] = $user["rol"];
 } else {
-    // Si no existe, insertarlo en la base de datos
     $query = "INSERT INTO usuarios (nombre_usuario, email_usuario, foto_usuario, rol) 
-              VALUES ('$name', '$email', '$picture', 2)"; // rol por defecto 2 (cliente)
+              VALUES ('$name', '$email', '$picture', 2)";
 
     if ($conn->query($query) === TRUE) {
-        // Nuevo usuario insertado
         $user_id = $conn->insert_id;
         $_SESSION["usuario_id"] = $user_id;
         $_SESSION["nombre_usuario"] = $name;

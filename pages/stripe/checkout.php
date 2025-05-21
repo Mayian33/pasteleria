@@ -69,10 +69,12 @@ $token = bin2hex(random_bytes(16));
 // Guardar la info temporal en archivo JSON
 $temp_data = [
     'usuario_id' => $usuario_id,
+    'tipo' => 'compra', // << AÑADIR ESTO
     'cliente' => $cliente,
     'carrito' => $carrito_items,
     'total' => $total
 ];
+
 
 file_put_contents(__DIR__ . "/temp_" . $token . ".json", json_encode($temp_data));
 
@@ -81,7 +83,7 @@ $YOUR_DOMAIN = 'http://localhost/PROYECTO/pasteleria/';
 $checkout_session = \Stripe\Checkout\Session::create([
     'line_items' => $line_items,
     'mode' => 'payment',
-    'success_url' => $YOUR_DOMAIN . 'pages/stripe/success.php?token=' . $token,
+'success_url' => $YOUR_DOMAIN . 'pages/stripe/success.php?token=' . $token . '&tipo=compra',
     'cancel_url' => $YOUR_DOMAIN . 'pages/stripe/cancel.html',
 ]);
 

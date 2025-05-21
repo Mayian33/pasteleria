@@ -89,16 +89,18 @@ if (isset($_GET['error']) && $_GET['error'] === 'duplicado') {
 
                 <div id="user-session" data-logged-in="<?php echo $isLoggedIn; ?>"></div>
                 <div class="btn-compra">
-  <button id="add-to-cart" data-id="<?= $producto['id_prod']; ?>">Añadir al carrito</button>
+                    <button id="add-to-cart" data-id="<?= $producto['id_prod']; ?>">Añadir al carrito</button>
 
-<!-- Mensaje visual que mostrará el resultado -->
-<div id="mensaje-usuario" class="mensaje-usuario" style="display:none;"></div>
+                    <!-- Mensaje visual que mostrará el resultado -->
+                    <div id="mensaje-usuario" class="mensaje-usuario" style="display:none;"></div>
+
+
+                  <button class="cta-btn" onclick="confirmarDonacion('<?php echo $id; ?>')">
+    Donar <img src='../assets/img/icons/donation.png' alt='Icono de donaciones' class='icono'>
+</button>
 
 
 
-                    <a class="cta-btn" href="../php/carritoInsert.php?id=<?php echo $id; ?>">Donar
-                        <img src='../assets/img/icons/donation.png' alt='Icono de donaciones' class='icono'>
-                    </a>
                 </div>
             </div>
         </div>
@@ -139,6 +141,20 @@ if (isset($_GET['error']) && $_GET['error'] === 'duplicado') {
         echo $Footer;
         ?>
     </section>
+
+    <script>
+        function confirmarDonacion(idProducto) {
+            const mensaje = "⚠️ Vas a comprar este producto para ti.\nEl dinero será donado a una asociación solidaria.\n¿Deseas continuar?";
+
+            if (confirm(mensaje)) {
+                // Redirige a Stripe
+                window.location.href = `../pages/stripe/donacion_producto.php?id=${idProducto}`;
+            }
+            // Si cancela, no hacemos nada
+        }
+    </script>
+
+
 
     <script src="../js/compra.js"></script>
 </body>
