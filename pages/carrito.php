@@ -91,7 +91,6 @@ $result = $stmt->get_result();
                     $categoria = ucfirst(strtolower($carrito['categoria'] ?? 'Producto'));
                     $nombre = ucfirst(strtolower($carrito['producto_nombre']));
                     echo '<span>' . $categoria . ' ' . $nombre . '</span>';
-                    echo '<span>Sabor: ' . $carrito['sabor'] . ' | Masa: ' . $carrito['masa'] . ' | Tamaño: ' . $carrito['tamano'] . ' | Decoración: ' . $carrito['decoracion'] . '</span>';
                     echo '<span class="precio">€' . number_format($carrito['producto_precio'], 2) . '</span>';
                     echo '</div>';
 

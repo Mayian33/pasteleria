@@ -1,5 +1,9 @@
 <?php
 include_once('../php/conexion.php');
+
+// Detectar si está en móvil
+$esMovil = $_COOKIE['esMovil'] ?? '0';
+
 // Variables iniciales
 $Sesion = '';
 $Carrito = '';
@@ -12,7 +16,7 @@ $picture = $_SESSION["foto_usuario"] ?? '';
 // Si está logueado
 if (!empty($name)) {
     // Comenzamos el contenido del dropdown
-$Sesion = "
+    $Sesion = "
 <div class='user-info'>
     <label for='menu-toggle-account' class='account-label'>
           <img src='../assets/img/icons/flecha_abrir.png' />
@@ -45,7 +49,7 @@ $Sesion = "
         ";
 
     // Cerrar div del dropdown
-$Sesion .= "
+    $Sesion .= "
     </div>
 </div>";
 } else {
@@ -70,30 +74,59 @@ $AdminMenu = '';
 if ($rol == 1) {
     $AdminMenu = '
 <a href="./orders.php">Pedidos</a>
-<a href="../pages/stock.php">Stock</a>
 <a href="./catalogue.php">Catalogo</a>
 ';
 }
 
 // Menú completo
-$Menu = '
-<div class="navbar" id="home">
-    <nav>
-        <div class="logo">
-            <img alt="logo" src="../assets/img/logos/logo_menu.png" />
-        </div>
-    
-        <nav class="nav" id="nav-links">
-            ' . $ClienteMenu . $AdminMenu . '
-        </nav>
-        <div class="right-menu">
-            ' . $Carrito . $Sesion . '  
+
+
+// Menú completo según si es móvil o no
+if ($esMovil === '0') {
+    $Menu = '
+    <div class="navbar" id="home">
+        <nav>
+            <div class="logo">
+                <img alt="logo" src="../assets/img/logos/logo_menu.png" />
+            </div>
+            <nav class="nav" id="nav-links">
+                ' . $ClienteMenu . $AdminMenu . '
+            </nav>
             
-        </div> 
-         <div id="menu-toggle" class="menu-toggle">  <img src="../assets/img/icons/flecha_abrir.png" alt="Abrir menú" /></div>
-    </nav>
-</div>
-';
+            <div class="right-menu mobile-top">
+                ' . $Carrito . $Sesion . ' 
+            </div> 
+
+            <div id="menu-toggle" class="menu-toggle">
+                <p class="common-text text-menu">Menú</p> 
+                <img src="../assets/img/icons/flecha_abrir.png" alt="Abrir menú" />
+            </div>
+        </nav>
+    </div>';
+} else {
+    $Menu = '
+    <div class="navbar" id="home">
+        <nav>
+            <div class="logo">
+                <img alt="logo" src="../assets/img/logos/logo_menu.png" />
+            </div>
+
+            <nav class="nav" id="nav-links">
+                ' . $ClienteMenu . $AdminMenu . '
+            </nav>
+
+            <div class="right-menu">
+                ' . $Carrito . $Sesion . '  
+            </div> 
+
+            <div id="menu-toggle" class="menu-toggle">
+                <p class="common-text">Menú</p>
+                <img src="../assets/img/icons/flecha_abrir.png" alt="Abrir menú" />
+            </div>
+        </nav>
+    </div>';
+}
+
 
 $Footer = '
 <footer>
@@ -146,5 +179,10 @@ $Footer = '
                 nav.classList.toggle('active');
             });
         }
+    });
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const isMobile = /Mobile|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ? "1" : "0";
+        document.cookie = "esMovil=" + isMobile + "; path=/";
     });
 </script>

@@ -5,7 +5,6 @@ include_once('../php/layout.php');
 if (isset($_GET['id'])) {
     $id = intval($_GET['id']);
 
-    // Consulta para obtener la información del producto
     $sql = "SELECT p.*, c.nombre_categ 
             FROM productos p
             LEFT JOIN categorias c ON p.categoria = c.id_categ
@@ -24,10 +23,8 @@ if (isset($_GET['id'])) {
     exit;
 }
 
-// Verifica si el usuario está logueado
 $isLoggedIn = isset($_SESSION['usuario_id']) ? 'true' : 'false';
 
-// Capturar mensaje de error
 $mensaje_error = '';
 if (isset($_GET['error']) && $_GET['error'] === 'duplicado') {
     $mensaje_error = 'Este producto ya está en tu carrito. Puedes ajustar la cantidad desde allí.';
@@ -44,6 +41,7 @@ if (isset($_GET['error']) && $_GET['error'] === 'duplicado') {
 
     <link rel="preload" href="../css/estilos-comunes.css" as="style" />
     <link href="../css/estilos-comunes.css" rel="stylesheet" />
+
     <link rel="preload" href="../css/compra.css" as="style" />
     <link href="../css/compra.css" rel="stylesheet" />
 
@@ -67,10 +65,11 @@ if (isset($_GET['error']) && $_GET['error'] === 'duplicado') {
     </header>
 
     <section class="main">
+
         <div class="container-info">
             <div class="card-wrapper-single">
-                <div class="card-1 card-object card-object-hf">
-                    <a class="face front" href="#" style="background-image: url(<?php echo htmlspecialchars($producto['imagen']); ?>);">
+                <div class="card-1 card-object-single card-object-hf">
+                    <a class="face front-single" href="#" style="background-image: url(<?php echo htmlspecialchars($producto['imagen']); ?>);">
                         <div class="title-wrapper"></div>
                     </a>
                 </div>
@@ -79,82 +78,63 @@ if (isset($_GET['error']) && $_GET['error'] === 'duplicado') {
                 <h1 class="title categoria_nombre"><?php echo htmlspecialchars($producto['nombre_categ']); ?></h1>
                 <h1 class="title nombre_prod"><?php echo htmlspecialchars($producto['nombre_prod']); ?></h1>
                 <p class="descripcion"><?php echo nl2br(htmlspecialchars($producto['descripcion_detallada_prod'])); ?></p>
-                <h1><?php echo htmlspecialchars($producto['precio']); ?> €</h1>
+                <h1 class="precio"><?php echo htmlspecialchars($producto['precio']); ?> €</h1>
 
                 <?php if (!empty($mensaje_error)) : ?>
-                    <div class="alerta-error">
-                        <?php echo $mensaje_error; ?>
-                    </div>
+                    <div class="alerta-error"><?php echo $mensaje_error; ?></div>
                 <?php endif; ?>
 
                 <div id="user-session" data-logged-in="<?php echo $isLoggedIn; ?>"></div>
                 <div class="btn-compra">
-                    <button id="add-to-cart" data-id="<?= $producto['id_prod']; ?>">Añadir al carrito</button>
+                    <button class="cta-btn common-text" id="add-to-cart" data-id="<?= $producto['id_prod']; ?>">Añadir al carrito</button>
 
-                    <!-- Mensaje visual que mostrará el resultado -->
-                    <div id="mensaje-usuario" class="mensaje-usuario" style="display:none;"></div>
-
-
-                  <button class="cta-btn" onclick="confirmarDonacion('<?php echo $id; ?>')">
-    Donar <img src='../assets/img/icons/donation.png' alt='Icono de donaciones' class='icono'>
-</button>
-
-
+                    <button class="cta-btn common-text btn-compra" id="btn-donar" data-id="<?php echo $id; ?>">
+                        Donar <img src='../assets/img/icons/donation.png' alt='Icono de donaciones' class='icono'>
+                    </button>
 
                 </div>
+
             </div>
         </div>
 
         <div class="line"></div>
 
+
+        <!-- CARDS DINÁMICAS -->
         <?php
         $sql = "SELECT id_categ, nombre_categ, descripcion_categ FROM categorias";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
-            echo '<div class="cards-container">';
-            echo '<div class="cards-title"><h1 class="subtitle-text title-info"> Ver más productos</h1></div>';
+
             echo '<div class="cards-wrapper">';
 
             while ($row = $result->fetch_assoc()) {
+                $nombre_categ = $row['nombre_categ'];
+                $descripcion_categ = $row['descripcion_categ'];
+                $id_categ = strtolower(trim(preg_replace('/[^a-z0-9]+/', '-', iconv('UTF-8', 'ASCII//TRANSLIT', $nombre_categ))));
                 echo '<div class="card-wrapper">
-                        <div class="card-' . htmlspecialchars($row['id_categ']) . ' card-object card-object-hf">
-                            <a class="face front" href="catalogue.php#">
-                                <div class="title-wrapper">
-                                    <div class="card-font">' . htmlspecialchars($row['nombre_categ']) . '</div>
-                                    <div class="card-font-text">' . htmlspecialchars($row['descripcion_categ']) . '</div>
-                                </div>
-                            </a>
+                <div class="card-' . htmlspecialchars($row['id_categ']) . ' card-object card-object-hf">
+                    <a class="face front" href="catalogue.php#' . $id_categ . '">
+                        <div class="title-wrapper">
+                            <div class="card-font">' . htmlspecialchars($nombre_categ) . '</div>
+                            <div class="card-font-text common-text">' . htmlspecialchars($descripcion_categ) . '</div>
                         </div>
-                      </div>';
+                    </a>
+                </div>
+            </div>';
             }
 
-            echo '</div>
-                <div class="cta-catalogue">
-                    <a class="cta-btn" href="../pages/catalogue.php">Ver catálogo completo</a>
-                </div>
-              </div>';
+            echo '</div><div class="cta-catalogue">
+            <a class="cta-btn" href="../pages/catalogue.php">Ver catálogo completo</a>
+        </div>';
         } else {
             echo "No hay productos disponibles.";
         }
 
-        echo $Footer;
+        echo $Footer
         ?>
     </section>
-
-    <script>
-        function confirmarDonacion(idProducto) {
-            const mensaje = "⚠️ Vas a comprar este producto para ti.\nEl dinero será donado a una asociación solidaria.\n¿Deseas continuar?";
-
-            if (confirm(mensaje)) {
-                // Redirige a Stripe
-                window.location.href = `../pages/stripe/donacion_producto.php?id=${idProducto}`;
-            }
-            // Si cancela, no hacemos nada
-        }
-    </script>
-
-
 
     <script src="../js/compra.js"></script>
 </body>

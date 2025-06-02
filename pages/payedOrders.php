@@ -46,6 +46,49 @@ $pedidos = [];
 while ($row = $result->fetch_assoc()) {
     $pedidos[$row['pedido_id']][] = $row;
 }
+
+// Consulta adicional para donaciones del usuario
+$sql_donaciones = "SELECT d.*, p.nombre_prod 
+                   FROM donacion d 
+                   JOIN productos p ON d.producto_donacion = p.id_prod 
+                   WHERE d.usuario_donacion = ? 
+                   ORDER BY d.fecha_donacion DESC";
+$stmt_don = $conn->prepare($sql_donaciones);
+$stmt_don->bind_param("i", $usuario_id);
+$stmt_don->execute();
+$result_don = $stmt_don->get_result();
+
+$donaciones = [];
+while ($row = $result_don->fetch_assoc()) {
+    $donaciones[] = $row;
+}
+
+// Fusionar pedidos y donaciones
+$pedidos_flat = [];
+foreach ($pedidos as $pedido_id => $productos) {
+    $pedidos_flat[] = [
+        'tipo' => 'pedido',
+        'fecha' => $productos[0]['fecha_pedido'],
+        'estado' => $productos[0]['nombre_estado'],
+        'precio' => $productos[0]['total_pedido'],
+        'productos' => $productos
+    ];
+}
+
+foreach ($donaciones as $d) {
+    $pedidos_flat[] = [
+        'tipo' => 'donacion',
+        'fecha' => $d['fecha_donacion'],
+        'estado' => $productos[0]['nombre_estado'],
+        'precio' => $d['monto_donacion'],
+        'producto_nombre' => $d['nombre_prod'],
+        'donacion_monto' => $d['monto_donacion']
+    ];
+}
+
+usort($pedidos_flat, function ($a, $b) {
+    return strtotime($b['fecha']) - strtotime($a['fecha']);
+});
 ?>
 
 <!DOCTYPE html>
@@ -53,9 +96,12 @@ while ($row = $result->fetch_assoc()) {
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mis Pedidos</title>
+
     <link rel="preload" href="../css/estilos-comunes.css" as="style" />
     <link href="../css/estilos-comunes.css" rel="stylesheet" />
+
     <link rel="preload" href="../css/payedOrders.css" as="style" />
     <link href="../css/payedOrders.css" rel="stylesheet" />
 </head>
@@ -65,74 +111,59 @@ while ($row = $result->fetch_assoc()) {
         <?php echo $Menu ?>
     </header>
 
-    <style>
-        .productos-pedido {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-top: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .producto-detalle {
-            flex: 1 1 300px;
-            border: 1px solid var(--secondary);
-            border-radius: 12px;
-            padding: 1rem;
-            background-color: var(--white);
-        }
-
-        .producto-detalle p,
-        .producto-detalle ul {
-            margin: 0.5rem 0;
-        }
-
-        .producto-detalle ul {
-            padding-left: 1.2rem;
-        }
-    </style>
-
-    <main class="main">
+    <section class="main">
         <h2 class="subtitle-text">Historial de Pedidos</h2>
-
-        <div class="orders">
+        <div class="white-container">
             <?php if (!empty($pedidos)): ?>
-                <?php foreach ($pedidos as $pedido_id => $productos): ?>
-                    <div class="order-card">
-                        <div class="order-details">
-                            <h3 class="title-text common-text">Fecha: <?= htmlspecialchars($productos[0]['fecha_pedido']) ?></h3>
-                            <p class="common-text"><strong>Estado:</strong> <?= htmlspecialchars($productos[0]['nombre_estado']) ?></p>
-                            <?php
-                            $total = isset($productos[0]['total_pedido']) ? floatval($productos[0]['total_pedido']) : 0;
-                            ?>
-                            <p class="common-text"><strong>Precio:</strong> <?= number_format($total, 2) ?> €</p>
+                <?php if (!empty($pedidos)): ?>
+                 
 
+                        <?php foreach ($pedidos_flat as $item): ?>
+                            <?php if ($item['estado'] === 'archivar') continue; ?>
+                            <div class="orders">
+                                <div class="order-card">
+                                    <div class="order-details">
+                                        <h3 class="title-text common-text">Fecha: <?= htmlspecialchars($item['fecha']) ?></h3>
+                                        <p class="common-text"><strong>Tipo:</strong> <?= $item['tipo'] === 'pedido' ? 'Pedido' : 'Donación' ?></p>
+                                        <p class="common-text"><strong>Precio:</strong> <?= number_format($item['precio'], 2) ?> €</p>
 
-                            <div class="productos-pedido">
-                                <?php foreach ($productos as $producto): ?>
-                                    <div class="producto-detalle">
-                                        <?php if (!empty($producto['nombre_prod'])): ?>
-                                            <p class="common-text"><strong>Producto:</strong> <?= htmlspecialchars($producto['nombre_prod']) ?></p>
-                                        <?php elseif (!empty($producto['id_personalizacion'])): ?>
-                                            <p class="common-text"><strong>Producto personalizado</strong></p>
-                                            <ul class="common-text">
-                                                <li><strong>Tamaño:</strong> <?= htmlspecialchars($producto['nombre_tamano'] ?? 'No especificado') ?></li>
-                                                <li><strong>Masa:</strong> <?= htmlspecialchars($producto['nombre_masa'] ?? 'No especificado') ?></li>
-                                                <li><strong>Sabor:</strong> <?= htmlspecialchars($producto['nombre_sabor'] ?? 'No especificado') ?></li>
-                                                <li><strong>Decoración:</strong> <?= htmlspecialchars($producto['nombre_decoracion'] ?? 'No especificado') ?></li>
-                                            </ul>
-                                        <?php else: ?>
-                                            <p class="common-text"><strong>Producto:</strong> Producto desconocido</p>
+                                        <?php if ($item['tipo'] === 'pedido'): ?>
+                                            <p class="common-text"><strong>Estado:</strong> <?= htmlspecialchars($item['estado']) ?></p>
+                                            <div class="productos-pedido">
+                                                <?php foreach ($item['productos'] as $producto): ?>
+                                                    <div class="producto-detalle">
+                                                        <?php if (!empty($producto['nombre_prod'])): ?>
+                                                            <p class="common-text"><strong>Producto:</strong> <?= htmlspecialchars($producto['nombre_prod']) ?></p>
+                                                        <?php elseif (!empty($producto['id_personalizacion'])): ?>
+                                                            <p class="common-text"><strong>Producto personalizado</strong></p>
+                                                            <ul class="common-text">
+                                                                <li><strong>Tamaño:</strong> <?= htmlspecialchars($producto['nombre_tamano'] ?? 'No especificado') ?></li>
+                                                                <li><strong>Masa:</strong> <?= htmlspecialchars($producto['nombre_masa'] ?? 'No especificado') ?></li>
+                                                                <li><strong>Sabor:</strong> <?= htmlspecialchars($producto['nombre_sabor'] ?? 'No especificado') ?></li>
+                                                                <li><strong>Decoración:</strong> <?= htmlspecialchars($producto['nombre_decoracion'] ?? 'No especificado') ?></li>
+                                                            </ul>
+                                                        <?php endif; ?>
+                                                        <p class="common-text"><strong>Cantidad:</strong> <?= $producto['cantidad'] ?></p>
+                                                    </div>
+                                                <?php endforeach; ?>
+                                            </div>
+                                        <?php elseif ($item['tipo'] === 'donacion'): ?>
+                                            <p class="common-text"><strong>Donación para:</strong> <?= htmlspecialchars($item['producto_nombre']) ?></p>
+                                            <p class="common-text donacion-frase">
+                                                ¡Gracias por tu generosa donación! Ayudas a endulzar la vida de quienes más lo necesitan. 🩷
+                                            </p>
                                         <?php endif; ?>
 
-                                        <p class="common-text"><strong>Cantidad:</strong> <?= $producto['cantidad'] ?></p>
-
                                     </div>
-                                <?php endforeach; ?>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
+                        <?php endforeach; ?>
+
+
+             
+                <?php else: ?>
+                    <p class="common-text">No tienes pedidos registrados.</p>
+                <?php endif; ?>
             <?php else: ?>
                 <p class="common-text">No tienes pedidos registrados.</p>
             <?php endif; ?>
@@ -142,7 +173,9 @@ while ($row = $result->fetch_assoc()) {
         <div class="cta-catalogue">
             <a href="../pages/catalogue.php" class="cta-btn">Hacer nuevo pedido</a>
         </div>
-    </main>
+
+        <?php echo $Footer ?>
+    </section>
 </body>
 
 </html>

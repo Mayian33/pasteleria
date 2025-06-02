@@ -21,9 +21,18 @@ if ($result->num_rows === 0) {
 
 $producto = $result->fetch_assoc();
 
-// Consultar categorías
+// Guardar categorías en array
+$categorias = [];
 $sql_categorias = "SELECT * FROM categorias";
 $result_categorias = $conn->query($sql_categorias);
+
+while ($row = $result_categorias->fetch_assoc()) {
+    $categorias[] = $row;
+    if ($row['id_categ'] == $producto['categoria']) {
+        $categoria_actual = $row['nombre_categ'];
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -47,24 +56,24 @@ $result_categorias = $conn->query($sql_categorias);
         <?php echo $Menu ?>
     </header>
 
-    <h1 class="subtitle-text title-info">Editar Producto: <?php echo htmlspecialchars($producto['nombre_prod']); ?></h1>
+    <h1 class="subtitle-text title-info title-edit"> Editar Producto: <?php echo ucwords(htmlspecialchars($categoria_actual)); ?> - <?php echo ucwords(htmlspecialchars($producto['nombre_prod'])); ?></h1>
     <form action="../php/editarInsert.php?id=<?php echo $producto['id_prod']; ?>" method="post" enctype="multipart/form-data">
-        <label for="nombre_prod">Nombre:</label>
+        <label class="common-text" for="nombre_prod">Nombre:</label>
         <input type="text" id="nombre_prod" name="nombre_prod" value="<?php echo htmlspecialchars($producto['nombre_prod']); ?>" required />
 
-        <label for="descripcion_prod">Descripción:</label>
+        <label class="common-text" for="descripcion_prod">Palabra descriptiva:</label>
         <textarea id="descripcion_prod" name="descripcion_prod" required><?php echo htmlspecialchars($producto['descripcion_prod']); ?></textarea>
 
-        <label for="descripcion_detallada_prod">Descripción detallada:</label>
+        <label class="common-text" for="descripcion_detallada_prod">Descripción detallada:</label>
         <textarea id="descripcion_detallada_prod" name="descripcion_detallada_prod" required><?php echo htmlspecialchars($producto['descripcion_detallada_prod']); ?></textarea>
 
-        <label for="categoria">Categoría:</label>
+        <label class="common-text" for="categoria">Categoría:</label>
         <select id="categoria" name="categoria" required>
             <?php
             if ($result_categorias->num_rows > 0) {
-                while ($row = $result_categorias->fetch_assoc()) {  
+                foreach ($categorias as $row) {
                     $selected = ($producto['categoria'] == $row['id_categ']) ? 'selected' : '';
-                    echo "<option value='" . $row['id_categ'] . "' $selected>" . $row['nombre_categ'] . "</option>";
+                    echo "<option value='" . $row['id_categ'] . "' $selected>" . htmlspecialchars($row['nombre_categ']) . "</option>";
                 }
             } else {
                 echo "<option value='0'>Sin categorías disponibles</option>";
@@ -72,17 +81,41 @@ $result_categorias = $conn->query($sql_categorias);
             ?>
         </select>
 
-        <label for="precio">Precio:</label>
+        <label class="common-text" for="precio">Precio:</label>
         <input type="number" id="precio" name="precio" value="<?php echo htmlspecialchars($producto['precio']); ?>" min="0" step="0.01" required />
 
         <!-- Campo para subir imagen nueva o mantener la actual -->
-        <label for="imagen">Nueva imagen (si desea cambiarla):</label>
-        <input type="file" name="imagen" id="imagen" />
+        <div class="imagen-wrapper">
+            <label class="common-text" for="imagen">Nueva imagen:</label>
+            <input class="common-text" type="file" name="imagen" id="imagen" accept="image/*" />
 
-        <p>Imagen actual: <img src="<?php echo htmlspecialchars($producto['imagen']); ?>" alt="Imagen actual" width="100" /></p>
+            <p>Imagen actual:</p>
+            <img id="preview" src="<?php echo htmlspecialchars($producto['imagen']); ?>" alt="Imagen actual" width="100" />
+        </div>
 
-        <button type="submit" class="cta-btn">Guardar Cambios</button>
+
+        <div class="btn-submit">
+            <button type="submit" class="cta-btn common-text ">Guardar Cambios</button>
+        </div>
+
     </form>
+
+    <script>
+        const input = document.getElementById('imagen');
+        const preview = document.getElementById('preview');
+
+        input.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+
 
 </body>
 

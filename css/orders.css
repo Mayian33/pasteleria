@@ -3,30 +3,46 @@
     flex-direction: column;
     gap: 30px;
 }
-.usuario-pedidos {
-    background-color: var(--white);
-    border-radius: 20px;
-    padding: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+.btn-save {
+    margin: 2rem;
+    text-align: center;
 }
+
+.usuario-pedidos {
+    padding: 0; 
+    box-shadow: none; 
+    border-radius: 0; 
+}
+
+
 .pedido-card {
-    border: 1px solid var(--secondary);
-    border-radius: 15px;
     padding: 15px;
     margin-top: 15px;
-    transition: transform 0.2s;
+    border-radius: 15px;
+    background-color: white;
+    box-shadow: 0 0 5px rgba(0,0,0,0.05);
+}
+
+.producto-box {
+    border: 1px solid var(--secondary);
+    border-radius: 12px;
+    padding: 10px;
+    margin-top: 10px;
 }
 
 h1.title {
     text-align: center;
     margin-bottom: 30px;
 }
+
 h2.regular-title {
     margin-bottom: 10px;
     padding-bottom: 5px;
     color: var(--details);
     border-bottom: 2px solid var(--secondary);
 }
+
 p.common-text {
     margin: 5px 0;
 }
@@ -78,5 +94,49 @@ p.common-text {
     .custom-dropdown {
         font-size: 14px;
         max-width: 250px;
+    }
+}
+
+/* ===== Responsive general (móviles y tablets) ===== */
+@media (max-width: 768px) {
+
+    .pedidos {
+        padding: 10px;
+        gap: 20px;
+    }
+
+    .usuario-pedidos {
+        padding: 15px;
+    }
+
+    .pedido-card {
+        padding: 10px;
+    }
+
+    h1.title {
+        font-size: 1.6rem;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    h2.regular-title {
+        font-size: 1.2rem;
+    }
+
+    p.common-text {
+        font-size: 0.95rem;
+    }
+
+    .custom-dropdown {
+        width: 100%;
+        max-width: 100%;
+        font-size: 1rem;
+    }
+
+    .guardar-btn {
+        width: 100%;
+        font-size: 1rem;
+        padding: 10px;
+        margin-top: 10px;
     }
 }

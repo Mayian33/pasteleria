@@ -8,6 +8,10 @@
     color: var(--secondary);
 }
 
+.cards-title{
+    margin-top: 2rem;
+}
+
 .cards-title h2 {
     background-color: var(--secondary);
     color: var(--white);
@@ -22,6 +26,10 @@
     color: var(--details);
     margin-top: 3rem;
     margin-bottom: 2rem;
+    text-align: center;
+}
+
+.btn-perso {
     text-align: center;
 }
 
@@ -41,6 +49,10 @@
         padding: 1rem;
     }
 
+    .cards-title{
+        margin: 0;
+    }
+
     .categoria-titulo {
         font-size: 1.6rem;
         margin-top: 1.5rem;
@@ -54,25 +66,11 @@
 }
 
 /* SECCION CARDS */
-.cards-wrapper {
-    position: relative;
-    height: auto;
-    list-style: none;
-    margin: 0;
-    padding: 0 5%;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    flex-wrap: wrap;
-}
 
 .productos {
-    width: 100%;
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
     justify-content: center;
-    margin-bottom:3rem;
 }
 
 /* seccion card dinamica */
@@ -80,27 +78,35 @@
     background-color: var(--white);
     border-radius: 3rem;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
     width: 100%;
+   scroll-margin-top: 80px;
+}
+
+/* Tablets */
+@media (max-width: 768px) {
+  .categoria-container {
+    margin-bottom: 3rem;
+  }
+}
+
+/* Móviles */
+@media (max-width: 480px) {
+  .categoria-container {
+    margin-bottom: 2rem;
+  }
 }
 
 .categoria-titulo {
     margin-bottom: 15px;
 }
 
-.card-wrapper {
-    display: flex;
-    flex-direction: column;
-    display: block;
+.card-visual {
+    width: 100%;
+    aspect-ratio: 1 / 1;
     position: relative;
- 
-    width: 28%;
-    height: auto;
-    perspective: 700px;
-    display: flex;
-    justify-content: center;
-    min-height: 250px;
+    margin-bottom: 1rem;
 }
+
 
 .card-object {
     color: var(--white);
@@ -114,13 +120,14 @@
 }
 
 .cards-wrapper {
-    position: relative;
-    list-style: none;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    /* ✅ CENTRA los contenedores de categorías */
     gap: 20px;
+    width: 100%;
 }
+
 
 .face {
     color: var(--white);
@@ -172,8 +179,8 @@
 .face.front .title-wrapper {
     position: absolute;
     bottom: 3%;
-    left: 25%;
-    right: 25%;
+    left: 10%;
+    right: 10%;
     overflow: hidden;
     display: flex;
     justify-content: center;
@@ -285,7 +292,6 @@
     .cards-wrapper {
         flex-direction: column;
         align-items: center;
-       
     }
 
     .card-font {
@@ -296,7 +302,7 @@
         width: 100%;
         height: auto;
         margin-bottom: 20px;
-         margin-right: 2rem;
+
     }
 }
 
@@ -313,12 +319,6 @@
     text-decoration: none;
 }
 
-.edit-button-container {
-    clear: both;
-    margin: 2rem;
-    text-align: center;
-}
-
 .card-1 {
     width: 100%;
     aspect-ratio: 1/1;
@@ -329,22 +329,12 @@
     display: flex;
     justify-content: center;
     gap: 10px;
-    margin-top: 5rem;
-    width: 100%;
-}
-
-.btn-editar {
-    padding: 8px 16px;
-    border-radius: 5px;
-    text-align: center;
-    text-decoration: none;
-    font-weight: bold;
-    color: white;
-    transition: background-color 0.3s ease;
+    flex-wrap: wrap;
 }
 
 .btn-anadir {
     display: block;
-    margin: 20px auto; /* esto lo centra horizontalmente */
+    margin: 20px auto;
+    /* centra horizontalmente */
     text-align: center;
 }

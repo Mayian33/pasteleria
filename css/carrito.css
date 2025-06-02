@@ -108,8 +108,15 @@
 /* Diseño minimalista para el control de cantidad */
 .cantidad {
   display: flex;
-  align-items: center;
+  flex-direction: row;
   gap: 10px;
+}
+
+.papelera .img{
+  align-items: center;
+}
+.cantidad-numero{
+margin: 0.3rem 0;
 }
 
 .cantidad button {
@@ -162,42 +169,42 @@
 
 /* Estilo del formulario de pedido */
 .formulario-envio {
-    max-width: 500px;
-    margin: 0 auto;
-    background-color: var(--background);
-    padding: 2rem;
-    border-radius: 20px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    font-family: inherit;
-    display: flex;
-    flex-direction: column;
-    gap: 1.2rem;
+  width: 100%;
+  max-width: 700px;
+  margin: 2rem auto;
+  background-color: var(--background);
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
 }
 
 .formulario-envio label {
-    display: flex;
-    flex-direction: column;
-    font-weight: 600;
-    font-size: 0.95rem;
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+  font-size: 0.95rem;
 }
 
 .formulario-envio input {
-    padding: 0.6rem 1rem;
-    margin-top: 0.3rem;
-    border: 1px solid var(--background);
-    border-radius: 10px;
-    font-size: 1rem;
-    transition: border-color 0.2s, box-shadow 0.2s;
+  padding: 0.6rem 1rem;
+  margin-top: 0.3rem;
+  border: 1px solid var(--background);
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .formulario-envio input:focus {
-    border-color: var(--background);
-    box-shadow: 0 0 0 2px rgba(216, 107, 160, 0.2);
-    outline: none;
+  border-color: var(--background);
+  box-shadow: 0 0 0 2px rgba(216, 107, 160, 0.2);
+  outline: none;
 }
 
-
-
+/* Responsive tablet y móvil */
 @media (max-width: 768px) {
   .producto {
     flex-direction: column;
@@ -211,7 +218,20 @@
   .info {
     align-items: center;
   }
+
+  .formulario-envio {
+    max-width: 95%;
+    padding: 1.5rem;
+  }
 }
+
+@media (max-width: 480px) {
+  .formulario-envio {
+    max-width: 100%;
+    padding: 1.2rem;
+  }
+}
+
 
 /* MÓVIL: hasta 480px */
 @media (max-width: 480px) {

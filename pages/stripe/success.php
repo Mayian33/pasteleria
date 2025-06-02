@@ -41,20 +41,16 @@
     if ($tipo === 'donacion') {
         // Donación con producto
         $producto_id = $data['producto_id'] ?? null;
-        $monto = $data['monto'] ?? 0;
-        $descripcion = "Donación solidaria con producto";
-        $tipo_id = 2;
+        $monto = $data['monto_donacion'] ?? 0;
 
         $stmt = $conn->prepare("INSERT INTO donacion (usuario_donacion, fecha_donacion, monto_donacion, producto_donacion)
                         VALUES (?, NOW(), ?, ?)");
         $stmt->bind_param("idi", $usuario_id, $monto, $producto_id);
-
-
         $stmt->execute();
 
         echo '<div class="container-stripe">';
         echo '<h1 class="subtitle-text">💖 ¡Gracias por tu donación solidaria!</h1>';
-        echo '<p class="common-text">Tu ayuda será destinada a una asociación solidaria mientras disfrutas de tu producto.</p>';
+        echo "<p class='common-text'>Has donado <strong>{$monto} €</strong> a una causa solidaria mientras disfrutas de tu producto 🧁.</p>";
         echo '<a class="cta-btn" href="../catalogue.php">Volver al catálogo</a>';
         echo '</div>';
     } else {

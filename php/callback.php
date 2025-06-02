@@ -9,7 +9,7 @@ require __DIR__ . '/../vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->load();
 
-// ✅ Ahora sí estás usando las claves reales del .env
+// claves del .env
 $client_id = $_ENV['GOOGLE_CLIENT_ID'];
 $client_secret = $_ENV['GOOGLE_CLIENT_SECRET'];
 $redirect_uri = "http://localhost/PROYECTO/pasteleria/php/callback.php";

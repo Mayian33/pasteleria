@@ -33,6 +33,7 @@ $result = $conn->query($sql_categorias);
 
         <label for="categoria">Categoría:</label>
         <select id="categoria" name="categoria" required>
+            <option value="" disabled selected>Seleccionar categoría</option>
             <?php
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
@@ -44,15 +45,46 @@ $result = $conn->query($sql_categorias);
             ?>
         </select>
 
+
         <label for="precio">Precio:</label>
         <input type="number" id="precio" name="precio" min="0" step="0.01" required />
 
-        <!--Imagen -->
-        <label for="imagen">Imagen:</label>
-        <input type="file" name="imagen" required />
+        <div class="imagen-wrapper">
+            <label class="common-text" for="imagen">Nueva imagen:</label>
+            <input class="common-text" type="file" name="imagen" id="imagen" accept="image/*" />
 
-        <button type="submit" class="cta-btn">Agregar Producto</button>
+            <p id="texto-sin-imagen">Aún no hay imagen seleccionada</p>
+            <img id="preview" src="" alt="Vista previa" width="100" style="display: none;" />
+        </div>
+
+
+        <div class="btn-submit">
+            <button type="submit" class="cta-btn common-text ">Guardar Cambios</button>
+        </div>
     </form>
+
+    <script>
+        document.getElementById('imagen').addEventListener('change', function() {
+            const file = this.files[0];
+            const preview = document.getElementById('preview');
+            const texto = document.getElementById('texto-sin-imagen');
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                    texto.style.display = 'none';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                preview.style.display = 'none';
+                texto.style.display = 'block';
+            }
+        });
+    </script>
+
+
 </body>
 
 </html>

@@ -26,7 +26,6 @@ if ($result->num_rows > 0) {
 
     <link rel="preload" href="../css/index.css" as="style" />
     <link href="../css/index.css" rel="stylesheet" />
-
 </head>
 
 <body>
@@ -35,8 +34,8 @@ if ($result->num_rows > 0) {
         <?php echo $Menu ?>
     </header>
 
-
     <section class="main">
+
         <!-- CONTAINER PRINCIPAL -->
         <div class="container ">
             <div class="content-card">
@@ -72,14 +71,25 @@ if ($result->num_rows > 0) {
                         const totalSlides = slides.length;
 
                         function updateSlides() {
-                            // Oculta todas las imágenes primero
-                            document.querySelectorAll('.carrusel-card').forEach(card => {
+                            document.querySelectorAll('.carrusel-card').forEach((card, index) => {
+                                // Mostrar solo la anterior, actual y siguiente
+                                if (
+                                    index === currentSlide ||
+                                    index === (currentSlide - 1 + totalSlides) % totalSlides ||
+                                    index === (currentSlide + 1) % totalSlides
+                                ) {
+                                    card.style.display = 'block';
+                                } else {
+                                    card.style.display = 'none';
+                                }
+
+                                // Reiniciar estilos base
                                 card.style.transform = 'translateX(40%) scale(0.8)';
                                 card.style.opacity = '0.4';
                                 card.style.zIndex = '0';
                             });
 
-                            // Muestra la imagen actual
+                            // Imagen actual (centro)
                             const currentCard = document.querySelector(`#song-${currentSlide + 1}`);
                             if (currentCard) {
                                 currentCard.style.transform = 'translateX(0) scale(1)';
@@ -87,7 +97,7 @@ if ($result->num_rows > 0) {
                                 currentCard.style.zIndex = '1';
                             }
 
-                            // Muestra la imagen anterior (izquierda)
+                            // Imagen anterior (izquierda)
                             const prevIndex = (currentSlide - 1 + totalSlides) % totalSlides;
                             const prevCard = document.querySelector(`#song-${prevIndex + 1}`);
                             if (prevCard) {
@@ -96,7 +106,7 @@ if ($result->num_rows > 0) {
                                 prevCard.style.zIndex = '0';
                             }
 
-                            // Muestra la siguiente imagen (derecha)
+                            // Imagen siguiente (derecha)
                             const nextIndex = (currentSlide + 1) % totalSlides;
                             const nextCard = document.querySelector(`#song-${nextIndex + 1}`);
                             if (nextCard) {
@@ -115,16 +125,15 @@ if ($result->num_rows > 0) {
                         // Inicializar
                         updateSlides();
 
-                        // Configurar intervalo
+                        // Avance automático cada 3 segundos
                         let interval = setInterval(nextSlide, 3000);
 
-                        // Pausar al hacer hover
+                        // Pausar al pasar el ratón
                         const carrusel = document.querySelector('.carrusel-container');
                         carrusel.addEventListener('mouseenter', () => clearInterval(interval));
                         carrusel.addEventListener('mouseleave', () => interval = setInterval(nextSlide, 3000));
                     });
                 </script>
-
                 <!-- FIN CAROUSEL -->
 
 
@@ -138,54 +147,44 @@ if ($result->num_rows > 0) {
                 <div class="content-info">
                     <h2 class="regular-title subtitle-info">Sobre mi</h2>
                     <h1 class="subtitle-text title-info">El <span>Sabor</span> Que necesitas, para tu placer.</h1>
-                    <p class="common-text">At Bakery Co., we believe that every day deserves a little sweetness. Our artisan bakery is your
-                        one-stop destination for baked treats that burst with flavor and melt in your mouth. With a
-                        passion
-                        for
-                        baking that has been passed down through generations, we take pride in creating mouth-watering
-                        pastries
-                        that delight your taste buds.</p>
+                    <p class="common-text">En Bróllin preparo tartas y dulces caseros con mucho cariño desde casa. Cada producto es artesanal, personalizable y pensado para adaptarse a todos, incluso con opciones sin gluten o veganas. Este proyecto nace de un sueño y del deseo de compartir momentos especiales a través del sabor y la cercanía.</p>
                     <br>
                     <a class="cta-btn" href="../pages/sobreMi.php">More about us</a>
                 </div>
             </div>
         </section>
 
-        <!-- CARDS -->
+        <!-- CARDS DINÁMICAS -->
         <?php
         $sql = "SELECT id_categ, nombre_categ, descripcion_categ FROM categorias";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
             echo '<div class="cards-title">
-    <h1 class="title-text subtitle-text"> <span>Delicias Caseras:</span> El Sabor de lo Hecho con Amor</h1>
-    <p class="common-text">Un catálogo de productos frescos y auténticos para endulzar tus momentos</p>
-  </div>';
+            <h1 class="title-text subtitle-text"><span>Delicias Caseras:</span> El Sabor de lo Hecho con Amor</h1>
+            <p class="common-text">Un catálogo de productos frescos y auténticos para endulzar tus momentos</p>
+        </div>';
             echo '<div class="cards-wrapper">';
 
             while ($row = $result->fetch_assoc()) {
                 $nombre_categ = $row['nombre_categ'];
                 $descripcion_categ = $row['descripcion_categ'];
-                // Generar id_categ consistentemente con nombre en minúsculas sin espacios
-                $id_categ = strtolower(trim($nombre_categ));
+                $id_categ = strtolower(trim(preg_replace('/[^a-z0-9]+/', '-', iconv('UTF-8', 'ASCII//TRANSLIT', $nombre_categ))));
                 echo '<div class="card-wrapper">
-        <div class="card-' . htmlspecialchars($row['id_categ']) . ' card-object card-object-hf">
-            <a class="face front" href="catalogue.php#' . $id_categ . '">
-                <div class="title-wrapper">
-                    <div class="card-font">' . htmlspecialchars($nombre_categ) . '</div>
-                    <div class="card-font-text common-text">' . htmlspecialchars($descripcion_categ) . '</div>
+                <div class="card-' . htmlspecialchars($row['id_categ']) . ' card-object card-object-hf">
+                    <a class="face front" href="catalogue.php#' . $id_categ . '">
+                        <div class="title-wrapper">
+                            <div class="card-font">' . htmlspecialchars($nombre_categ) . '</div>
+                            <div class="card-font-text common-text">' . htmlspecialchars($descripcion_categ) . '</div>
+                        </div>
+                    </a>
                 </div>
-            </a>
-        </div>
-      </div>';
+            </div>';
             }
 
-            echo '</div>';
-            echo '<div class="cta-catalogue">
-    <a class="cta-btn" href="../pages/catalogue.php">
-        Ver catálogo completo
-    </a>
-  </div>';
+            echo '</div><div class="cta-catalogue">
+            <a class="cta-btn btn-catalogue" href="../pages/catalogue.php">Ver catálogo completo</a>
+        </div>';
         } else {
             echo "No hay productos disponibles.";
         }
