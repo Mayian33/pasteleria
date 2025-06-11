@@ -1,13 +1,8 @@
-FROM php:apache
-
-# Install dependencies
+FROM php:apache  
+COPY . /var/www/html/  
+EXPOSE 80  
+# Instalar las extensiones necesarias de PHP
 RUN docker-php-ext-install mysqli pdo pdo_mysql
 
-# Enable Apache mod_rewrite
-COPY ./var/www/html/
-
-# Enable permissions 
+# Cambiar permisos del directorio de trabajo (ejemplo: /var/www/html)
 RUN chown -R www-data:www-data /var/www/html
-
-# Expose port 80
-EXPOSE 80
