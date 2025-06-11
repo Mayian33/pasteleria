@@ -14,12 +14,11 @@ if (file_exists(__DIR__ . '/../vendor/autoload.php')) {
     $dotenv->load();
 }
 
-// Obtener datos desde variables de entorno
-$host = 'localhost'; // <- muy importante
-$user = 'root';
-$pass = ''; 
-$db   = 'brollin';
-$port = 3306;
+$host = 'MYSQLHOST';
+$user = 'MYSQLUSER';
+$pass = 'MYSQLPASSWORD'; 
+$db   = 'MYSQLDATABASE';
+// $port = 3306;
 
 $conn = new mysqli($host, $user, $pass, $db, $port);
 

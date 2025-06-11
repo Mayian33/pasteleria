@@ -44,7 +44,7 @@
         $monto = $data['monto_donacion'] ?? 0;
 
         $stmt = $conn->prepare("INSERT INTO donacion (usuario_donacion, fecha_donacion, monto_donacion, producto_donacion)
-                        VALUES (?, NOW(), ?, ?)");
+                VALUES (?, CURDATE(), ?, ?)");
         $stmt->bind_param("idi", $usuario_id, $monto, $producto_id);
         $stmt->execute();
 

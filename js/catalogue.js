@@ -1,9 +1,18 @@
-document.querySelectorAll('.cards-title').forEach(title => {
-    let productos = title.nextElementSibling; 
-    let wrapper = document.createElement('div'); 
-
-    wrapper.classList.add('categoria-container'); 
-    title.parentNode.insertBefore(wrapper, title); 
-    wrapper.appendChild(title);
-    wrapper.appendChild(productos); 
+window.addEventListener('load', () => {
+    const hash = window.location.hash;
+    if (hash) {
+        const el = document.querySelector(hash);
+        if (el) {
+            setTimeout(() => {
+                el.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }, 100);
+        }
+    }
 });
+
+// borrar producto
+function confirmarBorrado() {
+    return confirm("¿Estás seguro que quieres borrar este producto?");
+}

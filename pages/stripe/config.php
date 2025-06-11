@@ -1,7 +1,7 @@
 <?php
-require __DIR__ . '/../../vendor/autoload.php'; // ✅ sube dos niveles: stripe → pages → pasteleria
+require __DIR__ . '/../../vendor/autoload.php'; 
 
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../../'); // ✅ también sube dos niveles hasta .env
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../../'); 
 $dotenv->load();
 
 \Stripe\Stripe::setApiKey($_ENV['STRIPE_SECRET_KEY']);

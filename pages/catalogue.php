@@ -112,27 +112,8 @@ $isAdmin = isset($_SESSION['rol']) && $_SESSION['rol'] == 1;
         <?php echo $Footer ?>
     </section>
 
-    <script>
-        window.addEventListener('load', () => {
-            const hash = window.location.hash;
-            if (hash) {
-                const el = document.querySelector(hash);
-                if (el) {
-                    setTimeout(() => {
-                        el.scrollIntoView({
-                            behavior: 'smooth'
-                        });
-                    }, 100);
-                }
-            }
-        });
 
-        // borrar producto
-        function confirmarBorrado() {
-            return confirm("¿Estás seguro que quieres borrar este producto?");
-        }
-    </script>
-
+ <script src="../js/catalogue.js"></script>
 </body>
 
 </html>
